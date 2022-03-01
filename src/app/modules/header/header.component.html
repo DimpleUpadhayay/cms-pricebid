@@ -1,0 +1,350 @@
+<app-alert></app-alert>
+<header class="header" (mouseleave)="logoHovered = false">
+  <div class="top-bar row">
+    <!-- Logo Image on the NAVBAR -->
+    <div class="col-xs-3 col-sm-5 col-lg-5 col-md-5" *ngIf="!sheetHeader ">
+      <div class="logo margin-top-12"
+        (mouseover)="logoHovered = true
+                && (userData?.user_role == 'COMPANY_ADMIN' || userData?.user_role == 'SUPPORT' || userData?.user_role == 'CUSTOM')"
+        (click)="changeState()">
+        <img src="assets/Logo/CMS IT.png" class=" cms-logo" alt="CMS Logo">
+      </div>
+    </div>
+    <!-- Top Bar/Navbar for Excel Sheet -->
+    <!-- Logo Image on the NAVBAR -->
+    <div class="col-xs-3 col-sm-5 col-lg-1 col-md-1" *ngIf="sheetHeader == true">
+      <div class="logo margin-top-12" (click)="changeState()">
+        <img src="assets/Logo/CMS IT.png" class="logoWidth" alt="Pricebid Logo">
+      </div>
+    </div>
+    <div class="col-lg-11 col-md-11" *ngIf="sheetHeader == true">
+      <div class="margin-top-12 box">
+        <span style="color:#17b495; margin-left: 2px;font-size: 16px;">#</span><span> {{bid.bid_number}}
+        </span><span id="vertical"></span>
+        <span> <img src="assets\images\menu-button.png" class="image"> {{bid.name}} </span><span id="vertical"></span>
+        <span> <img src="assets\images\rupee-indian.png" class="imageCurrency">{{bid.estimatedValue}} (Mn)
+        </span><span id="vertical"></span>
+        <span> <img src="assets\images\eye-open.png" (click)="getViewAssign()" class="image">
+          {{bid.date_submission | date:'dd-MM-yyyy'}}
+        </span><span id="vertical"></span>
+        <span *ngFor="let participant of participants">
+          <span [className]="participant.class" class="text-truncate second1-circle-color bid-text-center"
+            id="circleThree"
+            title=" {{
+              participant?.fullname }} - {{participant?.userTypes && participant?.userTypes[0].user_subtype}} {{participant?.userTypes && participant?.userTypes[0].user_type }}">
+            {{getSignatures(participant.fullname)}} </span>
+        </span>
+        <span></span>
+      </div>
+    </div>
+    <!-- Home icon in Navbar -->
+    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center margin-top-12 homeDesktop" *ngIf="!sheetHeader ">
+      <span class="margin-top-12">
+        <a (click)="changeState()" title="Dashboard">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span class="sr-only">(current)</span>
+        </a>
+      </span>
+      <!-- <span class="margin-top-12" id="usersLink" *ngIf="userData?.user_type == 'COMPANY_ADMIN'">
+                <a [routerLink]="['/users']" title="Users">
+                    <img src="assets/images/users.png" class="userImage"> </a>
+            </span> -->
+    </div>
+    <!-- <div class="col-xs-6 col-sm-2 col-lg-2 col-md-2 align-center margin-top-12 homeMobileView" *ngIf="!sheetHeader">
+      <span class="margin-top-12">
+        <a (click)="changeState()" title="Dashboard">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          <span class="sr-only">(current)</span>
+        </a>
+      </span>
+    </div> -->
+
+    <!-- Search Section in the Navbar -->
+    <div class="col-xs-4 col-sm-3 col-lg-3 col-md-3 align-right  margin-top-12 search">
+      <div class="" *ngIf="disabled" style="margin-right: -18px;">
+        <i class="fa fa-search" style="color:white;background: transparent"></i>
+        <input type="text" [(ngModel)]="search" id="Search" (input)="searchData()" placeholder="Search bids" />
+        <span title="Clear" (click)="onClear();">
+          <i *ngIf="search.length !=0" class="fa fa-times" style="color:white;cursor: pointer;"></i>
+        </span>
+      </div>
+      <!-- <button style="    margin-left: 50px;" (click)="incrementCount()">+</button> -->
+    </div>
+    <!-- Search Section in the Navbar Ends Here-->
+
+
+    <!-- Notification Bell icon and Badge using for Alert -->
+    <!--  *ngIf="user.user_role == 'CUSTOM' && !sheetHeader" -->
+    <!-- [hidden]=" user.user_role == 'SUPPORT' || user.user_role =='COMPANY_ADMIN' || sheetHeader" -->
+    <div class="col-xs-1 col-sm-1 col-lg-1  col-md-1">
+      <i class="fa fa-bell" *ngIf="user && user.user_role == 'CUSTOM' && !sheetHeader && user.userTypes[0].user_type != 'EMD_PBG_VIEWER'" (click)="clearCount();"
+        title="Notifications"></i> <span class="badge"
+        *ngIf="user.user_role == 'CUSTOM' && !sheetHeader && badgeCount > 0">{{badgeCount}}</span>
+    </div>
+    <!-- Notification Bell icon and Badge using for Alert End Here -->
+
+    <!-- Notification Section after click on Notification Bell-->
+    <div class="cricket" *ngIf="showing" id="card" appOutside (check1)="ClickedOut($event)">
+      <div class="notification title">
+        <p class="align-center" id="notific">Notifications
+          <i id="close" title="Close" class="fa fa-close align-right" (click)="clearCount()"></i>
+        </p>
+      </div>
+      <div class="align-center" *ngIf="badgeCount == 0 && results?.length == 0">
+        <span>No Notifications</span>
+      </div>
+      <div class="serachBox" style="margin: 5px;" *ngIf="results?.length != 0">
+        <input id="search" style="border-radius: 10px;" class="form-control" type="text" placeholder="Search.."
+          name="search" [(ngModel)]="searchKey">
+      </div>
+      <div class="serachBox" style="margin: 5px;cursor: pointer;" *ngIf="badgeCount != 0">
+        <span (click)="onMarkAsRead()" style="margin-right: 5px;">Mark all as Read</span>
+        <span style="margin-right: 5px;">|</span>
+        <span (click)="onDismissAll()">Dismiss all</span>
+      </div>
+      <div class="serachBox" style="margin: 5px;cursor: pointer;" *ngIf="badgeCount == 0 && notifications.length != 0">
+        <span (click)="onDismissAll()">Dismiss all</span>
+      </div>
+      <div class="messageBox scroll1" *ngFor="let result of results | seachNotification:searchKey">
+        <p class="bidHeading align-center"> {{result.bid_name  ? result.bid_name : 'NA'}}</p>
+        <p class="accountName  align-center">{{result.account_name  ? result.account_name : 'NA'}}</p>
+        <div [ngClass]="item.assigned_to[0].read ? 'readContent' : 'messageContent'" *ngFor="let item of result.notify">
+          <p style="cursor:pointer;" (click)="onReadNotification(item,result)"><i class="fa fa-comments-o"
+              aria-hidden="true" style="color:#17b495;"></i> {{item.task}}</p>
+          <p *ngIf="item.module == 'BID_SUBMIT' && !item.assigned_to[0].submission_date">
+            <button (click)="checkSubmissionDate(item,result,'yes')">Yes</button>
+            <button (click)="checkSubmissionDate(item,result,'no')">No</button>
+          </p>
+          <!-- <hr> -->
+          <p style="margin-bottom:3px;font-size: 12px;"><i class="fa fa-clock-o" aria-hidden="true"
+              style="color:#17b495"></i> {{item.date_created | date}} |
+            {{item.date_created | date:'h:mm a'}}
+            <span class="dismiss" style="float:right;cursor: pointer;" (click)="onDismiss(item,result)">Dismiss</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Notification Section after click on Notification Bell Ends Here-->
+
+    <!-- <button type="button" style="margin-top:12px;margin-left:3px;" (click)="save('submit bid')" *ngIf="approval" class="btn save-button">Submit Bid
+            </button> -->
+
+    <!-- ------User Login Detail/information Section on Hover User Icon-----  -->
+    <div class="col-xs-2 col-sm-1 col-lg-1 col-md-1 align-center" *ngIf="!sheetHeader">
+      <span class="dropdown logo margin-top-12">
+        <a class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-user"><span class="caret"></span></i>
+        </a>
+        <span class="dropdown-content"
+          style="left:-125px;width:180px;border: 1px solid #364453;background-color: white;border-top-left-radius: 9px;border-top-right-radius: 9px;">
+          <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-lg-12  col-md-12">
+              <div class="row iconMargin" style="margin-top:7px;">
+                <div class="col-xs-2 col-sm-2 col-lg-3 col-md-3">
+                  <i class="glyphicon glyphicon-user" id="icon" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-9 col-md-9">
+                  <!-- <b> -->
+                  <p id="userRole" style="font-weight: bold;" *ngIf="userData?.user_role == 'CUSTOM'">
+                    {{userData?.firstName}}
+                  </p>
+                  <p id="userRole" style="font-weight: bold;"
+                    *ngIf="userData?.user_role == 'COMPANY_ADMIN' || userData?.user_role == 'SUPPORT'">
+                    {{userData?.username}}
+                  </p>
+                  <!-- </b> -->
+                </div>
+              </div>
+              <div class="row iconMargin">
+                <div class="col-xs-2 col-sm-2 col-lg-3 col-md-3">
+                  <!-- <i class="glyphicon glyphicon-user" id="icon" aria-hidden="true"></i> -->
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-9 col-md-9">
+                  <p id="userRole1" style="font-weight: bold;" *ngIf="userData?.user_role == 'CUSTOM'">
+                    {{userData?.lastName}}
+                  </p>
+                </div>
+              </div>
+              <hr>
+              <div class="row iconMargin" *ngIf="userData?.user_role != 'CUSTOM'">
+                <div class="col-xs-2 col-sm-3 col-lg-3 col-md-3">
+                  <i class="fa fa-address-book-o" title="Role" id="icon"></i>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-9 col-md-9">
+                  <!-- <b> -->
+                  <!-- <p id="userRole" *ngIf="userData?.user_role != 'COMPANY_ADMIN' || userData?.user_role != 'SUPPORT' ">
+                    {{ capitalize(userCustomType)}}
+                  </p> -->
+                  <p id="userRole" *ngIf=" userData?.user_role == 'SUPPORT'"> Support Admin</p>
+                  <p id="userRole" style="font-size: 13px !important;" *ngIf=" userData?.user_role == 'COMPANY_ADMIN'">
+                    Company Admin</p>
+                  <!-- </b>  -->
+                </div>
+              </div>
+              <hr>
+              <!-- <div class="row iconMargin" *ngIf="userData?.user_role == 'CUSTOM'">
+                <div class="col-xs-2 col-sm-2 col-lg-3 col-md-3">
+                  <i class="fa fa-user-circle-o" title="User Type" id="icon" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-9 col-md-9">
+                  <p id="userRole">
+                    {{ userData?.user_subtype}}</p>
+                </div>
+              </div>
+              <hr> -->
+              <!-- userData?.user_type && -->
+              <div class="row iconMargin" id="hovRow" *ngIf=" userData?.user_role != 'SUPPORT'"
+                [routerLink]="['/profile']">
+                <div class="col-xs-2 col-sm-2 col-lg-3 col-md-3">
+                  <i class="fa fa-address-card-o" title="Profile" id="icon" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-9 col-md-9">
+                  <p id="userRole">Profile </p>
+                </div>
+              </div>
+              <hr>
+              <!-- <div class="row" id="hovRow" (click)="changePassword()">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
+                </div> -->
+              <!-- <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                  <i class="fa fa-address-card-o" title="Profile" id="icon" aria-hidden="true"></i>
+                </div> -->
+              <!-- <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                  <i class="fa fa-cogs" id="icon" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                  <p id="userRole">Change Password </p>
+                </div>
+              </div> -->
+
+              <!-- <div class="row" id="hovRow" (click)="changePassword()">
+                <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                  <p >Change Password</p>
+                </div>
+              </div> -->
+              <hr>
+              <div class="row iconMargin" (click)="doLogout()" id="hovRow">
+                <div class="col-xs-2 col-sm-2 col-lg-3 col-md-3">
+                  <i class="fa fa-power-off" id="icon" aria-hidden="true"></i>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-9 col-md-9">
+                  <p id="userRole">Logout</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
+      </span>
+    </div>
+  </div>
+  <!-- ------User Login Detail/information Section on Hover User Icon Ends Here----- -->
+  <!-- Top Bar and side Menu using in comapny login and Support Login Section  -->
+  <div class="side-menu"
+    *ngIf="(logoHovered && (userData?.user_role == 'SUPPORT' || userData?.user_role == 'COMPANY_ADMIN'))">
+    <div class="side-menus">
+      <!-- <nav> -->
+      <ul class="parent-menu">
+        <li *ngIf="(userData?.user_role == 'CUSTOM')" style="display: none">
+          <a title="" [routerLink]="['/dashboard']"><i class="fa-dashboard"></i><span>Dashboard</span></a>
+        </li>
+        <li *ngIf="(userData?.user_role == 'SUPPORT')">
+          <a title="" [routerLink]="['/company/list']"><i class="fa fa-industry"></i><span>Company</span></a>
+        </li>
+        <li *ngIf="userData?.user_role == 'SUPPORT'">
+          <a title="" routerLink='/list_module'><i class="fa fa-random"></i><span>
+              App Modules</span></a>
+        </li>
+        <div *ngIf="userData?.user_role == 'COMPANY_ADMIN'">
+          <li data-toggle="collapse" data-target="#companySetting">
+            <a title=""><i class="fa fa-industry"></i><span>Company Settings</span><i
+                class="fa fa-chevron-down rotate"></i>
+            </a></li>
+          <ul id="companySetting" class="collapse">
+             <!-- Company Profile -->
+            <li routerLink='/viewCompany'>
+              <a title=""><i class="ti-dashboard"></i>
+                <span>
+                  Company Profile
+                </span>
+              </a>
+            </li>
+            <!-- Territory -->
+            <li routerLink='/territory/list'>
+              <a title=""><i class="ti-dashboard"></i>
+                <span>
+                  Territory
+                </span>
+              </a>
+            </li>
+            <!-- Business Unit -->
+            <li routerLink='/businessUnit/list'>
+              <a title=""><i class="ti-dashboard"></i>
+                <span>
+                  Business Unit
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="userData?.user_role == 'COMPANY_ADMIN' || userData?.user_role == 'SUPPORT'">
+          <li data-toggle="collapse" data-target="#userSetting">
+            <a>
+              <i class="fa fa-address-card-o"></i><span> User Settings</span><i
+                class="fa fa-chevron-down rotate"></i></a></li>
+          <ul id="userSetting" class="collapse">
+            <!-- Role Management -->
+            <li [routerLink]="['/roles/list']">
+              <a title=""><i class="fa fa-settings"></i><span>Role
+                  Management</span></a>
+            </li>
+            <!-- User Management -->
+            <li [routerLink]="['/user/list']" *ngIf="userData?.user_role == 'COMPANY_ADMIN'">
+              <a title=""><i class="fa fa-setting"></i><span>User
+                  Management</span></a>
+            </li>
+          </ul>
+        </div>
+        <!-- Approval Chain -->
+        <li *ngIf="userData?.user_role == 'COMPANY_ADMIN'" routerLink='/approvalChainList'>
+          <a title="">
+            <i class="fa fa-chain"></i><span>ApprovalChain</span>
+          </a>
+        </li>
+        <div *ngIf="userData?.user_role == 'COMPANY_ADMIN'">
+          <li data-toggle="collapse" data-target="#masterData">
+            <a>
+              <i class="fa fa-database "></i><span>Master Data</span><i class="fa fa-chevron-down rotate"></i></a>
+          </li>
+          <ul id="masterData" class="collapse">
+            <!-- Account Names -->
+            <li [routerLink]="['/account/list']">
+              <a title=""><i class="fa fa-settings"></i><span>Account Name</span></a>
+            </li>
+            <!-- Competitor Names -->
+            <li [routerLink]="['/competitor/list']">
+              <a title=""><i class="fa fa-setting"></i><span>Competitor Names
+                </span></a>
+            </li>
+          </ul>
+        </div>
+        <!-- Category -->
+        <li *ngIf="userData?.user_role == 'COMPANY_ADMIN'" routerLink='/categoryList'>
+          <a title="">
+            <i class="fa fa-chain"></i><span>Category List</span>
+          </a>
+        </li>
+        <!-- Types -->
+        <li *ngIf="userData?.user_role == 'COMPANY_ADMIN'" routerLink='/typeList'>
+          <a title="">
+            <i class="fa fa-chain"></i><span>Types</span>
+          </a>
+        </li>
+      </ul>
+      <!--================Footer Area =================-->
+      <span class="footer-line">2021 Copyright Pricebid.co</span>
+    </div>
+  </div>
+  <!-- </header> -->
+
+</header>
+<!-- <app-dashboard></app-dashboard> -->

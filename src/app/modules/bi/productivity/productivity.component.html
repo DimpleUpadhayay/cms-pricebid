@@ -1,0 +1,156 @@
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Filter Starts Here -->
+    <div class="fa fa-filter" title="Filter" style="float:right;font-size:20px;cursor: pointer;margin-top: -50px;"
+      data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></div>
+    <span class="fa fa-refresh" title="Refresh" (click)="onClear()"></span>
+    <div class="collapse" id="collapseExample">
+      <div class="col-md-12 filterBox">
+        <div class="col-md-1 margin-left">
+          <input type="radio" name="BU" value="only" [(ngModel)]="obj.multiflagBu"> Only<br>
+          <input type="radio" name="BU" value="All" [(ngModel)]="obj.multiflagBu"> All<br>
+        </div>
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown [placeholder]="'Business Unit'" [data]="business_units"
+            [settings]="dropdownBUSettings" [(ngModel)]="selectedBUs" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event,'BU')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-1">
+          <input type="radio" name="territory" value="only" [(ngModel)]="obj.multiflagTerritory"> Only<br>
+          <input type="radio" name="territory" value="All" [(ngModel)]="obj.multiflagTerritory"> All<br>
+        </div>
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown [placeholder]="'Territory'" [data]="territories"
+            [settings]="dropdownTerritorySettings" [(ngModel)]="selectedTerritories" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event,'Territory')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="valueRange">
+          <div class="col-md-1 head">
+            <label style="margin-top:7px"> &#8377;Range :</label>
+          </div>
+          <div class="col-md-1 margin-left">
+            <input type="number" [(ngModel)]="start" oninput="validity.valid||(value=value.replace(/[^0-9.]+/g, ''))"
+              (ngModelChange)="onItemSelect($event)" placeholder="&#8377; From"
+              class="range form-control input-border input-bar">
+          </div>
+          <div class="guion"> - </div>
+          <div class="col-md-1">
+            <input type="number" [(ngModel)]="end" oninput="validity.valid||(value=value.replace(/[^0-9.]+/g, ''))"
+              (ngModelChange)="onItemSelect($event)" placeholder="&#8377; To"
+              class="range form-control input-border input-bar">
+          </div>
+        </div>
+        <div class="col-md-2" style="margin-left: 10px;">
+          <input placeholder="Date Time Range" class="form-control input-border input-bar" [(ngModel)]="dateTimeRange"
+            [selectMode]="'range'" (ngModelChange)="onItemSelect($event)" [owlDateTimeTrigger]="dtRange1"
+            [owlDateTime]="dtRange1" style="width:140px">
+          <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <button class="btn btn-submit" style="margin-top: 0px" (click)="getResult()">Search</button>
+        <div class="col-md-1" style="margin-top:-7px;float:right;">
+          <button class="btn btn-clear" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+      <div class="col-md-12 filterBox">
+        <div class="col-md-1 margin-left">
+          <input type="radio" name="Type" value="only" [(ngModel)]="obj.multiflagTypes"> Only<br>
+          <input type="radio" name="Type" value="All" [(ngModel)]="obj.multiflagTypes"> All<br>
+        </div>
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown [placeholder]="'Types'" [data]="types" [settings]="dropdownTypesSettings"
+            [(ngModel)]="selectedTypes" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'Types')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-1">
+          <input type="radio" name="Categories" value="only" [(ngModel)]="obj.multiflagCategories"> Only<br>
+          <input type="radio" name="Categories" value="All" [(ngModel)]="obj.multiflagCategories"> All<br>
+        </div>
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown [placeholder]="'Categories'" [data]="category" [settings]="dropdownCategorySettings"
+            [(ngModel)]="selectedCategories" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'Category')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-6">
+          <div class="col-md-3">
+            <ng-multiselect-dropdown [placeholder]="'Status'" [data]="opportunity_status"
+              [settings]="dropdownOpportunityStatusSettings" [(ngModel)]="selectedOpportunityStatus"
+              (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event,'Status')">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-3" style="font-size: 13px;">
+            <ng-multiselect-dropdown [placeholder]="'Stage'" [data]="bid_stage" [settings]="dropdownBidStageSettings"
+              [(ngModel)]="selectedBidStage" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'Status')">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-3">
+            <input type="text" name="Search Bid Name" placeholder="Bid Name, Account Name"
+              class="form-control input-border input-bar" [(ngModel)]="obj.bid_name">
+          </div>
+          <div class="col-md-3">
+            <input type="search" name="sales_person" id="sales_person" class="form-control input-border input-bar"
+              type="text" maxlength="35" placeholder="User Name" [(ngModel)]="searchUser">
+            <span id="showResults" style="position:absolute;display: none;z-index:900;color:black;">
+              <ul class="list-group list-group-flush" *ngIf="searchDataArray">
+                <li class="list-group-item" *ngFor="let item of searchDataArray;let i = index" style="cursor:pointer;"
+                  (click)="setData(item?.user_id, item?.fullname)">
+                  {{item?.fullname}}
+                </li>
+              </ul>
+            </span>
+            <div class="message-warning accountMessage" *ngIf="searchDataArray2.length == 0">
+              No record found
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+    <!-- Filter ends Here -->
+
+    <!-- Bi Section --> 
+    <zing-grid pager page-size="10" sort>
+      <zg-caption>
+        <span class="heading-caption">Productivity Report ({{start|date: 'dd-MMM-yyyy'}}  -  {{end|date: 'dd-MMM-yyyy'}})</span>
+        <span class="heading"><i class="fa fa-file-excel-o" style="cursor: pointer;" (click)="getData()"
+            title="Export to Excel"></i></span>
+        <span class="heading">Total ACV (Mn) : ₹ {{totalBidValue}} |</span>
+        <span class="heading">Total Bid Count: {{totalBids}} | </span>
+      </zg-caption>
+      <zg-data [data]='bids' *ngIf="bids && bids.length > 0"></zg-data>
+      <zg-colgroup>
+        <zg-column type="text" index="Sr no"></zg-column>
+        <zg-column type="text" index="Creation Date" sort="disabled"></zg-column>
+        <zg-column type="text" index="Bid Name"></zg-column>
+        <zg-column type="text" index="Bid Number"></zg-column>
+        <zg-column type="text" index="Account Name"></zg-column>
+        <zg-column type="text" index="Sales Person"></zg-column>
+        <zg-column type="text" index="Presales Person"></zg-column>
+        <zg-column type="text" index="Delivery Reviewer"></zg-column>
+        <zg-column type="text" index="Finance Reviewer"></zg-column>
+        <zg-column type="text" index="Territory"></zg-column>
+        <zg-column type="text" index="Submission Date" sort="disabled"></zg-column>
+        <zg-column type="number" index="ACV (in Mn)" header="ACV (in Mn)"></zg-column>
+        <!-- cell-class="align-right-zing" -->
+        <zg-column type="text" index="Stage"></zg-column>
+        <!-- <zg-column type="text" index="Bid Status" sort="disabled"></zg-column> -->
+        <zg-column type="text" index="Task Status" sort="disabled" cell-class="pending-tasks"></zg-column>
+        <zg-column type="text" index="Opportunity Status" sort="disabled"></zg-column>
+        <zg-column type="text" index="Bid Approval Status" sort="disabled"></zg-column>
+        <zg-column type="text" index="Bid Submitted" sort="disabled"></zg-column>
+      </zg-colgroup>
+    </zing-grid>
+  </div>
+</div>
+
+<!-- Loader Section -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

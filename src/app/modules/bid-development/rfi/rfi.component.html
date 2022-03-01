@@ -1,0 +1,101 @@
+<app-alert></app-alert>
+<!-- RFi button created -->
+<div *ngIf="categories && categories.length > 0">
+  <span *ngFor="let cat of categories;let i = index">
+    <button class="btn" id="btnDynamic" style="margin-right: 8px;" [class.selected]="cat.ac_id === rfiButton"
+      (click)="temp = i;onRfiButton(cat)">
+      {{'Information Required' + ' ' + (i+1)}}
+    </button>
+  </span>
+</div>
+
+<!-- Rfi starts here -->
+<div id="bid_rfi">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+      <div class="bid_div" *ngIf="categories && categories.length > 0">
+        <!-- Table Heading for the RFI Tab -->
+        <div class="bid_head">
+          <div class="row">
+            <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+              #
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-5 col-md-5">
+              Comments
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-5 col-md-5">
+              Justification
+            </div>
+            <!-- <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
+              Action Taken
+            </div> -->
+            <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1" *ngIf="!read">
+              <i class="fa fa-gear"></i>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngFor="let item of categories[temp].comment_add;let i = index;last as isLast">
+          <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">
+            {{i+1}}
+          </div>
+          <div class="col-xs-4 col-sm-4 col-lg-5 col-md-5">
+            <textarea type="text" class="form-control input-bar" [readonly]="true"
+              [(ngModel)]="categories[temp].comment_add[i].comment" required>
+            </textarea>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-lg-5 col-md-5">
+            <textarea type="text" class="form-control input-bar"
+              [readonly]="!access?.writeAccess || categories[temp].submit_flag"
+              [(ngModel)]="categories[temp].comment_add[i].justification" required>
+            </textarea>
+          </div>
+          <!-- <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
+            <input type="checkbox" class="checkbox" [(ngModel)]="categories[temp].comment_add[i].action_taken"
+              [disabled]="!access?.writeAccess || categories[temp].submit_flag" name="action" required>
+          </div> -->
+          <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+          <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1 action" *ngIf="!read">
+            <span class="fa fa-ellipsis-v dropdown-toggle"
+              [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}"
+              style="color: #17b495;cursor: pointer;" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"></span>
+            <ul class="dropdown-menu dropdown-menu-left actionList">
+              <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                  (click)="onDownloadDialog(i)"></i></span>
+              <span><i class="fa fa-paperclip faIcon" (click)="onUpload(i)" title="Attach"></i></span>
+              <span><img src="assets/images/rubbish-bin.png" *ngIf="i!=0" title="Delete" (click)="onDelete(i)"></span>
+              <!--  <img src="assets/images/add-orange.png" title="Add" (click)="onAdd(temp)"
+                                *ngIf="isLast && user_type == 'BID_OWNER' && !categories[temp].submit_flag"> -->
+            </ul>
+            <!-- <div class="dropdown" *ngIf="categories[0].date_modified != null">
+              <i class="fa fa-clock-o" style="color: white;"> </i>
+              <div class="dropdown-content">
+                {{ categories[0].date_modified | date: "dd-MM-yyyy , h:mm:ss" }}
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- If there is no RFI -->
+      <div class="aling-center bid_div color-white" *ngIf="categories && categories.length == 0">
+        No Information Required
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Action Button Save,Submit & Reset  -->
+<div class="container" *ngIf="!read && categories && categories.length > 0">
+  <div class="text-center">
+    <button type="submit" id="btnSubmit" [disabled]="!access?.writeAccess || categories[temp].submit_flag"
+      class="btn save-button" (click)="onSaveAsDraft(categories.length-1)">Save</button>
+    <button type="submit" id="btnSubmit" [disabled]="!access?.writeAccess || categories[temp].submit_flag"
+      class="btn draft-button" (click)="updateRfi(categories.length-1)">Submit</button>
+    <button type="submit" id="btnSubmit" [disabled]="!access?.writeAccess || categories[temp].submit_flag"
+      class="btn cancel-button" (click)="onReset(categories.length-1)">Reset</button>
+  </div>
+</div>
+<!-- Loader Section for the RFI Tab -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

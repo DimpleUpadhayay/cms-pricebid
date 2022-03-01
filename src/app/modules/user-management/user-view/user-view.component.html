@@ -1,0 +1,126 @@
+<!-- <app-header></app-header> -->
+<div class="container">
+  <app-alert></app-alert>
+  <div class="content padding-top-100">
+    <div class="row">
+      <!-- Breadcrumb Section -->
+      <div class="col-md-offset-2 col-md-12 col-md-8 col-lg-offset-2 col-lg-8">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"> Company Settings</li>
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" routerLink='/user/list' aria-current="page">Users</li>
+            <li class="breadcrumb-item active" aria-current="page">View</li>
+          </ol>
+        </nav>
+        <div class="well profile">
+          <div class="col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-8">
+              <div class="col-md-10">
+                <!-- User Login Information Details -->
+                <h2 class="align-center">{{userResponse?.fullname}}</h2>
+
+              </div>
+              <div class="col-md-1">
+                <!-- Edit icon for the user view -->
+                <!-- {{user?.otp | json}} -->
+                <span class="col-md-1 align-right"><img src="assets\images\role-1 (2).png"
+                    *ngIf="user?.otp?.attempts >= 3" title="Enable Login" style="width: 21px;
+                   margin: 5px 2px;cursor: pointer;" (click)="enableLogin(user.user_id)"></span>
+              </div>
+              <div class="col-md-1">
+                <span class="col-md-1 align-right"><img src="assets\images\edit.png" title="Edit" style="width: 21px;
+                      margin: 5px;cursor: pointer;" [routerLink]="['../../update',user_id]"></span>
+              </div>
+              <div class="row">
+                <!-- <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <p><strong>Company Name:</strong> {{user.fullname}} </p>
+                  </div> -->
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>First Name:</strong> {{userResponse?.firstName}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Last Name:</strong> {{userResponse?.lastName}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Phone no :</strong> {{userResponse?.phone}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Department:</strong> {{userResponse?.title  ? userResponse?.title : 'NA'}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Email:</strong> {{userResponse?.email}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>User Name:</strong> {{userResponse?.username}}</p>
+                </div>
+              </div>
+              <div *ngIf="userResponse?.user_role == 'CUSTOM'">
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <span><strong>Business Unit : </strong></span>
+                    <span class="Business unit" *ngFor="let bUnit of bUnits; let isLast=last">
+                      <span> {{bUnit}} {{isLast ? ' . ' : ',' }}</span>
+                    </span>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <strong>Territory : </strong>
+                    <span class="territory" *ngFor="let  territory of  territories; let isLast=last">
+                      <span> {{territory}} {{isLast ? ' . ' : ',' }}</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <span><strong>Business Unit Head : </strong></span>
+                    <span class="Business Head" *ngFor="let busHead of buHead; let isLast=last">
+                      <span> {{busHead ? busHead : "NA"}} {{isLast ? ' . ' : ',' }}</span>
+                    </span>
+                    <span *ngIf="buHead.length == 0">
+                      <span> NA </span>
+                    </span>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <strong>Territory Head: </strong>
+                    <span class="territory Head" *ngFor="let  terrHead of  territoryHead; let isLast=last">
+                      <span> {{terrHead ? terrHead : "NA"}} {{isLast ? ' . ' : ',' }}</span>
+                    </span>
+                    <span *ngIf="territoryHead.length == 0">
+                      <span> NA </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class=" col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <p><strong>Manager Name: </strong> {{userResponse?.manager_name}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <p><strong>Manager Email: </strong> {{userResponse?.manager_email}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                    <p><strong>Manager Phone: </strong> {{userResponse?.manager_phone}}</p>
+                  </div>
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Employee Id: </strong> {{userResponse?.emp_id ?  userResponse?.emp_id : 'NA'}}</p>
+                </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12"
+                    *ngFor="let users of userRole ; let i = index">
+                    <p><strong>Role {{i+1}} User Type :</strong> {{users.user_type ? users.user_type : "NA" }}</p>
+                    <p><strong>Role {{i+1}} User SubType :</strong> {{users.user_subtype ? users.user_subtype : "NA"  }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Loader Section for the Main-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

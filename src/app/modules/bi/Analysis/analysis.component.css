@@ -1,0 +1,26 @@
+ul,li{
+  font-family: 'Poppins', sans-serif;
+  color: #666666;
+  font-size: 16px;
+  line-height: 26px;
+}
+.nav-tabs .nav-link {
+  padding: 10px 30px;;
+  color: #337ab7;
+  font-size: 14px !important;
+  border-right:1px solid #ddd;
+  border-top:1px solid #ddd;
+  border-left:1px solid #ddd;
+}
+#mytab{
+  margin-bottom:-1px;
+
+}
+.nav-tabs .nav-link.active {
+  color: #17b495 !important;
+  background-color: #fff !important;
+  font-size: 15px !important;
+  border-top: 4px solid #17b495 !important;
+}
+
+

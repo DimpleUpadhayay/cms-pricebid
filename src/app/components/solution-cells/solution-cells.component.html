@@ -1,0 +1,81 @@
+<!-- <div id="overlay">
+<div id="matDialog"> -->
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Upload Files <span class="glyphicon glyphicon-upload" style="font-size: 20px;"></span>
+    </p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onSave()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-md-12">
+  <div id="bid_head">
+    <div class="row" style="margin-bottom
+                  :10px;">
+      <div class="col-md-1" style="margin-left:-14px">
+        <b>#</b>
+      </div>
+      <div class="col-md-4" style="margin-left:49px">
+        <strong>Attach File</strong>
+      </div>
+      <div class="col-md-2">
+        <strong style="
+                margin-left: -70px;">Reference</strong>
+      </div>
+      <div class="col-md-2">
+        <strong style="
+                    margin-left: -82px;">File Description</strong>
+      </div>
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-1" style="margin-left: -49px;">
+        <strong> Action</strong>
+      </div>
+      <div class="col-md-1">
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngFor="let file of files;let i = index; last as isLast" style="margin-bottom: 10px;">
+    <div class="col-md-1" id="nos">
+      {{i+1}}.
+    </div>
+    <div class="col-md-4">
+      <input type="file" style="outline: none;" (change)="onFileSelected($event,i)" id="file">
+    </div>
+
+    <div class="col-md-2">
+      <input type="text" placeholder="Z1, A1-Z1.." class="form-control input-bar" id="cell"
+        name="{{files[i].description}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="files[i].cellRange">
+    </div>
+    <div class="col-md-2">
+      <input type="text" placeholder="Description" class="form-control input-bar" id="description"
+        name="{{files[i].description}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="files[i].description">
+    </div>
+    <div class="col-md-1" id="uploadBtn">
+      <button type="button" class="btn btn-success" title="Upload" [disabled]="file.disable" (click)="onUpload(i)">
+        <span class="glyphicon glyphicon-upload"></span>
+      </button>
+    </div>
+    <div class="col-md-1" id="removeBtn">
+      <button type="button" class="btn btn-danger" title="Delete" (click)="onRemove(i)">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
+    </div>
+    <div class="col-md-1" id="addBtn" *ngIf="!flag && isLast">
+      <button type="button" class="btn btn-warning" title="Add" (click)="onAdd()">
+        <span class="glyphicon glyphicon-plus"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- <div>
+          <button class="btn btn-danger" id="closeBtn" style="margin-left: 236px" (click)="onSave()">Close</button>
+         </div> -->
+<!-- </div>
+        </div> -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

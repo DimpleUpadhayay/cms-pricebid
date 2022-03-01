@@ -1,0 +1,273 @@
+<!-- <app-header></app-header> -->
+<app-bid-details></app-bid-details>
+<app-alert></app-alert>
+<!-- <div class="side" style="position: fixed;top:75px;left:25px;">
+  <i class="fa fa-bars" (click)="sidebar = !sidebar" style="width:20px;"></i>
+</div> -->
+<div id="bid-development-id" class="container">
+  <!-- Sidebar starts here -->
+  <div class="side-menu" style="padding-top:-20px;">
+    <div class="side-menus">
+      <ul class="parent-menu">
+        <!-- Project Scope -->
+        <li class="abc" [routerLink]="['/projectscope',bid_id]">
+          <a title=""> <i class="fa fa-book"></i>
+            <span class="tooltiptext">Project Summary</span>
+          </a>
+        </li>
+        <!-- <hr id="hr">  -->
+        <!-- Main Tab -->
+        <li class="abc" [routerLink]="['../../bid-development',bid_id,'mains']" (click)="breadcrumb = 'Main'">
+          <a title=""> <i class="fa fa-tasks"></i> <span class="tooltiptext">Main</span></a>
+        </li>
+
+
+        <!-- <hr id="hr"> -->
+        <div class="panel-group" id="accordion">
+          <div class="panel ">
+            <li class="abc" data-toggle="collapse" data-parent="#accordion" data-target="#solution">
+              <i class="fa fa-exchange" [ngStyle]="{color: section?.response?.status ?  '#ec9138' : 'white'}"></i><i
+                class="fa fa-chevron-down rotate"></i> <span class="tooltiptext">Bid
+                Response</span>
+            </li>
+            <!-- <hr id="hr"> -->
+            <ul id="solution" class="collapse ">
+              <!-- Solution Response-->
+              <li class="abc" [routerLink]="['../../bid-development',bid_id,'solution']"
+                (click)="breadcrumb = 'Solution'">
+                <a title=""><i class="fa fa-lightbulb-o"
+                    [ngStyle]="{color: section?.solution_res?.status ?  '#ec9138' : 'white'}"></i><span
+                    class="tooltiptextChild">Solution</span></a>
+              </li>
+              <!-- <hr id="hr"> -->
+              <!-- Proposal Response: Non Pricing -->
+              <li class="abc" *ngIf="productType == 'nonpricing'"
+                [routerLink]="['../../bid-development',bid_id,'proposal']" (click)="breadcrumb = 'Proposal'">
+                <a title=""><i class="fa fa-file-powerpoint-o"
+                    [ngStyle]="{color: section?.proposal_res?.status ?  '#ec9138' : 'white'}"></i><span
+                    class="tooltiptextChild">Proposal</span></a>
+              </li>
+              <!-- Proposal Response: Pricing -->
+              <li *ngIf="productType == 'pricing'" (click)="goToDocumentEditor()">
+                <a class="nav-link" title=""><i class="fa fa-file-powerpoint-o"></i></a>
+              </li>
+              <!-- <hr id="hr"> -->
+              <!-- Pricing Response: Non Pricing -->
+              <li class="abc"
+                *ngIf="productType == 'nonpricing' && (user_type == 'BID_OWNER' || user_type == 'APPROVER' || user_type == 'VIEWER' || (user_subtype == 'Pricing' || user_subtype == 'Finance' || user_subtype == 'Sales' || user_subtype == 'Delivery' || user_subtype == 'All'))"
+                [routerLink]="['../../bid-development',bid_id,'pricing']" (click)="breadcrumb = 'Pricing'">
+                <a title=""><i class="fa fa-dollar"
+                    [ngStyle]="{color: section?.pricing_res?.status ?  '#ec9138' : 'white'}"></i><span
+                    class="tooltiptextChild">Pricing</span></a>
+              </li>
+              <!-- Pricing Response: Pricing -->
+              <li *ngIf="productType == 'pricing'" (click)="setLocalStorage()">
+                <a class="nav-link" title=""><i class="fa fa-dollar"
+                    [ngStyle]="{color: section?.pricing_new_res?.status ?  '#ec9138' : 'white'}"></i></a>
+              </li>
+              <!-- <hr id="hr"> -->
+              <!-- Legal Review -->
+              <li class="abc" [routerLink]="['../../bid-development',bid_id,'legal']" (click)="breadcrumb = 'Legal'">
+                <a title=""><i class="fa fa-gavel"
+                    [ngStyle]="{color: section?.legal_res?.status ?  '#ec9138' : 'white'}"></i><span
+                    class="tooltiptextChild">Legal</span></a>
+              </li>
+            </ul>
+          </div>
+          <div class="panel ">
+            <li class="abc" data-toggle="collapse" data-parent="#accordion" data-target="#review">
+              <i class="fa fa-refresh" [ngStyle]="{color: section?.review?.status ?  '#ec9138' : 'white'}"></i><i
+                class="fa fa-chevron-down rotate respReviewSec"></i> <span class="tooltiptext">Bid
+                Review</span>
+            </li>
+            <ul id="review" class="collapse">
+              <!-- Solution Review-->
+              <li class="abc" [routerLink]="['../../bid-development',bid_id,'solution-review']"
+                (click)="breadcrumb = 'Solution Review'">
+                <a title=""><i class="fa fa-lightbulb-o"
+                    [ngStyle]="{color: section?.solution_rev?.status ?  '#ec9138' : 'white'}"></i><span
+                    class="tooltiptextChild">Solution Review</span>
+                </a>
+              </li>
+              <!-- <hr id="hr"> -->
+              <!-- Proposal Review-->
+              <li class="abc" [routerLink]="['../../bid-development',bid_id,'proposal-review']"
+                (click)="breadcrumb = 'Proposal Review'">
+                <a title=""><i class="fa fa-file-powerpoint-o"
+                    [ngStyle]="{color: section?.proposal_rev?.status ?  '#ec9138' : 'white'}"></i>
+                  <span class="tooltiptextChild">Proposal Review</span>
+                </a>
+              </li>
+              <!-- <hr id="hr"> -->
+              <!-- Pricing Review-->
+              <li class="abc"
+                *ngIf="(user_type == 'BID_OWNER' || user_type == 'APPROVER' || user_type == 'VIEWER' || (user_subtype == 'Pricing' || user_subtype == 'Finance' || user_subtype == 'Sales' || user_subtype == 'Delivery' || user_subtype == 'All'))"
+                [routerLink]="['../../bid-development',bid_id,'pricing-review']"
+                (click)="breadcrumb = 'Pricing Review'">
+                <a title=""><i class="fa fa-dollar"
+                    [ngStyle]="{color: section?.pricing_rev?.status ?  '#ec9138' : 'white'}"></i>
+                  <span class="tooltiptextChild">Pricing Review</span>
+                </a>
+              </li>
+              <!-- <hr id="hr"> -->
+              <!-- Legal Review-->
+              <li class="abc" [routerLink]="['../../bid-development',bid_id,'legal-review']"
+                (click)="breadcrumb = 'Legal Review'">
+                <a title=""><i class="fa fa-gavel"
+                    [ngStyle]="{color: section?.legal_rev?.status ?  '#ec9138' : 'white'}"></i>
+                  <span class="tooltiptextChild">Legal Review</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Docs Required -->
+        <li class="abc" [routerLink]="['../../bid-development',bid_id,'docs-required']"
+          (click)="breadcrumb = 'Docs Required'">
+          <a title=""><i class="fa fa-file"></i>
+            <span class="tooltiptext">Docs Required</span>
+          </a>
+        </li>
+
+
+        <!-- <hr id="hr"> -->
+        <!-- Risk Assessment -->
+        <li class="abc" [routerLink]="['../../bid-development',bid_id,'risk-assessment']"
+          (click)="breadcrumb = 'Risk Assesment'">
+          <a title=""><i class="fa fa-warning"></i>
+            <span class="tooltiptext">Risk Assesment</span>
+          </a>
+        </li>
+
+        <!-- <hr id="hr"> -->
+        <!-- Approvals Required -->
+        <li class="abc" [routerLink]="['../../bid-development',bid_id,'approvalrequired']"
+          (click)="breadcrumb = 'Approvals Required'">
+          <a title=""> <i class="fa fa-check"></i>
+            <span class="tooltiptext">Approvals Required</span>
+          </a>
+        </li>
+        <!-- <hr id="hr"> -->
+        <!-- Information Required -->
+        <li class="abc" [routerLink]="['../../bid-development',bid_id,'rfi']"
+          (click)="breadcrumb = 'Information Required'">
+          <a title=""><i class="fa fa-info-circle"></i>
+            <span class="tooltiptext">Information Required</span>
+          </a>
+        </li>
+        <!-- <hr id="hr"> -->
+        <!-- Bid Documents -->
+        <li class="abc" (click)="onDocuments()">
+          <a title=""><i class="fa fa-files-o"></i>
+            <span class="tooltiptext">Bid Documents</span>
+          </a>
+        </li>
+        <!-- Approval Dashboards -->
+        <li class="abc" (click)="goToApproverDashboard()"
+          *ngIf="productType == 'nonpricing' && approverParticipants == 'APPROVER'">
+          <a title=""><i class="fa fa-desktop"></i>
+            <span class="tooltiptext">Approval Dashboard</span>
+          </a>
+        </li>
+        <!--Timeline-->
+        <li class="abc" (click)="onBidTimeline()">
+          <a title=""><i class="fa fa-T" ></i>
+            <span class="tooltiptext">Timeline</span>
+          </a>
+        </li>
+      </ul>
+      <!-- <hr id="hr"> -->
+    </div>
+  </div>
+  <!-- Sidebar ends here -->
+  <!-- Breadcrumb Section -->
+  <nav aria-label="breadcrumb" *ngIf="discussionBoard()" >
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+      <li class="breadcrumb-item Bid Development">Bid Development</li>
+      <li class="breadcrumb-item" style="cursor: auto;"
+        *ngIf="breadcrumb == 'Solution' || breadcrumb == 'Proposal' || breadcrumb == 'Pricing' || breadcrumb == 'Legal'">
+        Bid Response</li>
+      <li class="breadcrumb-item" style="cursor: auto;"
+        *ngIf="breadcrumb == 'Solution Review' || breadcrumb == 'Proposal Review' || breadcrumb == 'Pricing Review' || breadcrumb == 'Legal Review' ">
+        Bid Review</li>
+      <li class="breadcrumb-item active" aria-current="page">{{breadcrumb}}</li>
+    </ol>
+  </nav>
+  <!-- Review,Revision,Approval Button Section in Bid Development -->
+  <div class="row" *ngIf="discussionBoard()" >
+    <div class="col-md-6">
+      <div class="heading-profile">
+        <h2>{{breadcrumb}}</h2>
+      </div>
+    </div>
+
+
+    <!-- Submmit for Review, Approval buttons starts-->
+    <div class="col-md-6 align-right actionBtn" *ngIf="access && access?.writeAccess && bidStatus != 'DROPPED'">
+
+      <!-- Submit for Solution review Button -->
+      <button class="btn button-solution" title="Submit for Solution Review"
+        *ngIf="breadcrumb =='Solution' && isCoOwner" (click)="onSubmitTechnicalSolnReview()"
+        [disabled]="!solutionReviewFlag || !approvalFlag || revisedBid || (revisedBid &&  bidData.revision_status)"><i
+          class="fa fa-lightbulb-o"></i>
+      </button>
+
+      <!-- Submit for Proposal Review Button -->
+      <button class="btn button-proposal" title="Submit for Proposal Review"
+        *ngIf="breadcrumb =='Proposal' && isCoOwner" (click)="onSubmitProposalReview()"
+        [disabled]="!proposalReviewFlag || !approvalFlag || revisedBid || (revisedBid &&  bidData.revision_status)"><i
+          class="fa fa-file-powerpoint-o"></i>
+      </button>
+
+      <!-- Submit for Delivery Review Button -->
+      <button class="btn button-review" title="Submit for Delivery Review" *ngIf="breadcrumb =='Pricing' && isCoOwner"
+        (click)="onSubmitPricingReview('Delivery')"
+        [disabled]="!reviewNonPriceflag || !approvalFlag || revisedBid || (revisedBid && bidData.revision_status)"><i></i>
+        Delivery Review
+      </button>
+
+      <!-- Submit for Pricing Review Button -->
+      <button class="btn button-review" title="Submit for Pricing Review" *ngIf="breadcrumb =='Pricing' && isCoOwner"
+        (click)="onSubmitPricingReview('Pricing')"
+        [disabled]="!review_flag || !approvalFlag || revisedBid || (revisedBid && bidData.revision_status)"><i></i>
+        Pricing Review
+      </button>
+
+      <!-- Submit for Legal review Button -->
+
+      <button class="btn button-solution" title="Submit for Legal Review" *ngIf="breadcrumb =='Legal' && !isCoOwner"
+        (click)="onSubmitLegalReview()"
+        [disabled]="!legalReviewFlag || !approvalFlag || revisedBid || (revisedBid &&  bidData.revision_status)"><i
+          class="fa fa-gavel"></i></button>
+
+      <!-- Submit for Approval Button -->
+      <button class="btn button-approval" title="Submit for Approval" (click)="onSubmitApproval()"
+        *ngIf="breadcrumb =='Main'"
+        [disabled]="!proposalReviewFlag || !solutionReviewFlag || !review_flag || !approvalFlag || revisedBid || (revisedBid &&  bidData.revision_status)"><i
+          class="fa fa-check-square-o"></i>
+      </button>
+
+      <!-- Submit for Revision Button -->
+      <button class="btn button-revision" title="Revise bid" (click)="onSubmitRevision()"
+        *ngIf="(deliveryReviewFirstFlag || reviewFirstFlag || proposalFirstReviewFlag || solutionFirstReviewFlag || revisionFlag) && breadcrumb =='Main'"
+        [disabled]="((RFI && !this.revised)) && !revisedBid || (!approvalFlag && !isApprovedFlag) || (revisedBid &&  bidData.revision_status)"><i
+          class="fa fa-undo"></i>
+      </button>
+      <!-- ((RFI && !this.revised)) && !revisedBid || !proposalReviewFlag || !solutionReviewFlag || !review_flag || (!approvalFlag && !isApprovedFlag) || (revisedBid &&  bidData.revision_status)" -->
+    </div>
+    <!-- Submmit for Review, Approval buttons ends-->
+
+  </div>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Discussion board -->
+  <app-discussion-boards *ngIf="discussionBoard()"></app-discussion-boards>
+</div>
+
+<!-- Loader Section for bid-development -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

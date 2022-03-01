@@ -1,0 +1,266 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<fieldset [disabled]="bidStatus == 'DROPPED'">
+  <div class="container">
+    <div class="row">
+      <div class="mainadduserSection col-sm-2 col-md-2">
+      </div>
+      <div class="mainadduserSection col-sm-8 col-md-8">
+        <div class="card mainuserSection">
+          <!-- Breadcrumb Section  -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item" routerLink='/dashboard' aria-current="page">Home</li>
+              <li class="breadcrumb-item active" aria-current="page">{{bid_id ? 'Update' : 'Create'}}</li>
+            </ol>
+          </nav>
+          <div class="row text-center form-group">
+            <h4 class="formHeading">{{bid_id ? 'Update' : 'Create New'}} Bid</h4>
+          </div>
+          <div class="formLogin">
+            <form [formGroup]="bidForm" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Bid Name&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('name')"
+                    [readonly]="pocSubmited  || bid.revision_status || bid.OpportunityID ? true : false" #bidname
+                    [ngStyle]="{'box-shadow': formSubmitted && !bid.name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" [readonly]="bid?.bid_revision_id" type="text"
+                    formControlName="name" placeholder="Bid Name" required="required" [(ngModel)]="bid.name" autofocus>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Bid Number</label>
+                  <input (input)="validateSingle('bid_number')" [readonly]="true"
+                    class="form-control input-border input-bar" type="text" maxlength="20" style="cursor: not-allowed"
+                    [(ngModel)]="bid.bid_number" placeholder="Bid Number will be generated automatically"
+                    formControlName="bid_number">
+                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-5 col-md-5  margin-top-12">
+                  <label class="margin-bottom">Account Name&nbsp;<span class="required_field">*</span></label>
+                  <input type="search" name="account" id="account"
+                    [readonly]="!reviewFlag || !solutionReviewFlag || !proposalReviewFlag || pocSubmited  || bid.revision_status || bid.OpportunityID ? true : false"
+                    (input)="activeSearch = true;"
+                    [ngStyle]="{'box-shadow': formSubmitted  && accountNameFlag ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" type="text" maxlength="35" placeholder="Account Name"
+                    required="required" formControlName="account_name" [(ngModel)]="bid.account_name">
+                  <span id="showResults" style="position:absolute;display: none;z-index:900;color:black;">
+                    <ul class="list-group list-group-flush" *ngIf="searchDataArray">
+                      <li class="list-group-item" *ngFor="let item of searchDataArray;let i = index"
+                        [ngClass]="{active:i==activeIndex}" style="cursor:pointer;"
+                        (click)="setData(item?._id, item?.account_name)">
+                        <!-- <span class="fa fa-close" (click)="deleteAccount(i)" style="float:right;margin-top:2px;"></span> -->
+                        {{item?.account_name}}
+                      </li>
+                    </ul>
+                  </span>
+                  <div class="message-warning accountMessage" *ngIf="searchDataArray2.length == 0">
+                    No record found
+                  </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1 margin-top-12 upload">
+                  <!-- Edit account details  -->
+                  <!-- <img src="assets/images/edit1.png" title="Edit" class="icon-size" title="Edit Account Name"
+                    type="button" style="margin-top:28px;height: 23px;" (click)="editAccount( )"> -->
+
+                  <img src=" assets/images/add-orange.png" class="upload2" *ngIf="bid.OpportunityID ? false : true"
+                    style="width: 18px;margin-top: 35px;margin-left: -4px;cursor: pointer;" title="Add Account Name "
+                    type="button" (click)="addBidAccount()">
+                </div>
+
+
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Annual Contract Value (Mn)&nbsp;<span
+                      class="required_field">*</span></label>
+                  <input (input)="validateRegex('estimatedValue');bid.approval_chain = '';getApprovalChain()"
+                    [readonly]="!this.reviewFlag || !this.solutionReviewFlag || !this.proposalReviewFlag || pocSubmited || bid.OpportunityID ? true : false"
+                    [ngStyle]="{'box-shadow': formSubmitted && !bid.estimatedValue ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" type="text" pattern="^([0-9]{1,4}[.]?[0-9]{0,2})"
+                    placeholder="Annual Contract Value (Mn)" required="required" formControlName="estimatedValue"
+                    [(ngModel)]="bid.estimatedValue" maxlength="10">
+                  <div class="message-warning" *ngIf="formSubmitted && !bid.estimatedValueRegexValid">
+                    Deal Value must be number
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Deal Received date&nbsp;</label>
+                  <input id="name" name="name" [owlDateTime]="dt1" [max]="minDate" [readonly]="pocSubmited"
+                    class="form-control input-border input-bar" formControlName="date_received" [readOnly]="true"
+                    [(ngModel)]="bid.date_received" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                  <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Bid Submission date&nbsp;<span class="required_field">*</span></label>
+                  <input [owlDateTime]="dt2" [min]="minDate > bid.date_received ? minDate : bid.date_received"
+                    [max]="bid.date_closing" [readonly]="pocSubmited" [disabled]="bid.OpportunityID ? true : false"
+                    [ngStyle]="{'box-shadow': formSubmitted && !bid.date_submission ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" formControlName="date_submission"
+                    [(ngModel)]="bid.date_submission" [owlDateTimeTrigger]="dt2" placeholder="Date Time"
+                    [readOnly]="true">
+                  <owl-date-time #dt2></owl-date-time>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Deal Closure date&nbsp;<span class="required_field">*</span></label>
+                  <input [owlDateTime]="dt3" [min]="minDate > bid.date_submission ? minDate : bid.date_submission"
+                    [readonly]="pocSubmited" [disabled]="bid.OpportunityID ? true : false"
+                    [ngStyle]="{'box-shadow': formSubmitted && !bid.date_closing ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" formControlName="date_closing"
+                    [(ngModel)]="bid.date_closing" [owlDateTimeTrigger]="dt3" placeholder="Date Time" [readOnly]="true">
+                  <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Category&nbsp;<span class="required_field">*</span></label>
+                  <ng-select class="custom" formControlName="category" [items]="category" [(ngModel)]="bid.category"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="category_name"
+                    bindValue="_id" placeholder="Select Category" [multiple]="false"
+                    [ngStyle]="{'box-shadow': formSubmitted && !bid.category ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                  </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Type&nbsp;<span class="required_field">*</span></label>
+                  <ng-select class="custom" formControlName="types" [items]="types" [(ngModel)]="bid.types"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="type_name"
+                    bindValue="_id" placeholder="Select Type" [multiple]="true"
+                    [ngStyle]="{'box-shadow': formSubmitted && bid.types.length == 0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                  </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Territory&nbsp;<span class="required_field">*</span></label>
+                  <ng-select [items]="territoryByIdList" class="custom"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                    bindValue="territory_id"
+                    [ngStyle]="{'box-shadow': formSubmitted && bid.territory_ids.length==0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    placeholder="Select Region" [multiple]="true" formControlName="territory_ids"
+                    [(ngModel)]="bid.territory_ids"
+                    (change)="validateSingle('territory_ids');setTerritoryChildren(bid.territory_ids);getApprovalChain()">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Business Unit&nbsp;<span class="required_field">*</span></label>
+                  <ng-select [items]="businessUnitByIdList" class="custom"
+                    style="border-left:5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                    bindValue="bu_id" placeholder="Select Business Unit" [multiple]="true" formControlName="bu_ids"
+                    [ngStyle]="{'box-shadow': formSubmitted && bid.bu_ids.length==0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    [(ngModel)]="bid.bu_ids"
+                    (change)="validateSingle('bu_ids');setBuChildren(bid.bu_ids);getApprovalChain()">
+                  </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Add Co-Owner&nbsp;<span class="required_field">*</span></label>
+                  <ng-select [items]="coOwnerList" class="custom" (open)="openCoOwnerList()" (change)="updateCoOwners()"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;"
+                    [ngStyle]="{'box-shadow': formSubmitted  && !bid.coOwnerTypes ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    bindLabel="username" bindValue="username" placeholder="Add Co-Owner" formControlName="coOwner"
+                    [(ngModel)]="bid.coOwnerTypes" (clear)="reAssignCoowner(bid)">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Add Contributors&nbsp;<span class="required_field">*</span></label>
+                  <ng-select [items]="contributorList" class="custom" (open)="openContributorList()"
+                    (change)="updateContributorReviewers()"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="username"
+                    bindValue="username" placeholder="Add Contributors" [multiple]="true" formControlName="contributor"
+                    [ngStyle]="{'box-shadow': formSubmitted && bid?.contributorTypes?.length==0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    [(ngModel)]="bid.contributorTypes" (remove)="userDelete($event)">
+                  </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Add Reviewers&nbsp;<span class="required_field">*</span></label>
+                  <ng-select [items]="reviewerList" class="custom" (open)="openReviewerList()"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="username"
+                    bindValue="username" (change)="updateContributorReviewers()"
+                    [ngStyle]="{'box-shadow': formSubmitted && bid?.reviewerTypes?.length==0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    placeholder="Add Reviewers" [multiple]="true" formControlName="reviewer"
+                    [(ngModel)]="bid.reviewerTypes" (remove)="deleteReviewer($event)">
+                  </ng-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Select Approval Chain&nbsp;<span class="required_field">*</span></label>
+                  <ng-select [items]="approvalChains" class="custom"
+                    style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                    [(ngModel)]="bid.approval_chain" placeholder="Select Approval Chain" bindValue="ac_id"
+                    [ngStyle]="{'box-shadow': formSubmitted && bid?.approval_chain?.length==0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    (change)="onApprovalChainSelect();" formControlName="approval_chain">
+                    <ng-template ng-option-tmp let-item="item">
+                      <div title="{{onHoverTitle(item.name)}}">{{item.name}}</div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Attachment</label><!-- (input)="validateSingle('')" -->
+                  <input class="form-control input-border input-bar attachment" (click)="openDialog()" type="button"
+                    formControlName="attachment_data" [(ngModel)]="fileSelected" value="{{ fileSelected }}"
+                    style="width:330px">
+                  <i class="fa fa-download download"
+                    [ngStyle]="{'color' : bid.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}"
+                    style="cursor:pointer" title="Download" aria-hidden="true" (click)="onDownloadDialog()"></i>
+                </div>
+              </div>
+              <div class="row">
+                <!-- <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Tags</label>
+                  <input class="form-control input-border input-bar" type="text" name="tag" formControlName="tag"
+                    [readonly]="pocSubmited " (keypress)="addTag($event)" [(ngModel)]="bid.tag">
+                  <div class="tags">
+                    <div class="chip" *ngFor="let tag of bid.tags; let i = index;" id="chip_row_1">
+                      <b class="tag_chip"> {{tag.name}} </b> &nbsp;
+                      <a (click)="removeTag(i)" style="color: white;cursor: pointer;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                  <label class="margin-bottom">Comment</label>
+                  <textarea name="new_bid_comments" id="new_bid_comments" [readonly]="pocSubmited "
+                    class="form-control input-border input-bar" style="resize: none" [(ngModel)]="bid.comments"
+                    placeholder="Comments..." formControlName="comments"></textarea>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12" *ngIf="bid && bid.salesRemove == 'yes' && bid.user_id != user.user_id">
+                  <label class="margin-bottom">Re-assign Sales Manager</label>
+                  <i class="fa fa-user"></i> 
+                  <input  class="form-control input-border input-bar" value="{{ salesManagerName }}"
+                    (click)="deleteBidManager()"  type="button" style="width:330px">
+                </div>
+              </div>
+              <!-- <div class="col-md-6 margin-top-12">
+                                <label class="margin-bottom">Currency</label>
+                                <input (input)="validateSingle()" name="currency" id="currency"
+                                [readonly] = "userType!= 'BID_OWNER'" [ngStyle]="{'box-shadow': formSubmitted && !bid.name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                                 class="form-control input-border" [(ngModel)]="bid.currency" placeholder="currency..."
+                                    [(ngModel)]="bid.currency" formControlName="currency" />
+                            </div> -->
+
+              <br>
+              <!-- Action Button Save,Update and Reset -->
+              <div class="row">
+                <!-- [disabled]="pocSubmited" -->
+                <div class="text-center" style="margin-bottom: 27px;">
+                  <button id="btnSubmit" [disabled]="bidStatus == 'DROPPED' || pocSubmited || bid.revision_status" (click)="bid_id ? updateBid() : createBid()" class="btn save-button">
+                    {{bid_id ? 'Update' : 'Create'}}</button>
+                  <button id="btnSubmit" *ngIf="!bid_id" (click)="reset()" class="btn cancel-button">Reset</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="mainadduserSection col-sm-2 col-md-2">
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <!-- Loader Section-->
+  <div class="overlay" *ngIf="loader">
+    <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+  </div>
+</fieldset>

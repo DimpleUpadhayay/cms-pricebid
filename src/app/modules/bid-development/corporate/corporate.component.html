@@ -1,0 +1,51 @@
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="bid_div">
+        <div class="bid_head">
+          <div class="row">
+            <div class="col-md-1 align-center">
+              #
+            </div>
+            <div class="col-md-9">
+              Risk Assessment
+            </div>
+            <div class="col-md-2">
+              <i class="fa fa-gear">
+              </i>
+            </div>
+
+          </div>
+          <div class="row" *ngFor="let item of risks; let i = index; last as isLast;trackBy:trackByFn;">
+            <div class="col-md-1 align-center srno">
+              {{i+1}}
+            </div>
+            <div class="col-md-9">
+              <input type="text" [(ngModel)]="risks.riskInput" [ngModelOptions]="{standalone: true}"
+                class="form-control input-bar" required>
+            </div>
+            <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+            <div class="col-md-2  action">
+              <i class="fa fa-download" aria-hidden="true" title="download"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+              <img src="assets/images/attachment.png" class="allIcon" title="Attach">&nbsp;&nbsp;&nbsp;&nbsp;
+              <img src="assets/images/rubbish-bin.png" class="allIcon" title="Delete"
+                (click)="onDelete(i)">&nbsp;&nbsp;&nbsp;&nbsp;
+              <img src="assets/images/add-orange.png" [hidden]="!isLast" (click)="onAdd()" class="allIcon" title="add">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Action Button Save,Submit & Reset  -->
+    <div class="text-center">
+      <button type="submit" id="btnSubmit" class="btn save-button">Save</button>
+      <button type="submit" id="btnSubmit" class="btn draft-button">Submit</button>
+      <button type="submit" id="btnSubmit" class="btn cancel-button">Reset</button>
+    </div>
+  </div>
+</div>
+<!-- Loader Section -->
+<!-- <div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div> -->

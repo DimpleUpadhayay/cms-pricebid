@@ -1,0 +1,137 @@
+<div class="account-user-sec">
+  <div class="account-sec">
+    <!-- Logo Image of the Page -->
+    <div class="top-bar row">
+      <div class="col-md-12">
+        <div class="logo margin-top-12">
+          <img src="assets/Logo/CMS IT.png" class="cms-logo" alt="cms logo">
+        </div>
+      </div>
+    </div>
+    <div class="acount-sec">
+      <div class="container">
+        <div class="row ">
+          <div class="col-md-offset-2 col-md-8">
+            <app-alert></app-alert>
+            <div class="contact-sec" *ngIf="stepOne">
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- Logo Image using in the Box -->
+                  <div class="widget-title">
+                    <h3>
+                      <img style="width: 110%;margin-top: -53px;margin-left: -8px;"
+                        src="assets/Logo/Pricebid logo total final blue.png">
+                    </h3>
+                    <span>Login with your credentials</span>
+
+                  </div><!-- Widget title -->
+                  <div class="account-form">
+                    <div class="alert alert-danger" *ngIf="errorMsg && formSubmitted">
+                      {{errorMsg}}
+                    </div>
+                    <form [formGroup]="loginForm" novalidate>
+                      <div class="row">
+                        <div class="feild col-md-12">
+                          <input type="text" class="username0" placeholder="Email" formControlName="username"
+                            name="username" required />
+                        </div>
+                        <div class="feild col-md-12">
+                          <input type="password" id="pwd" placeholder="Password" (keydown.enter)="doLogin(loginForm)"
+                            formControlName="password" name="password" />
+                          <span (click)="showPassword()"
+                            [ngClass]="!flag ? 'fa fa-fw fa-eye field-icon' : 'fa fa-eye-slash field-icon'"></span>
+                        </div>
+
+                      </div>
+                    </form>
+                  </div>
+                  <div class="more-option">
+                    <span>OR</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <!-- CMS LOGO -->
+                  <!-- <div class="widget-title">
+                      <img style="width: 50%;margin-top: -11px;"
+                        src="assets/Logo/cms logo.png">
+                  </div> -->
+                  <div class="creat-an-account">
+                    <span>Don't have an account?</span>
+                    <button class="btn save-button" [routerLink]="['/signup']" disabled>Create
+                      Account</button>
+                  </div><!-- Create an account -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" id="mobileView">
+                  <button class="btn save-button" [disabled]="!loginForm.valid" (click)="doLogin(loginForm)">Login
+                  </button>
+                  <button class="btn cancel-button" [routerLink]="['/forgotPassword']">Forgot
+                    Password</button>
+                  <!-- <input type="submit" (click)="doLogin()" value="Login Now" /> -->
+                </div>
+              </div>
+            </div>
+            <div class="contact-sec1" *ngIf="!stepOne">
+              <!-- <app-alert></app-alert> -->
+              <div class="row">
+                <div class="col-md-7">
+                  <!-- Logo Image using in the Box -->
+                  <div class="widget-title">
+                    <h3><img style="width: 110%;margin-top: -53px;margin-left: -8px;"
+                        src="assets/Logo/Pricebid logo total final blue.png"></h3>
+                    <span>Enter the OTP you received</span>
+
+                  </div><!-- Widget title -->
+                  <div class="account-form">
+                    <div class="alert alert-danger" *ngIf="errorMsg">
+                      {{errorMsg}}
+                    </div>
+                    <form [formGroup]="otpForm" novalidate>
+                      <div class="row">
+                        <div class="feild col-md-12">
+                          <input type="num" class="username0" (keydown.enter)="verifyOtp(otpForm)"
+                            (keypress)="numberOnly($event)" id="verify" mplaceholder="OTP" formControlName="otp"
+                            name="otp" minlength="6" maxlength="6" />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="more-option">
+                    <span>OR</span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="creat-an-account">
+                    <span>Go back to login</span>
+                    <button class="btn save-button" (click)="goBackToLogin()">Go to login page</button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button class="btn save-button" [disabled]="!otpForm.valid" (click)="verifyOtp(otpForm)">Verify
+                  </button>
+                  <button class="btn cancel-button" (click)="resendOtp(user)">
+                    Resend OTP</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--================Footer Area =================-->
+    <div class="container" class="footer">
+      <div class="logo">
+        <img src="assets/Logo/Pricebid logo only final.jpg" class="logo-img-footer" alt="Pricebid Logo">
+      </div>
+      <div class="align-center" style="margin-top: 8px;">
+        <p>© 2021 Pricebid.co</p>
+      </div>
+    </div>
+
+  </div><!-- Account Sec -->
+</div>
+
+<!-- <app-alert></app-alert> -->

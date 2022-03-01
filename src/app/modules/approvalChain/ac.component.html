@@ -1,0 +1,298 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div>
+  <div class="container">
+    <div class="content padding-top-60">
+      <div class="main-title-sec">
+        <!-- Breadcrumb Section -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <!-- <li class="breadcrumb-item" (click)="changeState()" aria-current="page">Menu</li> -->
+            <li class="breadcrumb-item" routerLink='/approvalChainList' aria-current="page">Approval
+              chains</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ approval_chain_id ? 'Update' :
+                            'Create'}}</li>
+          </ol>
+        </nav>
+        <!-- Page Heading in Approval -->
+        <div class="row">
+          <div class="col-md-12 column">
+            <div class="heading-profile">
+              <h2>Approval Chain {{approval_chain_id ? 'Updation' : 'Creation'}}</h2>
+              <!-- <span>Welcome back <i class="userNametxt">Admin</i></span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-content-area margin-top-12">
+        <div class="row">
+          <div class="container-fluid">
+            <div class="row">
+              <!-- Step 1 of 2 in Approval Chain -->
+              <div class="col-md-6 margin-top-12">
+                <form [formGroup]="acForm">
+                  <div class="">
+                    <div class="caption">Step 1 of 2</div>
+                    <div class="acDiv">
+                      <div class="row">
+                        <div class="col-md-6 margin-top-12">
+                          <label class="margin-top-12">Name&nbsp;<span class="required_field">*</span></label>
+                          <input (input)="validateSingle('name')" class="form-control input-border input-bar"
+                            type="text" maxlength="50" formControlName="name" placeholder="Name" required="required"
+                            [(ngModel)]="approvalChain.name"
+                            [ngStyle]="{'box-shadow': formSubmitted && !approvalChain.name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                        </div>
+                        <div class="col-md-6 margin-top-12">
+                          <label class="margin-top-12">Description&nbsp;<span class="required_field">*</span></label>
+                          <textarea (input)="validateSingle('desc')" class="form-control input-border input-bar"
+                            type="text" maxlength="50" [(ngModel)]="approvalChain.desc" placeholder="Description"
+                            required="required" formControlName="desc"
+                            [ngStyle]="{'box-shadow': formSubmitted && !approvalChain.desc ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                                                    </textarea>
+                        </div>
+                        <div class="col-md-6 margin-top-12">
+                          <label class="margin-top-12">Select Territory&nbsp;<span
+                              class="required_field">*</span></label>
+                          <ng-select [items]="territoryData"
+                            style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                            [multiple]="true" bindValue="territory_id" placeholder="Select Territories"
+                            [(ngModel)]="approvalChain.territory_ids" formControlName="territory_ids"
+                            [ngStyle]="{'box-shadow': formSubmitted && (!approvalChain.territory_ids || approvalChain.territory_ids.length == 0) ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                            (change)="validateSingle('territory_ids');setTerritoryChildren($event);getParticipants()">
+                          </ng-select>
+                        </div>
+                        <div class="col-md-6 margin-top-12">
+                          <label class="margin-top-12">Select Business Unit&nbsp;<span
+                              class="required_field">*</span></label>
+                          <ng-select [items]="businessUnits"
+                            style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                            [multiple]="true" [(ngModel)]="approvalChain.bu_ids" bindValue="bu_id"
+                            placeholder="Select Business units"
+                            [ngStyle]="{'box-shadow': formSubmitted && (!approvalChain.bu_ids || approvalChain.bu_ids.length == 0) ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                            formControlName="bu_ids"
+                            (change)="validateSingle('bu_ids');setBuChildren($event);getParticipants()">
+                          </ng-select>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="acDiv">
+                        <div class="row">
+                          <div class="col-md-12 margin-top-12">
+                            <label class="margin-top-12">Select Additional Approvers (Optional)&nbsp;
+                            </label>
+                            <ng-select [items]="additionalApprovers" [(ngModel)]="additional_approver"
+                              [ngModelOptions]="{standalone: true}"
+                              style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="fullname"
+                              [multiple]="true" bindValue="user_id" placeholder="Select Additional Approvers">
+                            </ng-select>
+                            <button type="button" class="btn save-button" (click)="setAdditionalApprovers('')">
+                              Done
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- ---Step 2 of 2 Approval List & Approval Sequence------- -->
+              <div class="col-md-6 margin-top-12">
+                <div class="caption">
+                  Step 2 of 2
+                </div>
+                <div class="acDiv">
+                  <div class="row margin-top-12">
+                    <div class="col-md-5 margin-top-12" dnd-droppable [dropZones]="['selected-users']">
+                      <div class="panel panel-success">
+                        <div class="row ps_head">
+                          <div class="col-md-12 align-center ps_head">
+                            Approvers List
+                          </div>
+                        </div>
+                        <div class="panel-body handle-overflow">
+                          <div *ngFor="let user of approvedUsers;let i = index" class="panel panel-default"
+                            dnd-draggable [dragEnabled]="true" [dragData]="user" [dropZones]="['add-approver']">
+                            <div class="row panel-body">
+                              <span class="align-left margin-left">
+                                {{i+1}}
+                              </span>
+                              <span class="align-right margin-left">
+                                {{user.fullname}} ({{user.title}})
+                              </span>
+                            </div>
+                          </div>
+                          <div class="message-warning"
+                            *ngIf="approvedUsers && formSubmitted && approvalChain.users && !approvedUsers.length && !approvalChain.users.length">
+                            List of users required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 align-center" style="margin-top:14%">
+                      <div>
+                        <i class="fa textBlue fa-arrow-right"></i>
+                      </div>
+                      <div>
+                        <i class="fa textBlue fa-arrow-left"></i>
+                      </div>
+                    </div>
+                    <div class="col-md-5 margin-top-12">
+                      <div dnd-droppable (onDropSuccess)="validateSingle('users');addApprovers($event)"
+                        [dropZones]="['add-approver']" class="panel panel-success">
+                        <div class="row align-center ps_head">
+                          <div class="col-md-10 align-center ps_head ">
+                            Approval Sequence
+                          </div>
+                          <div class="col-md-2">
+                            <i class="fa textBlue fa-gear"></i>
+                          </div>
+                        </div>
+                        <div class="panel-body handle-overflow" dnd-sortable-container
+                          [sortableData]="approvalChain.users">
+                          <div *ngFor="let user of approvalChain.users;let i = index" class="panel panel-default"
+                            dnd-sortable (onDropSuccess)="changeOrder($event)" [sortableIndex]="i" dnd-draggable
+                            [dragEnabled]="true" [dropZones]="['selected-users']" [dragData]="user">
+                            <div class="row panel-body">
+                              <span class="align-left margin-left">
+                                {{i + 1}}
+                              </span>
+                              <span class="align-center margin-left">
+                                {{user.fullname}} ({{user.title}})
+                              </span>
+                              <span class="align-right margin-left"  
+                                style="color:red">
+                                <span (click)="removeApprovers(user, i)" title="Delete Approver">x</span>
+                              </span>
+                              <span  *ngIf="approval_chain_id" class="align-right margin-left" 
+                                style="color: #17b495">
+                                <i class="fa fa-user" title="Re-assign Approver" (click)="reassignApprovers(user, i)"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="message-warning"
+                        *ngIf="approvalChain.users && formSubmitted && approvalChain.users.length == 0">
+                        List of Approvers required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:70px;" *ngIf="rules.length > 0">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div class="business-body">Business Rule (Optional)</div>
+              </div>
+            </div>
+            <div class="row ps_head margin-top-12 margin-top">
+              <!-- Table Heading for the Business -->
+              <div class="business_div">
+                <div class="business_head">
+                  <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                    <div class="row">
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                        #
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        Rule
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        Operator
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        Min Value (Mn)
+                      </div>
+                      <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                        Operator (Optional)
+                      </div>
+                      <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                        Max Value (Mn) (Optional)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row margin-top-12 margin-top">
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <div class="margin-top-12 margin-top" *ngFor="let rule of rules;let i = index;">
+                      <div class="col-md-1 align-center">{{i+1}}</div>
+                      <div class="col-md-2">
+                        <input (input)="validateSingle()" type="text" value="Rule Name" name="{{rule.name}}"
+                          [(ngModel)]="rule.name" [disabled]="true" class="form-control input-border"></div>
+                      <div class="col-md-2">
+                        <select class="form-control input-border" [(ngModel)]="rule.l_operator">
+                          <option>Select</option>
+                          <!-- <option value="lt">
+                                  <
+                                </option>  -->
+                          <option value="gt">>
+                          </option>
+                          <option value="eq">=</option>
+                          <option value="gte">>=</option>
+                          <!-- <option value="lte"> -->
+                          <!-- <= -->
+                          <!-- </option>  -->
+                        </select> </div>
+                      <div class="col-md-2">
+                        <input (input)="validateSingle()" type="number" class="form-control input-border"
+                          [(ngModel)]="rule.l_amount" placeholder="value" (input)="checkMinMaxValue('l_amount', i)"
+                          required>
+                      </div>
+                      <div class="col-md-2">
+                        <select class="form-control input-border" [(ngModel)]="rule.r_operator">
+                          <option>Select</option>
+                          <option value="lt"
+                            [disabled]="rule.l_operator == 'lt' || rule.l_operator == 'lte' || rule.l_operator == 'eq'">
+                            < </option> <!-- <option
+                              [disabled]="rule.l_operator == 'gt' || rule.l_operator == 'gte' || rule.l_operator == 'eq'"
+                              value="gt">
+                              > -->
+                              <!-- </option> -->
+                          <option value="eq"
+                            [disabled]="rule.l_operator == 'eq' || rule.l_operator == 'lt' || rule.l_operator == 'gte' || rule.l_operator == 'lte'">
+                            =</option>
+                          <!-- <option value="gte" [disabled]="rule.l_operator == 'gte' || rule.l_operator == 'gt' || rule.l_operator == 'eq'">>=</option> -->
+                          <option value="lte"
+                            [disabled]="rule.l_operator == 'lte' || rule.l_operator == 'lt' || rule.l_operator == 'eq'">
+                            <= </option> </select> </div> <div class="col-md-2">
+                              <input (input)="validateSingle()" type="number" class="form-control input-border"
+                                [disabled]="rule.l_operator == 'eq'" [(ngModel)]="rule.r_amount"
+                                (input)="checkMinMaxValue('r_amount', i)" placeholder="value" required>
+                      </div>
+                      <!-- Not used -->
+                      <!-- <div class="col-md-3 align-center" *ngIf="rule.icon">
+                        <img src="assets/images/add-orange.png" class="icon-size" (click)="addRule()">
+                      </div>
+                      <div class="col-md-3 align-center" *ngIf="rule.allIcon">
+                        <img src="assets/images/add-orange.png" class="icon-size" (click)="addRule()">
+                        <img src="assets/images/rubbish-bin.png" title="Attach" class="icon-size"
+                          (click)="deleteRule(i)">
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Action Button Save Update Reset -->
+        <div class="row margin-top-12">
+          <div class="col-md-12" class="align-center">
+            <button type="button" class="btn save-button"
+              (click)="approval_chain_id ? updateApprovalChain() : createApprovalChain()">
+              Update</button>
+            <button *ngIf="!approval_chain_id" type="button" class="btn cancel-button" (click)="reset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Loader Section of the Approval Chain -->
+  <div class="overlay" *ngIf="loader">
+    <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+  </div>

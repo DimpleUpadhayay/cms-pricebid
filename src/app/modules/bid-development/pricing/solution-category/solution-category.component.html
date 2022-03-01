@@ -1,0 +1,31 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Create Category</p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="row">
+  <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+    <div class="div_head">
+      <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8" style="margin-left: 30px;margin-bottom:10px;">
+        <strong>Category</strong>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2" style="margin-left: 11px;">
+        <strong>Action</strong>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-8 col-sm-8 col-lg-8 col-md-8">
+        <input type="text" class="form-control input-bar" id="categoryInput" (keydown.enter)="onSave()"
+          placeholder="Category name" [(ngModel)]="solnCat">
+      </div>
+      <!-- Action Button Create -->
+      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+        <button class="btn btn-success" id="createBtn" (click)="onSave()">Create</button>
+      </div>
+    </div>
+  </div>
+</div>

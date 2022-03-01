@@ -1,0 +1,120 @@
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Filter Starts Here -->
+    <div class="fa fa-filter" title="Filter" style="float:right;font-size:20px;cursor: pointer;margin-top: -50px;"
+      data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></div>
+    <span class="fa fa-refresh" title="Refresh" (click)="onClear()"></span>
+    <div class="collapse" id="collapseExample">
+      <div class="col-md-12 filterBox" style="display: flex;">
+
+        <div class="col-md-3 margin-left">
+          <ng-multiselect-dropdown #multiSelect [(ngModel)]="locations1"
+            [placeholder]="'Territory'" [data]="territories" [settings]="dropdownTerritorySettings" [disabled]="false"
+            (onSelect)="onItemSelect($event, 'location')" (onDeSelect)="onDeSelect($event, 'location')"
+            (onSelectAll)="onSelectAll($event, 'location')" (onDeSelectAll)="onDeSelectAll($event, 'location')">
+          </ng-multiselect-dropdown><br>
+        </div>
+
+        <div class="col-md-3 margin-left" style="margin-left: 35px;">
+          <input type="text" [(ngModel)]="Filterobj.eoiRequestId" placeholder="Tender Fee Request Number"
+            class="range form-control input-border input-bar" style="padding-left: 25px;margin-left: 5px;">
+        </div>
+
+        <div class="col-md-3 margin-left" style="margin-left: 85px;padding-left: 25px;">
+          <input type="search" name="Filterobj.CustomerName" maxlength="35" id="customer"
+            class="form-control input-border input-bar" type="text" placeholder="Customer Name"
+            [(ngModel)]="Filterobj.CustomerName">
+          <span id="showResultsCustomer" style="position:absolute;display: none;z-index:900;color:black;">
+            <ul class="list-group list-group-flush" *ngIf="searchDataCust">
+              <li class="list-group-item" *ngFor="let item of searchDataCust;let i = index" style="cursor:pointer;"
+                (click)="setDataCustomer(item?._id, item?.account_name)">
+                {{item?.account_name}}
+              </li>
+            </ul>
+          </span>
+          <!-- <div class="message-warning accountMessage" *ngIf="searchDataCust2.length == 0">
+          No record found
+        </div> -->
+        </div>
+
+        <div class="col-md-3 margin-left" *ngIf="isViewer" style="margin-left: 85px;padding-left: 25px;">
+          <input type="search" name="Filterobj.orderBookedPersonName" maxlength="35" id="sales_person"
+            class="form-control input-border input-bar" type="text" placeholder="Sales Manager"
+            [(ngModel)]="Filterobj.orderBookedPersonName">
+          <span id="showResultsSales" style="position:absolute;display: none;z-index:900;color:black;">
+            <ul class="list-group list-group-flush" *ngIf="searchDataSales">
+              <li class="list-group-item" *ngFor="let item of searchDataSales;let i = index" style="cursor:pointer;"
+                (click)="setDataSales(item?.user_id, item?.fullname)">
+                {{item?.fullname}}
+              </li>
+            </ul>
+          </span>
+          <!-- <div class="message-warning accountMessage" *ngIf="searchDataSales2.length == 0">
+          No record found
+        </div> -->
+        </div>
+
+        <div class="col-md-3  margin-left" style="margin-left: 85px;padding-left: 25px;">
+          <input placeholder="Tender Date" class="form-control input-border input-bar" [(ngModel)]="dateTimeRange"
+            [selectMode]="'range'" (ngModelChange)="onItemSelectDate($event)" [owlDateTimeTrigger]="dtRange1"
+            [owlDateTime]="dtRange1" style="width:140px">
+          <owl-date-time #dtRange1></owl-date-time>
+        </div>
+
+        <div class="col-md-3" style="margin-top: -7px;float: right;margin-left: 0px;margin-right: -60px;">
+          <button class="btn btn-submit" title="Search" (click)="onSubmit()">Search</button>
+          <button class="btn btn-clear" title="Clear" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+      <div class="col-md-12 filterBox">
+        <div class="col-md-6">
+        </div>
+      </div>
+    </div>
+    <!-- Filter ends Here -->
+
+    <!-- PBG History Data Table -->
+    <zing-grid>
+      <zg-caption>
+        <span class="heading-caption">Tender Fee Details ({{start|date: 'dd-MMM-yyyy'}}  -  {{end|date: 'dd-MMM-yyyy'}})</span>
+        <!-- <span class="heading"><i class="fa fa-file-excel-o" style="cursor: pointer;" (click)="getData()"
+            title="Export to Excel"></i></span> -->
+        <span class="heading">Total Records : {{totalRecords}} </span>
+      </zg-caption>
+      <zg-data [data]='myResult' *ngIf="myResult && (myResult.length > 0) && !loader"></zg-data>
+      <zg-colgroup>
+        <zg-column type="text" index="Srl" sort="disabled"></zg-column>
+        <zg-column type="text" index="Tender Fee No" sort="disabled"></zg-column>
+        <zg-column type="text" index="Amount"></zg-column>
+        <zg-column type="text" index="Tender Date"></zg-column>
+        <zg-column type="text" index="Customer Name"></zg-column>
+        <zg-column type="text" index="Sales Manager"></zg-column>
+        <zg-column type="text" index="Status"></zg-column>
+        <zg-column type="text" index="Last Date for Submission" sort="disabled"></zg-column>
+        <zg-column type="text" index="Tender Number"></zg-column>
+        <zg-column type="text" index="Tender Fee in favour of"></zg-column>
+        <zg-column type="text" index="Payable At"></zg-column>
+        <zg-column type="text" index="Order Value"></zg-column>
+        <zg-column type="text" index="Mode of Payment" sort="disabled"></zg-column>
+        <zg-column type="text" index="Order Type" sort="disabled"></zg-column>
+      </zg-colgroup>
+    </zing-grid><br>
+    <div *ngIf="(myResult && myResult.length > 0) && !loader" style="text-align: center;">
+      <button *ngIf="(myResult && myResult.length > 0) && !loader" (click)="pagination('Previous')"
+        [disabled]='pageNo<=1' style="background-color: #364453; color: white;">Previous</button>
+      <input *ngIf="(myResult && myResult.length > 0) && !loader" type="number" [(ngModel)]="pageNo" name="pageNo" [max]=pageCount min=1
+        (keyup)="keyEvent($event, pageNo)" value="pageNo" id="myInput" style="width: 65px;">
+      of
+      <input *ngIf="(myResult && myResult.length > 0) && !loader" [(ngModel)]="pageCount" name="pageCount"
+        style="width: 65px;" readonly>
+      <button *ngIf="(myResult && myResult.length > 0) && !loader" (click)="pagination('Next')"
+        [disabled]='pageNo>=pageCount' style="background-color: #17b495;">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- Loader Section -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

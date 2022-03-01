@@ -1,0 +1,6 @@
+.mainadduserSection {
+margin-top: 8em;
+}
+.input-border, ng-select, textarea {
+box-shadow: 0 0 .5px .5px #17b495; 
+}

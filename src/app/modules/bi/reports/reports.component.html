@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Filter Starts Here -->
+    <div class="fa fa-filter" title="Filter" style="float:right;font-size:20px;cursor: pointer;margin-top: -50px;"
+      data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    </div>
+    <span class="fa fa-refresh" title="Refresh" (click)="onReload()"></span>
+
+    <div class="col-md-12 filterBox" class="collapse" id="collapseExample">
+      <div class="col-md-1 margin-left">
+        <input type="radio" name="BU" value="only" [(ngModel)]="multiflagBu"> Only<br>
+        <input type="radio" name="BU" value="All" [(ngModel)]="multiflagBu"> All<br>
+      </div>
+      <div class="col-md-2 margin-left">
+        <ng-multiselect-dropdown [placeholder]="'Business Unit'" [data]="business_units" [settings]="dropdownBUSettings"
+          [(ngModel)]="selectedBUs" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'BU')">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="col-md-1">
+        <input type="radio" name="territory" value="only" [(ngModel)]="multiflagTerritory"> Only<br>
+        <input type="radio" name="territory" value="All" [(ngModel)]="multiflagTerritory"> All<br>
+      </div>
+      <div class="col-md-2 margin-left">
+        <ng-multiselect-dropdown [placeholder]="'Territory'" [data]="territories" [settings]="dropdownTerritorySettings"
+          [(ngModel)]="selectedTerritories" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'Territory')">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="valueRange">
+        <div class="col-md-1 head">
+          <label style="margin-top:7px"> &#8377;Range :</label>
+        </div>
+        <div class="col-md-1 margin-left">
+          <input type="text" [(ngModel)]="start" (ngModelChange)="onItemSelect($event)" placeholder="&#8377; From"
+            class=" range form-control">
+        </div>
+        <div class="guion"> - </div>
+        <div class="col-md-1">
+          <input type="text" [(ngModel)]="end" (ngModelChange)="onItemSelect($event)" placeholder="&#8377; To"
+            class=" range form-control">
+        </div>
+      </div>
+      <div class="col-md-2" style="margin-left: 0px;">
+        <input placeholder="Date Time Range" class="form-control" [(ngModel)]="dateTimeRange" [selectMode]="'range'"
+          (ngModelChange)="onItemSelect($event)" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1"
+          style="width:140px">
+        <owl-date-time #dtRange1></owl-date-time>
+      </div>
+      <div class="col-md-1 margin-left" style="margin-top:0px;">
+        <select class="form-control onGoing" style="padding:5px;" [(ngModel)]="year"
+          (ngModelChange)="onItemSelect($event)">
+          <option [ngValue]="year" *ngFor="let year of years">{{year}}</option>
+        </select>
+      </div>
+      <!-- <span> <button class="btn btn-submit" style="margin-top:0px;">Submit</button></span> -->
+      <div class="col-md-1" style="margin-top:-8px;float: right;">
+        <button class="btn btn-clear" (click)="onClear()">Clear</button>
+
+      </div>
+    </div>
+    <!-- Bi Chart Section -->
+    <div id="myChart">
+    </div>
+    <!-- Heading at the bottom of the chart -->
+    <p class="align-center" style="
+    font-weight: bold;">Based on "Bids submitted to customers"</p>
+  </div>
+</div>
+<!-- Loader Section  -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

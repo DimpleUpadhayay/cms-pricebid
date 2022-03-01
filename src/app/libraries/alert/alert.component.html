@@ -1,0 +1,29 @@
+<!-- alert on data added -->
+<div *ngIf="add" class="alert alert-icon alert-success alert-dismissible floating-alert" role="alert">
+    <i class="fe fe-check mr-2" aria-hidden="true"></i> {{add}}
+    <button type="button" class="close" (click)="added = false"></button>
+</div>
+
+<!-- alert on data edited -->
+<div *ngIf="edit" class="alert alert-icon alert-info alert-dismissible floating-alert" role="alert">
+    <i class="fe fe-check mr-2" aria-hidden="true"></i> {{edit}}
+    <button type="button" class="close" (click)="edited = false"></button>
+</div>
+
+<!-- alert on data deleted -->
+<div *ngIf="delete" class="alert alert-icon alert-danger alert-dismissible floating-alert" role="alert">
+    <i class="fe fe-check mr-2" aria-hidden="true"></i> {{delete}}
+    <button type="button" class="close" (click)="deleted = false"></button>
+</div>
+
+<!-- alert on not an admin -->
+<div *ngIf="role" class="alert alert-icon alert-success alert-dismissible floating-alert" role="alert">
+    <i class="fe fe-check mr-2" aria-hidden="true"></i> {{role}}
+    <button type="button" class="close" (click)="role = false"></button>
+</div>
+
+<!-- alert on draft -->
+<div *ngIf="save" class="alert alert-icon alert-success alert-dismissible floating-alert" role="alert">
+    <i class="fe fe-check mr-2" aria-hidden="true"></i> {{save}}
+    <button type="button" class="close" (click)="role = false"></button>
+</div>

@@ -1,0 +1,15 @@
+<zing-grid pager page-size="10">
+  <zg-caption>
+    <span class="heading-caption">Bid Results</span>
+    <span class="heading"><i class="fa fa-file-excel-o" style="cursor: pointer;" (click)="getData()"
+        title="Export to Excel"></i></span>
+  </zg-caption>
+  <zg-data [data]="gridData.bids" *ngIf="gridData && gridData.bids.length > 0"></zg-data>
+  <zg-colgroup>
+    <zg-column type="text" index="Sr No" cell-class="align-left-zing"></zg-column>
+    <zg-column type="text" index="Bid Name" cell-class="align-left-zing"></zg-column>
+    <zg-column type="text" index="Bid Number" cell-class="align-left-zing"></zg-column>
+    <zg-column type="number" index="ACV (in Mn)" header="ACV (in Mn)" cell-class="align-left-zing"></zg-column>
+    <zg-column type="text" index="Bid Status" cell-class="align-left-zing"></zg-column>
+  </zg-colgroup>
+</zing-grid>

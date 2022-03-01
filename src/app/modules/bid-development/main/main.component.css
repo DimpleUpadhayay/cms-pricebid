@@ -1,0 +1,91 @@
+.bid_div {
+  background-color: #364453;
+  border-radius: 0px !important;
+  border-bottom-left-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+  margin-top: -10px !important;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  color: #f9f9f9;
+  min-width: 82px;
+  -webkit-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 3px 5px;
+  z-index: 1;
+  background-color: #364453;
+  border: 1px solid #17b495;
+  font-size: 12px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  color: white;
+}
+ 
+.dropdown {
+  margin-top: -2rem;
+  margin-left: 4.5rem;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.panel-body {
+  background-color: #17b495;
+  color: white;
+  padding: 9px;
+  border-radius: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.fa-ellipsis-v {
+  margin-top: -1px;
+  color: #17b495;
+  font-size: 20px;
+  margin-left: 5px !important;
+  cursor: pointer;
+}
+
+.actionList {
+  background-color: #364453;
+  border: 1px solid #17b495;
+  padding: 5px;
+}
+
+.faIcon {
+  padding: 4px;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+}
+
+.fa-plus-circle {
+  color: #EA8F38;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.dropdown-menu {
+  min-width: 0;
+}
+
+/* ================Responsive Mobile View =================  */
+
+@media screen and (max-width:900px) and (min-width:550px) {
+  .fa-download {
+    margin-left: -22px;
+  }
+}

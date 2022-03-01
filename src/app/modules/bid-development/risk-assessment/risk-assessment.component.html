@@ -1,0 +1,144 @@
+<app-alert></app-alert>
+<!--Risk Assesment Starts Here -->
+<fieldset [disabled]="bidStatus == 'DROPPED'">
+  <form #userForm="ngForm" novalidate autocomplete="off">
+    <div id="bid_mains" *ngIf="response">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+          <div class="bid_div"
+            *ngIf="!checkUser() || (checkUser() && response && !response[0].riskAssement_add[0]?.draft[0].flag)">
+            <!-- Table Heading for the Risk Assesment -->
+            <div class="bid_head">
+              <div class="row">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                  #
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                  Risk
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                  Description
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                  <div class="col-lg-6 col-md-6">
+                    Type
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    Risk
+                  </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                  <div class="col-lg-6 col-md-6">
+                    Mitigation
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    Comment by
+                  </div>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1">
+                  <i class="fa fa-gear"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngFor="let item of response[0].riskAssement_add; let i = index; last as isLast">
+              <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">
+                {{i+1}}
+              </div>
+              <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                <textarea type="text" [(ngModel)]="response[0].riskAssement_add[i].risk_name"
+                  [ngModelOptions]="{standalone: true}" class="form-control input-bar"
+                  [disabled]="checkUser() || item.draft[0].flag == false  ||  user.user_id != item.draft[0].user || pocSubmited || bid?.parent"
+                  required autofocus></textarea>
+              </div>
+              <div class="col-xs-3 col-sm-4 col-lg-2 col-md-2">
+                <textarea type="text" [(ngModel)]="response[0].riskAssement_add[i].description"
+                  [ngModelOptions]="{standalone: true}" class="form-control input-bar"
+                  [disabled]="checkUser() || item.draft[0].flag == false  ||  user.user_id != item.draft[0].user || pocSubmited || bid?.parent"
+                  required></textarea>
+              </div>
+              <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <div class="col-lg-6 col-md-6">
+                  <select type="text" [(ngModel)]="response[0].riskAssement_add[i].riskType"
+                    [ngModelOptions]="{standalone: true}" class="form-control input-bar"
+                    [disabled]="checkUser() || item.draft[0].flag == false  ||  user.user_id != item.draft[0].user || pocSubmited || bid?.parent">
+                    <option *ngFor="let type of types" [value]="type"> {{ type }}</option>
+                  </select>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                  <select type="text" [(ngModel)]="response[0].riskAssement_add[i].riskLevel"
+                    [ngModelOptions]="{standalone: true}" class="form-control input-bar"
+                    [disabled]="checkUser() || item.draft[0].flag == false  ||  user.user_id != item.draft[0].user || pocSubmited || bid?.parent">
+                    <option *ngFor="let risk of riskLevels" [value]="risk"> {{ risk }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <div class="col-md-6">
+                  <textarea type="text" [(ngModel)]="response[0].riskAssement_add[i].mitigation"
+                    [ngModelOptions]="{standalone: true}" class="form-control input-bar"
+                    [disabled]="checkUser() ||  item.draft[0].flag == false  || user.user_id != item.draft[0].user || pocSubmited || bid?.parent"
+                    required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <select type="text" [(ngModel)]="response[0].riskAssement_add[i].reviewer_id"
+                    [ngModelOptions]="{standalone: true}" class="form-control input-bar" disabled required>
+                    <option *ngFor="let user of reviewers" [value]="user.user_id"> {{user.username}} -
+                      {{user.user_subtype}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1 action">
+                <span class="fa fa-ellipsis-v dropdown-toggle"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}"
+                  style="color: #17b495;cursor: pointer;" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="false"></span>
+                <ul class="dropdown-menu dropdown-menu-left actionList">
+                  <span
+                    *ngIf="response[0].riskAssement_add[i].draft[0].flag != true && user.user_id == item.draft[0].user && !pocSubmited"><i
+                      class="fa fa-undo faIcon" title="Revoke" (click)="onEdit(i)"></i></span>
+                  <span><i class="fa fa-download" aria-hidden="true" title="Download"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i)"></i></span>
+                  <span><i class="fa fa-paperclip faIcon" title="Attach" (click)="onUpload(i)"></i></span>
+                  <span><i class="fa fa-trash faIcon" title="Delete"
+                       [ngStyle]="{'cursor': response[0].riskAssement_add[i]?.draft[0].flag == true ? 'pointer' : 'not-allowed'}"
+                      (click)="deleteRow(i)"></i>
+                  </span>
+                </ul>
+                <span *ngIf="isLast && !checkUser() && !pocSubmited && bidStatus != 'DROPPED'"><i
+                    class="fa fa-plus-circle" title="Add" (click)="addRow()"></i></span>
+                    <div class="dropdown" *ngIf="item.submission_date != null">
+                      <i class="fa fa-clock-o" style="color: white;"> </i>
+
+                      <div class="dropdown-content">
+                        {{ item.submission_date | date: "dd-MM-yyyy , h:mm:ss" }}
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+          <!-- If there is no Review -->
+          <div class="aling-center bid_div color-white" style="margin-top:10px"
+            *ngIf="response && response[0] && response[0].riskAssement_add[0]?.draft[0].flag && this.checkUser()">
+            No Risk Assessment
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Action Button Save,Submit & Reset for the Main  -->
+    <div class="container">
+      <div class="text-center" *ngIf="!checkUser() && response">
+        <button type="submit" id="btnSubmit" class="btn save-button" (click)="onSaveAsDraft()"
+          [disabled]=" pocSubmited || bid?.parent">Save</button>
+        <button type="submit" id="btnSubmit" class="btn draft-button" (click)="onSubmit()"
+          [disabled]=" pocSubmited || bid?.parent">Submit</button>
+        <button type="submit" id="btnSubmit" class="btn cancel-button" (click)="onReset()"
+          [disabled]=" pocSubmited || bid?.parent">Reset</button>
+      </div>
+    </div>
+  </form>
+  <!-- Loader Section for the Main-->
+  <div class="overlay" *ngIf="loader">
+    <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+  </div>
+</fieldset>

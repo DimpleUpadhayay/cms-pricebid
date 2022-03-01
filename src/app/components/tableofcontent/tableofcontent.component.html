@@ -1,0 +1,58 @@
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Table of Content</p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-md-12" style="overflow: auto;height: 210px;">
+  <div id="bid_head">
+    <div class="row" style="margin-bottom:10px;">
+      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
+        <strong>#</strong>
+      </div>
+      <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+        <strong>Chapters</strong>
+      </div>
+      <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3 ">
+        <strong>Description</strong>
+      </div>
+      <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+        <strong>Assign</strong>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+        <strong> Action</strong>
+      </div>
+
+    </div>
+  </div>
+  <div class="row indexRow" *ngFor="let item of assignmentData; let i = index;last as isLast">
+    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+      {{i+1}}
+    </div>
+    <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+      <input type="text" [disabled]=true [(ngModel)]="assignmentData[i].title" class="form-control input-bar"
+        id="chapter">
+    </div>
+    <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+      <textarea type="text" [(ngModel)]="item.description" class="form-control input-bar" id="description"></textarea>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+      <select class="form-control input-bar" [(ngModel)]="item.user_id">
+        <option value="" disabled selected></option>
+        <option value="" disabled selected>Contributors</option>
+        <option [value]="contributor.user_id" *ngFor="let contributor of participantsCont">
+          {{contributor.username}} - {{contributor.user_subtype}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 IconRow">
+      <span><i class="fa fa-trash "   title="Delete" (click)="deleteRow(i)"></i></span>
+      <span><i class="fa fa-plus-circle" title="Add" *ngIf="isLast" (click)="addRow()"></i></span>
+    </div>
+  </div>
+  <div class="align-center submitBtn">
+    <button id="saveBtn" type="button" (click)="submit()" class="btn save-button">Submit</button>
+  </div>
+</div>

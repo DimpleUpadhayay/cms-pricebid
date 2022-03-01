@@ -1,0 +1,108 @@
+<app-alert></app-alert>
+<!-- Review Button create  -->
+<div>
+  <span *ngFor="let item of response;let i=index">
+    <button class="btn" id="btnDynamic" [class.selected]="item.legalReview_cat === reviewButton"
+      (click)="tempCount = i;onReviewButton(item)">{{response[i].legalReview_cat}}</button>
+  </span>
+</div>
+<fieldset [disabled]="bidStatus == 'DROPPED'">
+  <!-- *ngIf="response && response.legalReview_add.length !=0" -->
+  <div class="row" *ngIf="response && response[tempCount]?.legalReview_add?.length > 0">
+    <div class="col-xs-12 col-md-12">
+      <div class="bid_div">
+        <!-- Table Heading for the Legal Response -->
+        <div class="bid_head">
+          <div class="row">
+            <div class="col-xs-1 col-md-1 align-center">
+              #
+            </div>
+            <div class="col-xs-4 col-md-4">
+              Comments
+            </div>
+            <div class="col-xs-3 col-md-3">
+              Action Required By
+            </div>
+            <div class="col-xs-3 col-md-3">
+              Reviewed By
+            </div>
+            <div class="col-xs-1 col-md-1">
+              <i class="fa fa-gear"> </i>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngFor="let item of response[tempCount].legalReview_add; let i =index;last as isLast">
+          <div class="col-xs-1 col-md-1 align-center srno">
+            {{i+1}}
+          </div>
+          <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+            <textarea class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="response[tempCount].legalReview_add[i].comment" [disabled]="!access?.writeAccess || response[tempCount].legalReview_add[i].reviewer_id != userID || (response.length-1 != tempCount) ||
+              !response[tempCount].legalReview_add[i].draft[0].flag"></textarea>
+          </div>
+          <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+            <select id="action" class="form-control" (ngModelChange)="onChange($event)"
+              [(ngModel)]="response[tempCount].legalReview_add[i].action_required_by" [disabled]="!access?.writeAccess || response[tempCount].legalReview_add[i].reviewer_id != userID || (response.length-1 != tempCount) ||
+              !response[tempCount].legalReview_add[i].draft[0].flag">
+              <option *ngFor="let action of bidManager" [value]="action.user_id">
+                {{action.username}} - {{action.userTypes[0].user_subtype}}</option>
+              <option value="noActionRequired">No action required</option>
+            </select>
+          </div>
+          <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+            <select class="form-control" disabled [(ngModel)]="response[tempCount].legalReview_add[i].reviewer_id">
+              <option *ngFor="let user of legalReviewers" [value]="user.user_id">
+                {{user.username}} - {{user.userTypes[0].user_subtype}}
+              </option>
+            </select>
+          </div>
+          <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+          <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1">
+            <span class="fa fa-ellipsis-v dropdown-toggle" title="Action"
+              [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"></span>
+            <ul class="dropdown-menu dropdown-menu-left actionList">
+              <span> <i class="fa fa-download faIcon" aria-hidden="true"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}" title="Download"
+                  (click)="onDownloadDialog(i)"></i></span>
+              <span><i class="fa fa-paperclip faIcon" (click)="onUpload(i)" title="Attach"></i></span>
+              <span> <i class="fa fa-trash faIcon" title="Delete"
+                  [ngStyle]="{'cursor': response[tempCount].legalReview_add[i]?.draft[0]?.flag == true ? 'pointer' : 'not-allowed'}"
+                  (click)="deleteRow(i)"></i></span>
+            </ul>
+            <!-- response[tempCount].legalReview_flag && disableFlag -->
+            <span [hidden]="!isLast || !approveReviewFlag "><i class="fa fa-plus-circle" title="Add"
+                *ngIf="access?.writeAccess && !legalReviewFlag && !disableFlag" (click)="addRow(tempCount)"></i></span>
+            <!-- *ngIf="access?.createAccess  && item.draft[0].flag" -->
+          </div>
+        </div>
+      </div>
+      <!-- If there is no Review -->
+      <div class="aling-center bid_div color-white" style="margin-top:10px" *ngIf="response && response.length == 0">
+        No Legal Reviews
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Button Save,Submit & Reset  -->
+  <div class="container" *ngIf="access?.writeAccess && response && response[tempCount]?.legalReview_add?.length > 0">
+    <div class="text-center">
+      <button type="submit" id="btnSubmit" class="btn save-button"
+        [disabled]="response && (response.length-1 != tempCount) || disableFlag || legalReviewFlag"
+        (click)="onSaveAsDraft()">Save</button>
+      <button type="submit" id="btnSubmit" class="btn draft-button"
+        [disabled]="response && (response.length-1 != tempCount) || disableFlag || legalReviewFlag || !approveReviewFlag"
+        (click)="onSubmit()">Submit</button>
+      <button type="submit" id="btnSubmit" class="btn cancel-button"
+        [disabled]="response && (response.length-1 != tempCount) || disableFlag || legalReviewFlag"
+        (click)="onReset()">Reset</button>
+      <button id="btnSubmit" class="btn" id="approve"
+        [disabled]="response && (response.length-1 != tempCount) || disableFlag || legalReviewFlag || approveReviewFlag"
+        (click)="onApprove()">Approve</button>
+    </div>
+  </div>
+</fieldset>
+<!-- Loader Section for the Main-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

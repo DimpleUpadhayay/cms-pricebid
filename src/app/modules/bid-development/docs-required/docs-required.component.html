@@ -1,0 +1,136 @@
+<app-alert></app-alert>
+
+<!-- Docs Required Starts here -->
+<fieldset [disabled]="bidStatus == 'DROPPED'">
+  <div *ngIf="access && docsData">
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="bid_div">
+          <!-- Table Heading for the Docs Required -->
+          <div class="bid_head">
+            <div class="row">
+              <div class="col-xs-1 col-md-1 align-center">
+                #
+              </div>
+              <div class="col-xs-2 col-md-3">
+                Description
+              </div>
+              <div class="col-xs-4 col-md-2">
+                Contributor
+              </div>
+              <div class="col-xs-4 col-md-2">
+                Start Date - End Date
+              </div>
+              <div class="col-xs-2 col-md-3">
+                Remarks
+              </div>
+              <div class="col-xs-3 col-md-1">
+                <i class="fa fa-gear"> </i>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of docsData.docrequired_add; let i=index; last as isLast">
+            <div class="col-xs-1 col-md-1 align-center srno">
+              {{i+1}}
+            </div>
+            <div class="col-xs-2 col-md-3">
+              <textarea type="text" [(ngModel)]="docsData.docrequired_add[i].description"
+                name="docsData.docrequired_add[i].description" [ngModelOptions]="{standalone: true}"
+                [disabled]="!access?.createAccess || !item.draft[0]?.flag || bidData?.parent"
+                class="form-control input-bar" required autofocus>
+            </textarea>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+              <select class="form-control " [ngModelOptions]="{standalone: true}"
+                [disabled]="(!access?.createAccess || !item.draft[0]?.flag || bidData?.parent) && !docsData.docrequired_add[i].reassignFlag"
+                name="docsData.docrequired_add[i].contributor" [(ngModel)]="docsData.docrequired_add[i].contributor">
+                <option [value]="contributor.user_id" *ngFor="let contributor of contributors"
+                  [disabled]="docsData.docrequired_add[i].reassignFlag && docsData.docrequired_add[i].originalContributor == contributor.user_id">
+                  {{contributor.username}} - {{contributor.user_subtype}}
+                  <span *ngIf="docsData.docrequired_add[i].reassignFlag">
+                    - {{ contributor.count }}
+                  </span>
+                </option>
+              </select>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+              <input placeholder="Date Time Range" class="form-control" [ngModelOptions]="{standalone: true}"
+                [disabled]="!access?.createAccess || !item.draft[0]?.flag || bidData?.parent"
+                [readonly]="access?.remarkAccess" [(ngModel)]="docsData.docrequired_add[i].dateTimeRange"
+                [min]="minDate" [max]="submission_date" [selectMode]="'range'" (ngModelChange)="onDateSelect(temp,i)"
+                [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+              <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+            </div>
+            <div class="col-xs-2 col-md-3">
+              <textarea type="text" [(ngModel)]="docsData.docrequired_add[i].remarks"
+                name="docsData.docrequired_add[i].remarks" [ngModelOptions]="{standalone: true}"
+                [disabled]="!access?.remarkAccess || !item.draft[1]?.flag  || item.contributor != user.user_id || docsData.docrequired_add[i].reassignFlag"
+                class="form-control input-bar" required>
+            </textarea>
+            </div>
+
+            <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+            <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1">
+              <span class="fa fa-ellipsis-v dropdown-toggle"
+                [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}" title="Action"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+              <ul class="dropdown-menu dropdown-menu-left actionList">
+                <span
+                  *ngIf="docsData.docrequired_add[i]?.draft.length > 1 && docsData.docrequired_add[i].contributor == user.user_id">
+                  <i class="fa fa-undo faIcon" title="Revoke" (click)="onEdit(i)"></i></span>
+                <span *ngIf="user_type == 'BID_OWNER' && docsData.docrequired_add[i]?.draft.length > 1"
+                  (click)="onReassign(i)"><i class="fa fa-user faIcon" title="Re-assign"></i>
+                </span>
+                <span><i class="fa fa-download faIcon"
+                    [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}" aria-hidden="true"
+                    title="Download" (click)="onDownloadDialog(i)"></i></span>
+                <span><i class="fa fa-paperclip faIcon" (click)="onUpload(i)" title="Attach"></i></span>
+                <span> <i class="fa fa-trash faIcon"
+                     [ngStyle]="{'cursor': docsData.docrequired_add[i]?.draft.length == 1 ? 'pointer' : 'not-allowed'}"
+                    title="Delete" (click)="deleteRow(i)"></i>
+                </span>
+              </ul>
+              <span *ngIf="docsData.docrequired_add[i].reassignFlag" (click)="onReassignSubmit(i)">
+                <i class="fa fa-check-circle" title="Re-assign"></i>
+              </span>
+              <span *ngIf="docsData.docrequired_add[i].reassignFlag" (click)="onReassignClear(i)">
+                <i class="fa fa-times-circle" title="Cancel"></i>
+              </span>
+              <span [hidden]="!isLast" *ngIf="access?.createAccess  && bidStatus != 'DROPPED' && !reassignFlag">
+                <i class="fa fa-plus-circle" title="Add" (click)="addRow()"></i>
+              </span>
+
+              <div class="dropdown" *ngIf="item.contributorSubmitDate != null">
+                <i class="fa fa-clock-o" style="color: #ffffff; margin-top: -2rem;">
+                </i>
+                <!-- <div class="dropdown-content" *ngIf="item.bidMngrSubmitDate != null" >
+                                      {{(item.bidMngrSubmitDate)  |  date:'dd-MM-yyyy , h:mm:ss' }}
+                                 </div> -->
+                <div class="dropdown-content" *ngIf="item.contributorSubmitDate != null">
+                  {{  item.contributorSubmitDate | date: "dd-MM-yyyy , h:mm:ss" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Button Save,Submit & Reset  -->
+  <div class="container" *ngIf="access && docsData">
+    <div class="text-center" *ngIf="access?.remarkAccess || access?.writeAccess">
+      <button type="submit" id="btnSubmit" class="btn save-button" [disabled]="disableSubmitButtons()"
+        (click)="onSaveAsDraft()">Save</button>
+      <button type="submit" id="btnSubmit" class="btn draft-button" [disabled]="disableSubmitButtons()"
+        (click)="onSubmit()">Submit</button>
+      <button type="submit" id="btnSubmit" class="btn cancel-button" [disabled]="disableSubmitButtons()"
+        (click)="onReset()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Loader Section for the Approval Required Tab-->
+  <div class="overlay" *ngIf="loader">
+    <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+  </div>
+</fieldset>

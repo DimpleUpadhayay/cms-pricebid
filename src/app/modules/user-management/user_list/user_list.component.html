@@ -1,0 +1,120 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Breadcrumb Section -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" style="margin-top: 10px;">
+        <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+        <li class="breadcrumb-item"> Company Settings</li>
+        <li class="breadcrumb-item active" aria-current="page">Users</li>
+      </ol>
+    </nav>
+    <div class="main-content-area margin-top-12">
+      <div class="row">
+        <div class="col-md-7">
+          <!-- Heading of the Page -->
+          <h2>List of Users</h2>
+        </div>
+        <div class="col-md-3">
+          <!-- Search input field  -->
+          <input type='text' class="searchBox" placeholder='Search' [(ngModel)]="filter">
+          <img src="assets/images/search.png" id="searchIcon">
+        </div>
+        <!-- <div class="col-md-1">
+					<i class="fa fa-search" id="searchIcon"></i>
+        </div> -->
+        <!-- Add User Button -->
+        <div class="col-md-2">
+          <div class="align-right">
+            <button *ngIf=" user_list.length !== 0" id="createSchedule" type="button" class="btn create-button"
+              title="Add User "  style="margin-top: 18px;" (click)="validateUserCount()">
+              <i style="padding-left:5px;font-size:12px;" class="fa fa-plus"></i>
+              NEW USER</button>
+          </div>
+        </div>
+      </div>
+      <!-- Table for the User Starts Here -->
+      <div class="row margin-top-12">
+        <div class="container-fluid">
+          <table class="table table-striped table-bordered dt-responsive nowrap">
+            <thead>
+              <tr class="blueTh">
+                <th class="align-center fit" style="width: 5% !important;">Sr</th>
+                <th class="fit" style="width: 15% !important;">Name</th>
+                <th class="fit" style="width: 20% !important;">Email</th>
+                <th class="fit">Roles</th>
+                <th class="fit">Status</th>
+                <th class="fit">Created On</th>
+                <th class="align-center fit">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf=" user_list.length == 0">
+                <td class="align-center fit" [routerLink]="['../create']"><i
+                    style="padding-left:5px;font-size:20px; color: #f1a458;" class="fa fa-plus"></i>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr
+                *ngFor="let item of user_list | search : filter :'username' | paginate:{ itemsPerPage:10,currentPage:p} let i = index;">
+                <td class="align-center fit">
+                  <!-- {{i+1}} -->
+                  {{i + (1+((p-1)*10))}}
+                </td>
+                <td class="f_parent fit">
+                  {{item.username}}
+                </td>
+                <td class="fit">
+                  {{item.email}}
+                </td>
+                <td class="fit">
+                  {{item.roles}}
+                </td>
+                <td class="fit">
+                  {{item.status}}
+                </td>
+                <td class="fit">
+                  {{item.date_created | date: 'dd/MM/yyyy,h:mm a'}}
+                </td>
+                <td class="align-center fit">
+                  <img src="assets/images/eye-open.png" title="view" class="icon-size-detail"
+                    [routerLink]="['../view', item.user_id]">&nbsp;&nbsp;&nbsp;&nbsp;
+                  <img src="assets/images/edit1.png" title="Edit" class="icon-size-detail"
+                    [routerLink]="['../update', item.user_id]"
+                    *ngIf="item?.user_id != user?.user_id">&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <span *ngIf="item && item.deleteStatus != 'NOTDELETED'">
+                    <i class="fa fa-trash-o" style="color: #17b495;" title="Delete User" (click)="getDeleteUser(item)"
+                      *ngIf="item?.user_id != user?.user_id"></i>
+                  </span>
+
+                  <span *ngIf="item && item.deleteStatus == 'NOTDELETED'">
+                    <i class="fa fa-trash-o" style="color: red;"
+                      title="Notification sent on: {{item.date_modified | date: 'dd/MM/yyyy,h:mm a'}}" (click)="getDeleteUser(item)"
+                      *ngIf="item?.user_id != user?.user_id"></i>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table> 
+          <!-- Pagination for the user Table -->
+          <pagination-controls class="align-center" (pageChange)="p=$event"></pagination-controls>
+        </div>
+      </div>
+      <!-- Table for the User Starts Here -->
+    </div>
+  </div><!-- Panel Content -->
+</div>
+<br>
+<br>
+<!-- Loader Section for the User -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

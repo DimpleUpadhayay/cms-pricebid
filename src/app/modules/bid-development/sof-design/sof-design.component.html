@@ -1,0 +1,858 @@
+<app-bid-details></app-bid-details>
+<app-alert></app-alert>
+<div class="container">
+  <!-- <nav aria-label="breadcrumb" style="font-size:14px;">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+      <li class="breadcrumb-item active" aria-current="page">Sales Order Form</li>
+    </ol>
+  </nav> -->
+
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Page Heading In Bid-Documents -->
+      <div class="heading-profile">
+        <h2>Sales Order Form</h2>
+        <span *ngIf="(access && access.writeAccess) && !bidVersionStatus && bidStatus != 'DROPPED'">
+          <img src="assets/images/add-orange.png" id="AddCategory" title="Create New SOF" (click)="onAddNewSOF()"
+            *ngIf="multipleSOFFlag"><br>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="download-csv">
+      <div class="col-md-6">
+        <select id="selectMultiple" class="form-control" (change)="readSofData($event.target.value); selectDropdown();"
+          [(ngModel)]="selectedSOF" *ngIf="multipleSOFFlag">
+          <option value="" disabled selected>Select SOF</option>
+          <option *ngFor="let details of allSOF;  let i = index;" [value]="details.sofNumber">{{details.sofNumber}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-6" *ngIf="multipleSOFFlag">
+        <i class="fa fa-download download" aria-hidden="true"
+          [ngStyle]="{'color': sofData && (sofData.isSubmittedStatus == 'Submitted' || sofData.isSubmittedStatus == 'Draft')  ? '#EC7D1F' : '#333' }"
+          (click)="onDownloadCSV()" title="Download CSV" id="downloadCsv"></i>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="access && NoDataMultipleSOFFlag">
+    <ul class="nav nav-tabs" style="text-align: left;">
+      <li class="active"><a href="#first" data-toggle="tab" id="first_tab">SOF</a></li>
+      <li><a href="#second" data-toggle="tab" id="second_tab">Contract Details</a></li>
+      <li *ngIf="productFlag"><a href="#third" data-toggle="tab" id="third_tab">Product Details</a></li>
+      <li><a href="#fourth" data-toggle="tab" id="fourth_tab">Attachment</a></li>
+      <li *ngIf="approvalStatusArray && approvalStatusArray.length >= 1"><a href="#fifth" data-toggle="tab"
+          id="fifth_tab">Timeline</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div id="first" class="tab-pane fade in active">
+        <div class="outside-container class2">
+          <form id="formId" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+            <div class="scroll2" style="display: flex;">
+              <div class="container-wrapper">
+                <div class="main-container">
+                  <div class="row" id="title" style="margin-left: 5px; margin-top:1rem">
+                    <p id="title" style="font-size: 16px">
+                      SOF Information
+                    </p>
+                  </div>
+                  <div class="inside-container-row">
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Number <span class="required_field">*</span></p>
+                      <input id="two-input" type="text" style="width: 23rem !important;"
+                        [(ngModel)]="sofData && sofData.sofNumber" class="form-control"
+                        [ngModelOptions]="{standalone: true}" [disabled]="true" />
+                    </div>
+                    <div class="form-group col">
+                      <p for="exampleInputPassword1"> Previous Reference No</p>
+                      <input type="text" style="width: 23rem;" class="form-control"
+                        [(ngModel)]="sofData && sofData.PreviousReferenceNumber" id="exampleInputPassword1"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus" />
+                    </div>
+                  </div>
+                </div>
+                <!-- {{sofData | json}} -- {{sofData.customerCode}} -->
+                <div class="main-container">
+                  <div class="row" style="margin-left: 5px; margin-top:1rem">
+                    <p style="font-size: 16px">Customer Information</p>
+                  </div>
+                  <div class="inside-container-row">
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Customer Code </p>
+                      <textarea type="text" id="two-input" [(ngModel)]="sofData && sofData.customerCode"
+                        value="{{sofData?.customerCode}}" class="form-control"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngModelOptions]="{standalone: true}"></textarea>
+                    </div>
+                    <div class="form-group col">
+                      <p for="exampleInputPassword1">Customer Name</p>
+                      <textarea type="text" id="two-input" class="form-control" value="{{bid?.account_name}}"
+                        readonly> </textarea>
+                    </div>
+                  </div>
+                  <div class="inside-container-row">
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Purchase Order Number <span class="required_field">*</span>
+                      </p>
+                      <input type="text" id="two-input" class="form-control"
+                        [(ngModel)]="sofData && sofData.customerPurchaseOrderNo" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (sofData?.customerPurchaseOrderNo == '' || sofData?.customerPurchaseOrderNo == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }" />
+                    </div>
+                    <div class="form-group col">
+                      <p for="exampleInputPassword1">Purchase Order Date <span class="required_field">*</span>
+                      </p>
+                      <input id="two-input" [owlDateTime]="dt2"
+                        [(ngModel)]="sofData && sofData.customerPurchaseOrderDate" [ngModelOptions]="{standalone: true}"
+                        [owlDateTimeTrigger]="dt2" placeholder="Date" class="form-control"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (sofData?.customerPurchaseOrderDate == '' || sofData?.customerPurchaseOrderDate == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    </div>
+                  </div>
+                </div>
+                <div class="main-container">
+                  <div class="row" id="title" style="margin-left: 5px;margin-top:1rem">
+                    <p id="title" style="font-size: 16px"> Contact Person Information
+                    </p>
+                  </div>
+                  <div class="inside-container-row">
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Name <span class="required_field">*</span></p>
+                      <input type="text" [(ngModel)]="sofData && sofData.ContactPersonCustomerName" id="three"
+                        class="form-control" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted &&  (sofData?.ContactPersonCustomerName == '' || sofData?.ContactPersonCustomerName == null )  ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col">
+                      <p for="exampleInputPassword1">Mobile No <span class="required_field">*</span></p>
+                      <input (input)="validateRegex('contactpersonCustomerContactNo')"
+                        [(ngModel)]="sofData && sofData.contactpersonCustomerContactNo" id="three" class="form-control"
+                        [ngModelOptions]="{standalone: true}" maxlength="11"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (sofData?.contactpersonCustomerContactNo == '' || sofData?.contactpersonCustomerContactNo == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }"
+                        required>
+                      <div class="message-warning"
+                        *ngIf="(sofData && sofData.contactpersonCustomerContactNo) && !sofData.contactpersonCustomerContactNoRegexValid ">
+                        Valid phone is required.
+                      </div>
+                    </div>
+
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Email Id <span class="required_field">*</span></p>
+                      <input type="email" (input)="validateRegex('contactPersonEmail')" class="form-control"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [(ngModel)]="sofData && sofData.contactPersonEmail" id="three"
+                        [ngModelOptions]="{standalone: true}"
+                        [ngStyle]="{'box-shadow': formSubmitted && (sofData?.contactPersonEmail == '' || sofData?.contactPersonEmail == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      <div class="message-warning"
+                        *ngIf="(sofData && sofData.contactPersonEmail) && !sofData.contactPersonEmailRegexValid">
+                        Valid email is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="main-container">
+                  <div class="row" id="title" style="margin-left: 15px;margin-top:1rem;">
+                    <p id="title" style="font-size: 16px">
+                      Order Information
+                    </p>
+                  </div>
+                  <div class="inside-container-row">
+                    <div class="form-group col">
+                      <!-- (change)="onBookedBy($event.target.value)" -->
+                      <p for="exampleInputEmail1">Booked By</p>
+                      <select [(ngModel)]="sofData && sofData.orderBookedBy" [ngModelOptions]="{standalone: true}"
+                        class="form-control" id="two-input" [disabled]="true">
+                        <option *ngFor="let quantity of bookedBy" [value]="quantity">
+                          {{quantity}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Name</p>
+                      <select type="text" id="two-input" class="form-control"
+                        [(ngModel)]="sofData && sofData.orderBookedPersonName" style="height:34px "
+                        [ngModelOptions]="{standalone: true}" [disabled]="true ">
+                        <option *ngFor="let action of name" [value]="action.user_id">
+                          {{action.username}} - {{action.userTypes[0].user_subtype}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="inside-container-row">
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">E-code</p>
+                      <input type="text" class="form-control" [(ngModel)]="sofData && sofData.orderBookedPersonECode"
+                        id="two-input" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus" />
+                    </div>
+                    <div class="form-group col">
+                      <p for="exampleInputEmail1">Regional Business Head </p>
+                      <input type="text" class="form-control" id="two-input" value="{{regionalHeadName}}" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container-wrapper">
+                <div class="main-container">
+                  <div class="row" id="title" style="margin-left: 5px; margin-top:1rem">
+                    <p id="title" style="font-size: 16px">
+                      Contract Information
+                    </p>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">SOF Type</p>
+                        <select type="" [(ngModel)]="sofData && sofData.sofType" class="form-control" id="two-input"
+                          [ngModelOptions]="{standalone: true}"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                          <option *ngFor="let type of sof_type" [value]="type">{{type}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group col">
+                      </div>
+                    </div>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Booking Region</p>
+                        <select type="" class="form-control" [(ngModel)]="sofData && sofData.bookingLocationName"
+                          id="two-input" [ngModelOptions]="{standalone: true}"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus || true">
+                          <option *ngFor="let region of readTerritory" [value]="region.territory_id">
+                            {{region.name}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">
+                          Billing Region <span class="required_field">*</span>
+                        </p>
+                        <select type="" [(ngModel)]="sofData && sofData.billingRegionName" class="form-control"
+                          id="two-input" [ngModelOptions]="{standalone: true}"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.billingRegionName == '' || sofData?.billingRegionName == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                          <option *ngFor="let region of territoryList" [value]="region.territory_id">
+                            {{region.name}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Billing Start Date <span class="required_field">*</span></p>
+                        <input [(ngModel)]="sofData && sofData.billingStartDate" id="two-input"
+                          [ngModelOptions]="{standalone: true}" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3"
+                          placeholder="Date" class="form-control"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.billingStartDate == '' || sofData?.billingStartDate == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                        <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Billing Plan <span class="required_field">*</span></p>
+                        <select type="" (change)="onBillingPlanBy($event.target.value)"
+                          [(ngModel)]="sofData && sofData.billingPlan" class="form-control" id="two-input"
+                          [ngModelOptions]="{standalone: true}"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.billingPlan == '' || sofData?.billingPlan == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                          <option *ngFor="let region of billingPlanField" [value]="region">
+                            {{region}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Contract Start Date <span class="required_field">*</span></p>
+                        <input [owlDateTime]="dt" id="three" [(ngModel)]="sofData && sofData.contractStartDate"
+                          [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="dt" placeholder="Date"
+                          class="form-control"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.contractStartDate == '' || sofData?.contractStartDate == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                        <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Contract End Date <span class="required_field">*</span></p>
+                        <input [owlDateTime]="dt1" id="three" [(ngModel)]="sofData && sofData.contractEndDate"
+                          class="form-control"
+                          [min]="minDate > sofData?.contractStartDate ? minDate : sofData?.contractStartDate"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngModelOptions]="{standalone: true}" [owlDateTimeTrigger]="dt1" placeholder="Date"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.contractEndDate == '' || sofData?.contractEndDate == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                        <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Contract Period</p>
+                        <input type="text" class="form-control" readonly id="three"
+                          value="{{sofData && sofData.duration ? sofData.duration : 'NA' }}">
+                      </div>
+                    </div>
+                    <div class="inside-container-row">
+                    </div>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Total Quantity <span class="required_field">*</span></p>
+                        <select [(ngModel)]="sofData && sofData.totalQuantity" [ngModelOptions]="{standalone: true}"
+                          class="form-control" id="three" [disabled]="true"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData.totalQuantity == '' || sofData.totalQuantity == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                          <option *ngFor="let quantity of quantities" [value]="quantity">
+                            {{quantity}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Payment Terms <span class="required_field">*</span></p>
+                        <select [(ngModel)]="sofData && sofData.paymentTerms" [ngModelOptions]="{standalone: true}"
+                          class="form-control" id="three"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData.paymentTerms == '' || sofData.paymentTerms == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                          <option *ngFor="let payment of payments" [value]="payment">{{payment}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Tax Type <span class="required_field">*</span></p>
+                        <select [(ngModel)]="sofData && sofData.taxType" [ngModelOptions]="{standalone: true}"
+                          class="form-control" id="three"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData.taxType == '' || sofData.taxType == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                          <option *ngFor="let tax_type of tax_types" [value]="tax_type">{{tax_type}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Gross Margin ( % ) <span class="required_field">*</span></p>
+                        <input id="three" type="number" min="0" [(ngModel)]="sofData && sofData.grossMarginValue"
+                          [ngModelOptions]="{standalone: true}" class="form-control"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.grossMarginValue == '' || sofData?.grossMarginValue == null)  ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Service desciption <span class="required_field">*</span></p>
+                        <textarea type="text" [(ngModel)]="sofData && sofData.serviceDesciption"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                          [ngModelOptions]="{standalone: true}" class="form-control" id="three"
+                          [ngStyle]="{'box-shadow': formSubmitted && (sofData?.serviceDesciption == '' || sofData?.serviceDesciption == null ) ? '0 0 1px 1px red' : '0 0 .1px .1px #17b495' }"></textarea>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputEmail1">Penalty Percentage</p>
+                        <textarea type="text" class="form-control" readonly id="three"
+                          value="{{(sofData && sofData.penalty) ? sofData.penalty : 'NA' }}"></textarea>
+                      </div>
+                    </div>
+                    <div class="inside-container-row">
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Is B2B ?</p>
+                        <select [(ngModel)]="sofData && sofData.isBackToBackOrder" [ngModelOptions]="{standalone: true}"
+                          class="form-control" id="two-input" (change)="onB2B($event.target.value)"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                          <option value="" disabled selected>Select</option>
+                          <option *ngFor="let backtoback of back_to_back" [value]="backtoback">{{backtoback}}</option>
+                        </select>
+                      </div>
+                      <div class="form-group col">
+                        <p for="exampleInputPassword1">Name Of OEM</p>
+                        <textarea type="text" [(ngModel)]="sofData && sofData.nameOEM"
+                          [ngModelOptions]="{standalone: true}" class="form-control" id="two-input"
+                          [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || isB2BFlag || bidStatus == 'DROPPED' || bidVersionStatus"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="button-class" style="text-align: center;margin-top: 2rem;" *ngIf="hideButtonPlusDiv()">
+          <button type="submit" id="btnReset"
+            [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+            (click)="resetSof()" class="btn cancel-button">Reset
+          </button>
+          <button (click)="saveDraftSof()"
+            [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+            type="submit" id="btnSave" class="btn save-button">
+            Save
+          </button>
+          <button type="submit" id="btnNext"
+            [disabled]="(access && !access.writeAccess) || (sofData && sofData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+            class="btn next-button" (click)="nextCreateSof()">Next
+          </button>
+        </div>
+
+        <!-- Approver comment Section  -->
+        <div *ngIf="!bidVersionStatus && bidStatus != 'DROPPED'">
+          <div class="row" style="margin-top:40px" *ngIf="approvalFlag">
+            <div class="col-md-12">
+              <div class="caption">Comments</div>
+              <div class="ps_div1">
+                <div class="row" *ngFor="let item of ac_comment;let i = index;last as isLast">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center" style="margin-top:10;">1.</div>
+                  <div class="col-xs-11 col-sm-11 col-lg-11 col-md-11">
+                    <input type="text" class="form-control" [(ngModel)]="ac_comment[i].comment"
+                      [ngModelOptions]="{standalone: true}"
+                      style="border-left: 7px solid #17b495!important;margin-left: -25px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></div>
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 align-right">
+              <button type="button" (click)="actionButton('Make Changes')" class="btn reject-button">MAKE CHANGES
+              </button>
+              <button type="button" (click)="actionButton('COMPLETED')" class="btn reject-button"
+                class="btn approved-button">COMPLETED
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="second" class="tab-pane fade in">
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()"
+          style=" background-color:rgb(234 247 220); -webkit-scrollbar:none;height: 30rem;">
+          <div class="row" style="display: flex;padding:2rem">
+            <div class="title-no" style=" font-size: 12px;">
+              #<br />
+            </div>
+            <div class="business-unit">
+              <p id="exampleFormControlInput1">Business Unit</p>
+            </div>
+            <div class="business-type">
+              <p id="exampleFormControlInput1">Deal Type</p>
+            </div>
+            <div class="product-title">
+              <p id="exampleFormControlInput1">Deal Category </p>
+            </div>
+            <div class="acv-title">
+              <p id="exampleFormControlInput1">ACV</p>
+            </div>
+            <div class="tcv-title">
+              <p id="exampleFormControlInput1">TCV</p>
+            </div>
+            <div class="contribution-title">
+              <p id="exampleFormControlInput1">Contribution</p>
+            </div>
+            <div class="remark-title">
+              <p id="exampleFormControlInput1">Remark</p>
+            </div>
+          </div>
+          <div>
+            <div class="container-scroll" style="height:23rem;overflow-y: scroll;padding:2rem;margin-top:-4rem">
+              <div class="row" style="display: flex;"
+                *ngFor="let details of attachment_details; let i = index; last as isLast">
+                <div class="new-1 form-group" style="width: 5%; font-size: 14px;">
+                  <p>{{i+1}}</p>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <select [(ngModel)]="details.business_unit" class="form-control" name="userName"
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                    <option *ngFor="let b_unit of businessUnits" [value]="b_unit.bu_id">
+                      {{b_unit.name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <select [(ngModel)]="details.tbd" name="tbd" [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    style="height: 34px" class="form-control">
+                    <option *ngFor="let business of business_type" [value]="business">
+                      {{business}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <select [(ngModel)]="details.deal_type" name="dealType" [ngModelOptions]="{standalone: true}"
+                    class="form-control"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    style="height: 34px">
+                    <option *ngFor="let productList of product" [value]="productList"> {{productList}}</option>
+                  </select>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="number" style="text-align: right;" pattern="^([0-9]{1,4}[.]?[0-9]{0,2})"
+                    class="form-control" min="0" [(ngModel)]="details.acv" name="acv"
+                    [ngModelOptions]="{standalone: true}" (ngModelChange)="totalAcv()"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus" />
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="number" style="text-align: right;" pattern="^([0-9]{1,4}[.]?[0-9]{0,2})"
+                    class="form-control" min="0" [(ngModel)]="details.tcv" name="tcv"
+                    [ngModelOptions]="{standalone: true}" (ngModelChange)="totalTcv()"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus" />
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <div class="form-group col" id="contract-input">
+                    <input type="number" style="text-align: right;" pattern="^([0-9]{1,4}[.]?[0-9]{0,2})"
+                      class="form-control" min="0" size:3 maxlength="3" minlength="0" [(ngModel)]="details.contribution"
+                      name="contribution" [ngModelOptions]="{standalone: true}" (ngModelChange)="total()"
+                      [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus" />
+                  </div>
+                </div>
+
+                <div class="form-group col" id="contract-input">
+                  <textarea type="text" rows="1" style="resize: vertical" [(ngModel)]="details.Remark" name="remark"
+                    [ngModelOptions]="{standalone: true}" name="footer_left" class="form-control input-bar"
+                    style="height: 34px;font-size: 14px;"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                    </textarea>
+                </div>
+                <!-- [hidden]="i == 0" -->
+                <div class="botton-container" style="display: flex; margin-top:1rem; width:3.7%;"
+                  *ngIf="hideButtonPlusDiv()">
+                  <span><i class="fa fa-trash faIcon" style="color: green; " title="Delete"
+                      (click)="delete(i)"></i></span>
+                  <span> <i class="fa fa-plus-circle" style="color: orange;margin-left: 1rem;" *ngIf="isLast "
+                      title="Add" (click)="add()"></i></span>
+
+                </div>
+              </div>
+              <!-- --------------total-------------- -->
+              <div class="row" style="display: flex;">
+                <div class="new-1 form-group" style="width: 5%; font-size: 14px;">
+                  <p style="font-weight: bold;font-size:16px">Total</p>
+                </div>
+                <div class="form-group col" id="contract-input">
+                </div>
+                <div class="form-group col" id="contract-input">
+                </div>
+                <div class="form-group col" id="contract-input">
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="number" class="form-control" value="{{total_acv}}" [disabled]="true"
+                    style="text-align: right;">
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="number" class="form-control" value="{{total_tcv}}" [disabled]="true"
+                    style="text-align: right;">
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="number" style="text-align: right;" value="{{total_contribution}}" [disabled]="true"
+                    class="form-control">
+                </div>
+                <div class="form-group col" id="contract-input">
+                </div>
+              </div>
+            </div>
+            <div class="button-class" style="text-align: center;margin-top:2rem" *ngIf="hideButtonPlusDiv()">
+              <button type="submit" (click)="resetContractDetails()"
+                [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                id="btnReset" class="btn cancel-button" style="margin-left: 1rem">Reset</button>
+              <button id="btnSave"
+                [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                (click)="saveContractDetails('Save')" class="btn save-button">Save</button>
+              <button type="submit" id="btnNext"
+                [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                (click)="saveContractDetails('Next')" class="btn next-button">Next</button>
+            </div>
+          </div>
+          <!-- </ng-container> -->
+        </form>
+      </div>
+
+      <div id="third" class="tab-pane fade in " *ngIf="productFlag">
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()"
+          style=" background-color:rgb(234 247 220); -webkit-scrollbar:none;height: 30rem;">
+          <div class="row" style="display: flex;padding:2rem">
+            <div class="title-no">
+              #<br />
+            </div>
+            <div class="product-name">
+              <p id="exampleFormControlInput1">Product Name</p>
+            </div>
+            <div class="product-code">
+              <p id="exampleFormControlInput1">Product code </p>
+            </div>
+            <div class="qty">
+              <p id="exampleFormControlInput1">Quantity </p>
+            </div>
+            <div class="unit-price">
+              <p id="exampleFormControlInput1">Unit Price</p>
+            </div>
+            <div class="total">
+              <p id="exampleFormControlInput1">Total</p>
+            </div>
+            <div class="IsB2B">
+              <p id="exampleFormControlInput1">Is B2B</p>
+            </div>
+            <div class="NameOEM">
+              <p id="exampleFormControlInput1">Name Of OEM</p>
+            </div>
+            <div class="remark">
+              <p id="exampleFormControlInput1">Remark</p>
+            </div>
+          </div>
+          <div>
+            <div class="scrollContainer" style="height: 20rem;margin-top: -3rem;">
+              <div class="row" style="display: flex;padding-left: 20px;"
+                *ngFor="let detailsProduct of product_details; let i = index; last as isLast">
+                <div class="new-1 form-group" style="width: 5%; font-size: 14px;">
+                  <p>{{i+1}}</p>
+                </div>
+                <div class="form-group col" id="product-input">
+                  <input type class="form-control" [(ngModel)]="detailsProduct.productName"
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col" id="product-input">
+                  <input name="tbd" class="form-control" [(ngModel)]="detailsProduct.productCode"
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col" id="product-input">
+                  <input type="number" style="text-align: right;" [(ngModel)]="detailsProduct.quantity"
+                    [ngModelOptions]="{standalone: true}" min="0" class="form-control" (ngModelChange)="totalproduct(i)"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col" id="product-input">
+                  <input type="number" style="text-align: right;" class="form-control"
+                    [(ngModel)]="detailsProduct.unitPrice" min="0" [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="totalproduct(i)"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus" />
+                </div>
+                <div class="form-group col">
+                  <input type="number" style="text-align: right;margin-right: 1rem;"
+                    value="{{detailsProduct.total ? detailsProduct.total : 0}}" id="product-input" [disabled]="true">
+                </div>
+                <div class="form-group col">
+                  <select [(ngModel)]="detailsProduct.isBackToBackOrderProd" [ngModelOptions]="{standalone: true}"
+                    class="form-control" id="product-input" (change)="onB2BProductTab(i)"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let backtoback of back_to_back" [value]="backtoback">{{backtoback}}</option>
+                  </select>
+                </div>
+                <div class="form-group col" id="product-input">
+                  <textarea type="text" [(ngModel)]="detailsProduct.nameOEMProd" [ngModelOptions]="{standalone: true}"
+                    class="form-control"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || detailsProduct.disableFlag || bidStatus == 'DROPPED' || bidVersionStatus"></textarea>
+                </div>
+                <div class="form-group col" id="product-input">
+                  <textarea class="form-control" [(ngModel)]="detailsProduct.Remark"
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"></textarea>
+                </div>
+                <div class="botton-container" style="display: flex; margin-top:1rem; width:3.7%;"
+                  *ngIf="hideButtonPlusDiv()">
+                  <span><i class="fa fa-trash faIcon" style="color: green; " title="Delete"
+                      (click)="deleteProduct(i)"></i></span>
+                  <span> <i class="fa fa-plus-circle" style="color: orange;margin-left: 1rem;" *ngIf="isLast "
+                      title="Add" (click)="addProduct(i)"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="button-class" style="text-align: center;margin-top:4rem" *ngIf="hideButtonPlusDiv()">
+              <button type="submit" (click)="resetProductDetails()"
+                [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                id="btnReset" class="btn cancel-button" style="margin-left: 1rem">Reset</button>
+              <button id="btnSave"
+                [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                (click)="saveProductDetails('Save')" class="btn save-button">Save</button>
+              <button type="submit" id="btnNext"
+                [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                (click)="saveProductDetails('Next')" class="btn next-button">Next</button>
+            </div>
+          </div>
+          <!-- </ng-container> -->
+        </form>
+      </div>
+
+
+      <div id="fourth" class="tab-pane fade in">
+        <form style=" background-color:rgb(234 247 220); -webkit-scrollbar:none;height: 30rem;" autocomplete="off">
+          <div class="row" style="font-size:16px;display: flex;padding:2rem">
+            <div class="new-1 form-group" style="width: 5%; font-size: 16px;">
+              #<br />
+            </div>
+            <div class="Attchfile">
+              <p id="exampleFormControlInput11">Referances </p>
+            </div>
+            <div class="Description">
+              <p id="exampleFormControlInput11">Attach File
+              </p>
+            </div>
+            <div class="Referance">
+              <p id="exampleFormControlInput11">Description</p>
+            </div>
+            <div class="Attchments" style="text-align: center;">
+              <p id="exampleFormControlInput11">Attachments </p>
+            </div>
+          </div>
+          <div class="container-scroll-attachment"
+            style="height:23rem;overflow-y: scroll;padding:2rem;margin-top:-4rem">
+            <ng-container>
+              <div class="row" *ngFor="let file of rfpReviewAttachments;let i = index; last as isLast"
+                style="display:flex ;">
+                <div class="new-1" style="width:5%;">
+                  <p id="exampleFormControlInput1"> {{i+1}}</p>
+                </div>
+                <div class="form-group col">
+                  <input type="text" class="form-control input-bar" id="attachmentRow"
+                    [(ngModel)]="rfpReviewAttachments[i].cellRange" [ngModelOptions]="{standalone: true}"
+                    [attr.disabled]="true" style="background-color: #eee;">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" class="form-control input-bar" id="attachmentRow"
+                    [(ngModel)]="rfpReviewAttachments[i].original_name" [ngModelOptions]="{standalone: true}"
+                    [attr.disabled]="true"></textarea>
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" id="attachmentRow" class="form-control input-bar"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="rfpReviewAttachments[i].description"
+                    [attr.disabled]="true"></textarea>
+                </div>
+                <div class="form-group col" style="text-align:center;margin-top: -1rem;margin-left: 7rem;">
+                  <button type="button" class="btn btn-success" id="downloadBtn" title="Download"
+                    (click)="onDownload(i , 'rfpFile')">
+                    <span class="glyphicon glyphicon-download"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container>
+              <div class="row" *ngFor="let file of uploadAttachments;let i = index; last as isLast"
+                style="display:flex ;">
+                <div class="new-1" style="width:5%;">
+                  <p id="exampleFormControlInput1"> {{i+1 + ReadAttachLength}} </p>
+                </div>
+                <div class="form-group col">
+                  <input type="text" class="form-control input-bar" id="attachmentRow"
+                    [(ngModel)]="uploadAttachments[i].cellRange" [ngModelOptions]="{standalone: true}"
+                    [attr.disabled]="true" style="background-color: #eee;">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" class="form-control input-bar" id="attachmentRow"
+                    [(ngModel)]="uploadAttachments[i].original_name" [ngModelOptions]="{standalone: true}"
+                    [attr.disabled]="true"></textarea>
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" id="attachmentRow" class="form-control input-bar"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="uploadAttachments[i].description"
+                    [attr.disabled]="true"></textarea>
+                </div>
+                <div class="form-group col" style="text-align:center;margin-top: -1rem;margin-left: 7rem;">
+                  <button type="button" class="btn btn-success" id="downloadBtn" title="Download"
+                    (click)="onDownload(i , 'upload')">
+                    <span class="glyphicon glyphicon-download"></span>
+                  </button>
+                  <button *ngIf="hideButtonPlusDiv()" type="button" class="btn btn-danger" style="margin-right:5px;"
+                    title="Delete File" (click)="onRemoveUploadFile(i)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="hideButtonPlusDiv()">
+              <div class="row" *ngFor="let file of files;let i = index; last as isLast" style="display:flex ;">
+                <div class="new-1" style="width:5%;">
+                  <p id="exampleFormControlInput1"> {{i+1 + ReadAttachLength + UploadAttachLength}}</p>
+                </div>
+                <div class="form-group col">
+                  <select class="form-control input-bar"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    id="attachmentRow" [ngModelOptions]="{standalone: true}" [(ngModel)]="files[i].cellRange">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let item of cellRange" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <input #myInput type="file" style="outline: none;" id="attachmentRow"
+                    (change)="onFileSelected($event,i)"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" id="attachmentRow" class="form-control input-bar"
+                    [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    [(ngModel)]="files[i].description"></textarea>
+                </div>
+                <div class="form-group col" style="text-align: center;
+              margin-top: -1rem;
+              margin-left: 7rem;">
+                  <button type="button" class="btn btn-success"
+                    [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    style="margin-right:5px;" title="Upload File" (click)="onUpload(i)">
+                    <span class="glyphicon glyphicon-upload"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </form>
+        <div class="button" style="margin-top:1rem" *ngIf="hideButtonPlusDiv()">
+          <div class="text-center">
+            <button type="submit" (click)="resetAttachmentFile()"
+              [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus"
+              id="btnReset" class="btn cancel-button" style="margin-left: 1rem">Reset</button>
+            <button type="submit" id="btnSave"
+              [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus"
+              (click)="finalSaveSof()" class="btn save-button">
+              Save
+            </button>
+            <button type="submit" id="btnSubmit"
+              [disabled]="(access && !access.writeAccess) || (sofData && (sofData.isSOFSubmittedStatus != 'SOFSubmitted' || sofData.isContractSubmitted != 'ContractFormSubmitted' || sofData.isSubmittedStatus == 'Submitted' || (productFlag && sofData.isProductSubmitted != 'ProductFormSubmitted' ))) || bidStatus == 'DROPPED' || bidVersionStatus"
+              (click)="finalSubmitSof()" class="btn draft-button" style="background-color: #17b495;">
+              Submit SOF </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---------------------Approval----------------------------- -->
+      <div id="fifth" class="tab-pane fade in" *ngIf="approvalStatusArray && approvalStatusArray.length >= 1">
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()"
+          style=" background-color:rgb(234 247 220); -webkit-scrollbar:none;height: 30rem; padding:2rem;">
+          <div class="row" style="display: flex;padding:2rem;margin-bottom: 1.5rem;">
+            <div class="title-no-timeline" style=" font-size: 15px;">
+              #<br />
+            </div>
+            <div class="ApproverName ">
+              <p id="exampleFormControlInput1">Name</p>
+            </div>
+            <div class="actionApproval">
+              <p id="exampleFormControlInput1">Action</p>
+            </div>
+            <div class="dateOfAction">
+              <p id="exampleFormControlInput1">Date of Action</p>
+            </div>
+            <div class="comment">
+              <p id="exampleFormControlInput1">Comments</p>
+            </div>
+          </div>
+          <div>
+            <div class="scrollContainer" style="height:23rem;overflow-y: scroll;padding:2rem;margin-top:-5rem">
+              <div class="row" style="display: flex;"
+                *ngFor="let approval of approvalStatusArray; let i = index; last as isLast">
+                <div class="SRNo form-group" style="width: 5%; font-size: 14px;">
+                  <p>{{i+1}}</p>
+                </div>
+                <div class="form-group col" id="contract-timeline">
+                  <input type="text" class="form-control" id="two-input" [(ngModel)]="approval.fullname"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true">
+                </div>
+                <div class="form-group col" id="contract-timeline">
+                  <input type="text" class="form-control" id="two-input" [(ngModel)]="approval.action"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true">
+                </div>
+                <div class="form-group col" id="contract-inputDate">
+                  <input id="two-input" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" [(ngModel)]="approval.Date"
+                    class="form-control" [ngModelOptions]="{standalone: true}" [disabled]="true">
+                  <owl-date-time #dt4></owl-date-time>
+                </div>
+                <div class="form-group col" id="contract-timeline">
+                  <textarea type="text" class="form-control input-bar" [(ngModel)]="approval.comments"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- If there is no Tender Fee -->
+  <div class="aling-center bid_div color-white" style="margin-top:18px;color:white;text-align: center;"
+    *ngIf="!NoDataMultipleSOFFlag && (!access?.createAccess)">
+    No Approvals requested yet
+  </div>
+</div>

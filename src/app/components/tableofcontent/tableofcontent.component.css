@@ -1,0 +1,57 @@
+.navbar-inverse {
+  background-color: #364453;
+  border-color: #364453;
+  height: 0px;
+}
+
+#cancel {
+  width: 26px;
+  float: right;
+  margin-top: 14px;
+  margin-right: 18px;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.fa-trash {
+  color: #17b495;
+  font-size: 17px;
+}
+
+.fa-plus-circle {
+  color: #EA8F38;
+  font-size: 17px;
+}
+
+.IconRow {
+  margin-top: 10px;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+.indexRow {
+  margin-top: 10px;
+}
+
+.submitBtn {
+  margin-top: 20px;
+}
+
+.fa {
+  padding: 5px;
+}
+
+/* ================Responsive Mobile View =================  */
+
+@media only screen and (max-width: 800px) {
+  #cancel {
+    margin-top: -55px;
+  }
+}

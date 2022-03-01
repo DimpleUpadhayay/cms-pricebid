@@ -1,0 +1,101 @@
+.row {
+  margin-bottom: 6px;
+}
+
+.color-white {
+  color: white;
+  text-align: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  color: #f9f9f9;
+  min-width: 82px;
+  -webkit-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 3px 5px;
+  z-index: 1;
+  background-color: #364453;
+  border: 1px solid #17b495;
+  font-size: 12px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  color: white;
+}
+
+.dropdown {
+  margin-left: 4.5rem;
+  margin-top: -21px;
+}
+
+.dropdown-menu {
+  padding: 1rem;
+  margin-left: 1.5rem;
+}
+
+img {
+  width: 17px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 0;
+}
+
+.fa-ellipsis-v {
+  color: #17b495;
+  cursor: pointer;
+  margin-top: 0px;
+  font-size: 20px;
+  margin-left: 5px !important;
+}
+
+.actionList {
+  background-color: #364453;
+  border: 1px solid #17b495;
+  padding: 5px;
+}
+
+.faIcon {
+  padding: 4px;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+}
+
+.bid_div {
+  margin-top: 5px !important;
+  background-color: #364453 !important;
+  padding: 5px 0;
+  border-radius: 5px;
+}
+
+#btnDynamic {
+  border-radius: 5px !important;
+  border-color: #17b495;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #17b495;
+  font-size: 14px;
+  margin: 4px 0 4px 0;
+}
+
+.bid_head {
+  color: #70D8C4;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.selected {
+  background: #364453 !important;
+}

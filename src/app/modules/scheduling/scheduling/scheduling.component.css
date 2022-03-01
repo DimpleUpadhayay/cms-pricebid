@@ -1,0 +1,61 @@
+.ps_head {
+  background: #364453;
+  color: #70D8C4;
+  font-size: 16px;
+  text-transform: capitalize;
+  border-radius: 5px;
+  padding: 15px 10px;
+}
+
+.ps_div {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
+
+.fan, .color-black {
+  color: black;
+}
+
+.sc_body {
+  padding: 10px 2px 10px 2px;
+}
+
+.icon-size {
+  width: 17px;
+  margin-top: 9px;
+}
+
+/* -------------Responsive view Mobile View Dashboard----------------------------------- */
+
+@media only screen and (max-width: 600px) {
+  .icon-size {
+    width: 12px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .deleteResp {
+    margin-left: -19px;
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-width: 601px) {
+  .deleteResp {
+    margin-left: -21px;
+  }
+}
+
+.fa-plus {
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+input:read-only {
+  background: white
+}
+
+select:disabled {
+  background: white
+}

@@ -1,0 +1,211 @@
+.padding-top-52 {
+  padding-top: 52px;
+}
+.container{
+  font-weight: 14px  !important;
+
+}
+#menu {
+  background-color: #E8E8E8;
+  padding: 5px;
+}
+
+#menu li {
+  display: inline-block;
+}
+
+.fa {
+  color: #17b495;
+}
+
+#vertical {
+  border: 1px solid grey;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.circleThree {
+  width: 27px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  padding-top: 1px;
+  font-weight: 900;
+  border: 2px solid #17b495;
+}
+
+#circleThree {
+  border: 1px solid #364453 !important;
+  height: 27px;
+  width: 27px;
+  padding: 2px;
+  text-align: center;
+  padding-top: 5px 2px 2px;
+  font-size: 13px;
+  margin-left: 5px;
+  margin-bottom: 3px;
+}
+
+.highlight-reviewer {
+  /* box-shadow: 2px 2px 3px #17b495; */
+  border: 2px solid #364453
+}
+
+.empty {
+  border: 2px solid #364453;
+  background: none;
+}
+
+.success {
+  background: #17b495;
+  color: white;
+  border: 2px solid #364453
+}
+
+.blink {
+  /* background-color: #f9b6ec; */
+  background-color: #821A17;
+  border: 2px solid #364453;
+  color: white;
+}
+
+.bid-owner-highlight {
+  box-shadow: 1px 1px 1px 1px #364453;
+  /* background: #364453; */
+  /* color: white; */
+  /* background-image: linear-gradient(#17b495, white); */
+}
+
+/* @keyframes example {
+  from {background-color: #17b495;}
+  to {background-color: white;}
+} */
+
+/* Safari 4.0 - 8.0 */
+
+/* @-webkit-keyframes example {
+  from {background-color: #17b495;}
+  to {background-color: white;}
+} */
+
+.approved-button {
+  background: #4FB596;
+  color: white;
+  /* border: 3px solid #364453; */
+}
+
+.reject-button {
+  background: #EC7E39;
+  color: white;
+  /* border: 3px solid #364453; */
+}
+
+.conditionally-button {
+  background: #f1a458;
+  color: white;
+  /* border: 3px solid #364453; */
+}
+
+.information-button {
+  background: #17b495;
+  color: white;
+  /* border: 3px solid #364453; */
+}
+
+.review-success {
+  background: #17b495;
+  color: white;
+}
+
+.review-empty {
+  color: orange;
+}
+
+.bidName {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 13%;
+  white-space: nowrap;
+  vertical-align: top;
+  margin-top: 3px;
+}
+
+.accountName {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 12%;
+  white-space: nowrap;
+  vertical-align: top;
+  margin-top: 3px;
+}
+
+/* ================Responsive Mobile View =================  */
+
+@media only screen and (max-width: 600px) {
+  .box {
+    width: 100%;
+    display: initial;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .box {
+    width: 100%;
+    display: initial;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .circleThree {
+    margin-bottom: 8px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .circleThree {
+    margin-bottom: 8px;
+  }
+}
+
+
+.dropbtn {
+  border: none;
+  outline: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 205px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* .dropdown:hover .dropbtn {
+  /* background-color: #3e8e41; */
+
+.stage {
+  white-space: pre-wrap;
+  color: black;
+  padding: 11px 3px;
+  text-decoration: none;
+  display: block;
+  margin-bottom: -20px;
+}

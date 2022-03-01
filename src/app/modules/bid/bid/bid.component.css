@@ -1,0 +1,95 @@
+.mainadduserSection {
+  margin-top: 8em;
+}
+
+.margin-top-12 {
+  margin-top: 16px !important;
+}
+
+ng-select, .input-border, textarea {
+  box-shadow: 0 0 .5px .5px #17b495;
+}
+
+.ng-select {
+min-height: 0;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+min-height: 0;
+  overflow: auto;
+}
+
+.download {
+  float: right;
+  color: #17b495;
+  margin-top: -26px;
+  font-size: 20px;
+  margin-right: 1px;
+}
+
+input:read-only {
+  background: white
+}
+
+textarea:read-only {
+  background: white
+}
+
+.chip {
+  display: inline-block;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  line-height: 32px;
+  padding: 0 10px;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.chip:nth-child(odd) {
+  background-color: #17b495;
+}
+
+.chip:nth-child(even) {
+  background-color: #333333;
+}
+
+.accountMessage {
+  position: absolute !important;
+  margin-top: 0px;
+  width: 90%;
+  padding: 7px 8px;
+  z-index: 900;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-color: #e6e6e6;
+  margin-top: -1px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #989494;
+}
+
+/* -------------Responsive view Mobile View Dashboard----------------------------------- */
+
+@media only screen and (max-width: 900px) {
+  .attachment, #account {
+    width: 85% !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .upload {
+    text-align: right;
+    margin-top: -26px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .upload2 {
+    margin-top: 73px !important;
+    margin-right: 22px !important;
+  }
+}

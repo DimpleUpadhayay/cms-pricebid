@@ -1,0 +1,18 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Drop Bid</p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-md-12">
+  <select class="form-control input-bar" [(ngModel)]="reason" name="reason" >
+    <option hidden value="" disabled selected>Please select the reason for Drop bid </option>
+    <option *ngFor="let item of droppedReason" [value]="item.reason_id">{{item.reason_name}}</option>
+  </select>
+</div>  
+<div class="col-md-12 align-center" style="margin-top: 20px;">
+  <button class="btn btn-success" id="submitBtn" (click)="onSubmit()">Submit</button>
+</div>

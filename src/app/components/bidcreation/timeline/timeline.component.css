@@ -1,0 +1,51 @@
+.legend {
+  color: black;
+  float: right;
+  margin: 5px;
+}
+
+.assign {
+  border: 1px solid white;
+  background: #EC9138;
+  color: white;
+}
+
+/* .vis-content {
+    overflow-y: scroll;
+  } */
+
+.completed {
+  border: 2px solid white;
+  background: green;
+  color: white;
+}
+
+/* .c2 {
+background: red
+}
+
+.c3 {
+background: green
+}
+
+.Legend {
+background: #17b495
+} */
+
+.solution {
+  border: 2px solid #17b495;
+}
+
+.fa {
+  color: white !important;
+}
+
+.timeline-button {
+  background: #17b495 !important;
+}
+
+.button-solution {
+  float: right;
+  margin: 2px;
+  background: #17b495 !important;
+}

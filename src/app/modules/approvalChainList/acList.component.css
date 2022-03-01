@@ -1,0 +1,10 @@
+.ps_head {
+    color: white;
+    text-transform: capitalize;
+    background-color: #364453;
+    margin: 0;
+}
+
+.first-col {
+    width: 20px;
+}

@@ -1,0 +1,18 @@
+zing-grid {
+    --zg-caption-font-family: 'Poppins', sans-serif;
+    /* --zg-caption-font-size: 2rem; */
+    --zing-grid-font-size: 1rem;
+    --zg-head-cell-font-size: 1rem;
+}
+
+.heading {
+    float: right;
+    font-size: 16px;
+    padding: 9px;
+}
+
+.heading-caption {
+    float: left;
+    font-size: 16px;
+    padding-top: 9px;
+}

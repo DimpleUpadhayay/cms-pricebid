@@ -1,0 +1,165 @@
+<!-- <app-header></app-header> -->
+
+<div class="container">
+  <div class="content padding-top-100">
+    <div class="row">
+      <div class="mainadduserSection col-sm-2 col-md-2">
+      </div>
+      <div class="mainadduserSection col-sm-8 col-md-8">
+        <div class="col-md-11">
+          <h3>Create Opportunity</h3>
+        </div>
+        <div class="col-md-1 margin-right">
+          <img src="assets\images\parsing (2).png" style="margin-top:23px;width: 30px;" (click)="onParsingDialog()"
+            title="Scan Documents">
+        </div>
+        <form autocomplete="off">
+
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Lead Name&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.leadName" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow':formSubmitted && !sales.leadName ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Lead Number&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.leadNo" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.leadNo ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Customer Name&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.custName" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.custName ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Estimated Deal Value (Mn)&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.estimateDeal" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.estimateDeal ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Submission Date&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.subDate" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.subDate ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+            <owl-date-time></owl-date-time>
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Tender Document Fees&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.tenderDoc" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.tenderDoc ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Consultant&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.consultan" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.consultan ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Territory&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.territory" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.territory ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Business Unit</label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.buUnit" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.buUnit ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Bid-Manager</label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.bManager" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.bManager ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-5 margin-top-12">
+            <label class="margin-bottom">Attachments</label>
+            <input class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.attach" type="button" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.attach ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}"
+              (click)="openDialog()" title="Attachment">
+          </div>
+          <div class="col-md-1 margin-top-12">
+            <i class="fa fa-download download align-right" title="Download" aria-hidden="true"
+              (click)="onDownloadDialog()"></i>
+          </div>
+          <div class="col-md-12 margin-top-12">
+            <label class="margin-bottom">Description</label>
+            <textarea class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="sales.desc" type="text" maxlength="50"
+              [ngStyle]="{'box-shadow' : formSubmitted && !sales.desc ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}"></textarea>
+          </div>
+
+          <div class="col-md-12" style="margin-bottom: 50px; margin-top: 20px;">
+            <div class="caption">Attractiveness</div>
+            <div class="fullDiv">
+              <div class="row" *ngFor="let attractive of attractiveness; let i = index; last as isLast">
+                <div class="col-md-1 align-center">
+                  {{i+1}}.
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control input input-bar" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="attractive.attract">
+                </div>
+                <div class="col-md-3 margin-right" style="margin-top: 5px;">
+                  <i class="fa fa-download download" title="Download" style="margin: 6px;" aria-hidden="true"
+                    (click)="onDownloadDialog()"></i>
+                  <img src="assets\images\attach1.png" title="Attach" (click)="openDialog()">
+                  <img src="assets/images/rubbish-bin.png" title="Delete" (click)="onDelete(i)">
+                  <img src="assets/images/add-orange.png" title="add" *ngIf="flag && isLast" (click)="onAdd()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12" style="margin-bottom: 50px;">
+            <div class="caption">Challenges </div>
+            <div class="fullDiv">
+              <div class="row" *ngFor="let challenge of challenges; let i = index; last as isLast">
+                <div class="col-md-1 align-center">
+                  {{i+1}}.
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control input input-bar" [(ngModel)]="challenge.challengeInput"
+                    [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="col-md-3 margin-right" style="margin-top: 5px;">
+                  <i class="fa fa-download download" title="Download" aria-hidden="true" style="margin: 6px;"
+                    (click)="onDownloadDialog()"></i>
+                  <img src="assets\images\attach1.png" title="Attach" (click)="openDialog()">
+                  <img src="assets/images/rubbish-bin.png" title="Delete" (click)="onDeleteChallenges(i)">
+                  <img src="assets/images/add-orange.png" title="add" *ngIf="flag && isLast"
+                    (click)="onAddChallenges()">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+
+
+
+        <div class="col-md-12 align-center" *ngIf="userType == 'SALES'">
+          <button type="button" class="btn save-button">Save</button>
+          <button type="button" class="btn submit-button" (click)="onSave()">Submit</button>
+        </div>
+        <div class="col-md-12 align-center" *ngIf="userType == 'BID_OWNER'">
+          <button type="button" class="btn submit-button">Proceed
+          </button>
+          <button type="button" class="btn discard-button">Discard
+          </button>
+        </div>
+
+
+
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-2 col-md-2">
+    </div>
+  </div>
+</div>

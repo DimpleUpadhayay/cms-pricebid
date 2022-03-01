@@ -1,0 +1,39 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Assign Sheet </p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClear()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 box">
+  <div id="bid_head">
+    <div class="row" style="margin-bottom:10px;">
+      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">
+        <b>#</b>
+      </div>
+      <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+        <strong>Name</strong>
+      </div>
+      <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+        <strong>Sheet Name</strong>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom:10px;margin-top: 5px;" *ngFor="let assign of username; let i=index; ">
+    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">
+      {{i+1}}
+    </div>
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+      {{assign.username}}
+    </div>
+    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+      {{assign.sheetName}}
+    </div>
+  </div>
+</div>
+<!-- Loader for the viewsheet -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

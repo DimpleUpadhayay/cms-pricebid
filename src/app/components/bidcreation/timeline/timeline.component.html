@@ -1,0 +1,38 @@
+<!-- <app-header></app-header> -->
+<app-bid-details></app-bid-details>
+<app-alert></app-alert>
+<div class="container">
+  <!-- Breadcrumb Section -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+      <li class="breadcrumb-item active" aria-current="page">Timeline</li>
+    </ol>
+  </nav>
+  <!-- <div> -->
+
+  <!-- </div> -->
+  <!-- Timeline charts Section using Vis.js -->
+  <div class="menu margin-bottom-12" style="margin-bottom:10px ;">
+    <button class="btn timeline-button" title="Zoom In" (click)="changeView('zoomIn')">
+      <i class="fa fa-search-plus" aria-hidden="true"></i> </button>
+    <button class="btn timeline-button" title="Zoom Out" (click)="changeView('zoomOut')">
+      <i class="fa fa-search-minus" aria-hidden="true"></i> </button>
+    <button class="btn timeline-button" title="Move Left" (click)="changeView('moveLeft')"><i
+        class="fa fa-arrow-circle-left" aria-hidden="true"></i> </button>
+    <button class="btn timeline-button" title="Move Right" (click)="changeView('moveRight')"><i
+        class="fa fa-arrow-circle-right" aria-hidden="true"></i> </button>
+    <button class="btn button-solution" title="Pricing"><i class="fa fa-dollar"></i></button>
+    <button class="btn button-solution" title="Proposal"><i class="fa fa-file-powerpoint-o"></i></button>
+    <button class="btn button-solution" title="Solution"><i class="fa fa-lightbulb-o"></i></button>
+    <!-- <input type="button" id="toggleRollingMode" value="toggleRollingMode"/> -->
+  </div>
+  <div class="one" [innerHtml]="legend"></div>
+  <div id="visualization" class="margin-top-12">
+    <!-- <a href="default.asp" target="_blank">This is a link</a> -->
+  </div>
+</div>
+<!-- Loader for the Timeline -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

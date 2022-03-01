@@ -1,0 +1,44 @@
+ #myChart {
+   height: 100%;
+   width: 100%;
+ }
+
+ .date {
+   width: 160% !important;
+ }
+
+ .filterBox {
+   background-color: #f1f1f1 !important;
+   padding: 8px 8px;
+ }
+
+ .range {
+   padding: 6px 4px !important;
+   width: 108% !important;
+ }
+
+ .guion {
+   float: left;
+   margin-top: 5px;
+ }
+
+ .margin-left {
+   margin-left: -25px !important;
+ }
+
+ .btn-clear {
+   background-color: #F1A457 !important;
+   color: white !important;
+ }
+
+ .btn-submit {
+   background-color: #17b495 !important;
+   color: white !important;
+ }
+
+ .fa-refresh {
+   float: right !important;
+   margin-top: -48px !important;
+   margin-right: -18px !important;
+   cursor: pointer !important;
+ }

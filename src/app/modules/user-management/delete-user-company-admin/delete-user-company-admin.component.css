@@ -1,0 +1,98 @@
+.navbar-inverse {
+    background-color: #364453;
+    border-color: #364453;
+    height: 0px;
+}
+
+#cancel {
+    width: 26px;
+    float: right;
+    margin-top: 14px;
+    margin-right: 18px;
+    cursor: pointer;
+}
+
+textarea {
+    resize: vertical;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 34px;
+}
+
+.fa-trash, .faIcon, .fa-check-circle, .fa-times-circle {
+    color: #17b495;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.fa-plus-circle {
+    color: #ea8f38;
+    font-size: 18px
+}
+
+.circle1 {
+    color: #17b495;
+    font-size: 20px
+}
+
+.IconRow {
+    margin-top: 10px;
+}
+
+.fa {
+    cursor: pointer;
+    /* padding: 1px; */
+}
+
+.indexRow {
+    margin-top: 10px;
+}
+
+.submitBtn {
+    margin-top: 6px;
+}
+
+#saveBtn {
+    background-color: #ec9138;
+    border: 1px solid#ec9138;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    padding: .5rem 2rem;
+    margin: 4px 0;
+    margin-right: 10px;
+    /* margin-left: 18%; */
+    margin-bottom: 10px;
+}
+
+#cancelBtn {
+    text-align: center;
+    font-size: 12px;
+    border-color: #ddd;
+    color: black;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 10px !important;
+    border: 1px solid #ddd;
+    padding: .5rem 2rem;
+    margin: 4px 0;
+    margin-right: 7px;
+}
+
+.pendingTask {
+    margin-top: -11em;
+    text-align: center;
+    border: 1px solid #364453;
+    color: white;
+    background: #364453;
+    margin-bottom: 115px;
+}
+
+/* ================Responsive Mobile View =================  */
+
+@media only screen and (max-width: 800px) {
+    #cancel {
+        margin-top: -55px;
+    }
+}

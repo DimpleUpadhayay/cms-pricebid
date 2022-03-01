@@ -1,0 +1,64 @@
+.ps_head {
+  color: white;
+  text-transform: capitalize;
+  background-color: #364453;
+  margin: 0;
+}
+
+.handle-overflow {
+  max-height: 175px;
+  overflow: scroll;
+}
+
+ng-select, .input-border, textarea {
+  box-shadow: 0 0 .5px .5px #17b495;
+}
+
+.padding-top-60 {
+  padding-top: 60px;
+}
+
+.business_div {
+  margin-top: 5px !important;
+  background-color: #364453 !important;
+  padding: 5px 0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.business_head {
+  color: #70D8C4;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.business-body {
+  background-color: #17b495;
+  color: white;
+  padding: 9px;
+  border-radius: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.caption {
+  width: 100%;
+  background: #364453;
+  color: white;
+  padding: 1px;
+  padding: 9px;
+  font-size: 16px;
+}
+
+.acDiv {
+  background-color: white;
+  margin-bottom: 4px;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #D3D3D3;
+}
+
+.fa-arrow-right .fa-arrow-left{
+  color:black !important;
+  font-size:12px;
+}

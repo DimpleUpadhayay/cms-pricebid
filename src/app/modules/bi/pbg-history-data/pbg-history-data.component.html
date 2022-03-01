@@ -1,0 +1,112 @@
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Filter Starts Here -->
+    <div class="fa fa-filter" title="Filter" style="float:right;font-size:20px;cursor: pointer;margin-top: -50px;"
+      data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"></div>
+    <span class="fa fa-refresh" title="Refresh" (click)="onClear()"></span>
+    <div class="collapse" id="collapseExample">
+      <div class="col-md-12 filterBox">
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown #multiSelect [disabled]="role=='Sales Manager'" [(ngModel)]="locations1"
+            [placeholder]="'City'" [data]="locations" [settings]="settings" [disabled]="false"
+            (onSelect)="onItemSelect($event, 'location')" (onDeSelect)="onDeSelect($event, 'location')"
+            (onSelectAll)="onSelectAll($event, 'location')" (onDeSelectAll)="onDeSelectAll($event, 'location')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-2 margin-left">
+          <input type="text" [(ngModel)]="Filterobj.emdRequestNumber" placeholder="PBG Request Number"
+            class="range form-control input-border input-bar" style="padding-left: 25px;margin-left: 5px;">
+        </div>
+        <div class="col-md-2 margin-left">
+          <input type="text" [(ngModel)]="Filterobj.emdReqdInTheFavourOfBeneficary" placeholder="Customer Name"
+            class="range form-control input-border input-bar" style="padding-left: 45px;">
+        </div>
+        <div class="col-md-2 margin-left">
+          <select type="" style="width: 160px;" id="two-input" class="form-control input-border input-bar"
+            [ngModelOptions]="{standalone: true}" [(ngModel)]="Filterobj.formFlag">
+            <option value="" disabled selected>Select EMD/PBG</option>
+            <option *ngFor="let data of formFlag" [value]="data">{{data}}</option>
+          </select>
+        </div>
+        <div class="col-md-2 margin-left">
+          <input placeholder="Last Date to claim" class="form-control input-border input-bar"
+            [(ngModel)]="dateTimeRange" [selectMode]="'range'" (ngModelChange)="onItemSelectDate($event)"
+            [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1" style="width: 145px;margin-bottom: 5px;">
+          <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <div class="col-md-2" style="margin-top:6px;">
+          <button class="btn btn-submit" title="Search" (click)="onSubmit()">Search</button>
+          <button class="btn btn-clear" title="Clear" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+      <div class="col-md-12 filterBox">
+        <select type="" *ngIf="PBGfilterFlag" style="width: 170px;margin-top: 5px;margin-bottom: 5px;margin-left: -5px;" id="two-input"
+          class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="Filterobj.isOld">
+          <option value="" disabled selected>Select History only</option>
+          <option *ngFor="let data of isOld" [value]="data">{{data}}</option>
+        </select>
+      </div>
+    </div>
+    <!-- Filter ends Here -->
+
+    <!-- PBG History Data Table -->
+    <zing-grid>
+      <zg-caption>
+        <span class="heading-caption">EMD/PBG Details ({{start|date: 'dd-MMM-yyyy'}}  -  {{end|date: 'dd-MMM-yyyy'}}) </span> 
+        <!-- <span class="heading"><i class="fa fa-file-excel-o" style="cursor: pointer;" (click)="getData()"
+            title="Export to Excel"></i></span> -->
+        <span class="heading">Total Records : {{totalRecords}} </span>
+      </zg-caption>
+      <zg-data [data]='myResult' *ngIf="myResult && (myResult.length > 0) && !loader"></zg-data>
+      <zg-colgroup>
+        <zg-column type="text" index="Srl" sort="disabled"></zg-column>
+        <zg-column type="text" index="Type" sort="disabled"></zg-column>
+        <zg-column type="text" index="EMD/PBG No" sort="disabled"></zg-column>
+        <zg-column type="text" index="Amount"></zg-column>
+        <zg-column type="text" index="Last Date to claim"></zg-column>
+        <zg-column type="text" index="Location"></zg-column>
+        <zg-column type="text" index="EMD/PBG in Favour of"></zg-column>
+        <zg-column type="text" index="Status"></zg-column>
+        <zg-column type="text" index="Sales Manager"></zg-column>
+        <zg-column type="text" index="Contact Person Name"></zg-column>
+        <zg-column type="text" index="Contact Person Telephone Number"></zg-column>
+        <zg-column type="text" index="Contact Person Email"></zg-column>
+        <zg-column type="text" index="Expected Order Value"></zg-column>
+        <zg-column type="text" index="PBG Req by Date" sort="disabled"></zg-column>
+        <!-- <zg-column type="text" index="Tender Date" sort="disabled"></zg-column> -->
+        <zg-column type="text" index="Tender Number" sort="disabled"></zg-column>
+        <!-- <zg-column type="text" index="Employee Code"></zg-column> -->
+        <!-- <zg-column type="text" index="Total Expected OrderValue"></zg-column> -->
+        <zg-column type="text" index="Payment Terms"></zg-column>
+        <zg-column type="text" index="Location of Installation"></zg-column>
+        <zg-column type="text" index="Scope of Work in Brief"></zg-column>
+        <zg-column type="text" index="Delivery Terms"></zg-column>
+        <zg-column type="text" index="Penalty/LD"></zg-column>
+        <zg-column type="text" index="Potential Date of Conversion of Tender to Order"></zg-column>
+        <zg-column type="text" index="Purpose"></zg-column>
+        <zg-column type="text" index="Bank Type"></zg-column>
+        <!-- <zg-column type="text" index="Government/Non-Government"></zg-column> -->
+        <zg-column type="text" index="% Margin for Order"></zg-column>
+        <zg-column type="text" index="Address of Beneficiary"></zg-column>
+      </zg-colgroup>
+    </zing-grid><br>
+    <div *ngIf="(myResult && myResult.length > 0) && !loader" style="text-align: center;">
+      <button *ngIf="(myResult && myResult.length > 0) && !loader" (click)="pagination('Previous')"
+        [disabled]='pageNo<=1' style="background-color: #364453; color: white;">Previous</button>
+      <input *ngIf="(myResult && myResult.length > 0) && !loader" type="number" [(ngModel)]="pageNo" name="pageNo"
+        [max]=pageCount min=1 (keyup)="keyEvent($event, pageNo)" value="pageNo" id="myInput" style="width: 65px;">
+      of
+      <input *ngIf="(myResult && myResult.length > 0) && !loader" [(ngModel)]="pageCount" name="pageCount"
+        style="width: 65px;" readonly>
+      <button *ngIf="(myResult && myResult.length > 0) && !loader" (click)="pagination('Next')"
+        [disabled]='pageNo>=pageCount' style="background-color: #17b495;">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- Loader Section -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

@@ -1,0 +1,248 @@
+.account-form > form .feild > input[type="submit"]{
+    background: #ff541f none repeat scroll 0 0;
+}
+
+.creat-an-account > a{
+    background: #3f51b5 none repeat scroll 0 0;
+}
+
+.side-menus nav > ul > li > a > span:hover{
+    color: #ff571e;
+}
+
+.quick-report-side div > strong{
+    color:#ff541f;
+}
+
+.side-menus > span.footer-line{
+    text-align: center;
+    color: #898989;
+    margin-top:50px;
+}
+
+.side-menu-sec{
+    background: #364453 none repeat scroll 0 0;
+    margin-top: 4.5em;
+    padding: 10px 0;
+}
+
+.top-bar{
+    background: #364453 none repeat scroll 0 0;
+}
+
+.userNametxt{
+    color: #3f51b5;
+    font-style: normal;
+    font-size: 1.2em;
+}
+
+.activeBread{
+    color: #3f51b5 !important;
+    font-size: 1.1em;
+}
+
+.widgetSubfig{
+    color: #ff541f !important;
+}
+
+.quick-report-widget > i{
+    background-color: #3f51b5;
+}
+
+
+.btnActive{
+    background-color: #3f51b5;
+}
+
+.btnInactive{
+     background-color: #ff541f;
+}
+
+
+
+
+
+/* Styling icons */
+
+.icon-size {
+    width: 14px;
+    margin-right: 4px; 
+    height:20px;
+    cursor:pointer;
+    padding-top: 5px;
+}
+
+/* Styling th td  table*/
+
+.table-gray {
+    border: 0;
+    background-color:#364453;
+    padding:10px;
+    border-radius:7px;   
+}
+
+
+.blueTh {
+    background-color: #364453;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+
+}
+
+.blueTh > th , td {
+    width:100px;
+}
+
+.ps_th > th {
+    color: #17b495 !important;
+}
+
+
+ 
+
+
+/* button styling */
+
+
+
+
+/* Date styling */
+
+::ng-deep.bs-datepicker {
+    height: 300px;
+  }
+
+.f_parent {
+    color: black;
+    font-weight: bold;
+}
+
+/* stylign sub-header */
+.d_fa {
+    font-weight: bold;
+    font-size: 18px;
+}
+.fa{
+    font-weight: bold;
+    font-size: 14px;
+    padding-bottom:2px; 
+}
+.fa fa-reorder{
+    padding: 2px;
+    color: #17b495;
+}
+.fa fa-inr{
+    padding: 2px;
+    color: #17b495;
+}
+.fa fa-eye{
+    padding: 2px;
+    color: #17b495;
+}
+.sub-header{
+    background-color: #eee;
+    padding-left:111px;
+    height:28px;
+}
+
+ng-select, textarea {
+    box-shadow: 0 0 .5px .5px #17b495; 
+}
+
+.margin-bottom {
+    margin-bottom: 7px;
+}
+.margin-top {
+    margin-top:7px;
+}
+
+
+.lineUL li {
+    width: 6.3em;
+    height: 2em;
+    text-align: center;
+    line-height: 2em;
+    border-radius: 1em;
+  
+    margin: 0 1em;
+    display: inline-block;
+    color: white;
+    position: relative;
+  }
+  
+  .lineUL li::before {
+    content: '';
+    position: absolute;
+    top: .9em;
+    left: -5em;
+    width: 7em;
+    height: .1em;
+    background: #17b495;
+    z-index: -1;
+  }
+  
+  .lineUL li:first-child::before {
+    display: none;
+  }
+  
+  .lineUL .active {
+    /*background: #eee;*/
+  }
+  
+  .lineUL .active~li {
+    /*background: #eee;*/
+  }
+  
+  .lineUL .active~li::before {
+    background: #17b495;
+  }
+  .greenCircle {
+    border: 2px solid #17b495;
+    border-radius: 35px;
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    padding: 14px;
+    font-size: 10px;
+    background-color: #ffffff;
+    color: #fff;
+    width: 30px;
+    text-align: left;
+    position: relative;
+  }
+.imgDiv {
+    width: 17px;
+    z-index: 26;
+    position: absolute;
+    left: 6px;
+    top: 6px;
+  }
+  .labelPara {
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    top: 35px;
+    color: black;
+    font-size: 12px;
+    line-height: 1.2em;
+    left: 2;
+  }
+.checkbox{
+    margin-top:12px !important;
+    margin-left:12px !important;
+}
+.action{
+    margin-top: 9px;
+}
+.circle{
+    border: 2px solid #17b495;
+    border-radius: 22px;
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    padding: 3px;
+    font-size: 12px;
+    color: #fff;
+    width: 27px;
+    margin-right: 0px;
+    margin-top: 3px;
+    margin-left: 12px;
+}

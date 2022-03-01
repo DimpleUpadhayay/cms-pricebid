@@ -1,0 +1,18 @@
+.row {
+margin-bottom:10px;
+}
+.bid_head {
+ padding: 0px 4px;
+}
+.color-white {
+color:white;
+text-align: center;
+}
+img {
+width:17px;
+} 
+.fa-download{
+color: white;
+padding-top: 12px !important;
+margin-right: 10px;
+}

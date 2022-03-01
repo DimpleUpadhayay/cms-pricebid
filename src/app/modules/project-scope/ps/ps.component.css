@@ -1,0 +1,26 @@
+.ps_div {
+  background-color: #364453;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.heading{
+  margin-bottom: 10px;
+}
+
+/* .row { 
+  margin-bottom: 10px;
+} */
+
+.ps_head {
+  color: #70D8C4;
+  font-size: 16px;
+  padding: 4px 2px;
+  text-transform: capitalize;
+}
+
+.fan, .color-white {
+  color: white;
+}

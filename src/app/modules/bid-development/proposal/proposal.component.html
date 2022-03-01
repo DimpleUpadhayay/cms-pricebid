@@ -1,0 +1,325 @@
+<app-alert></app-alert>
+<!-- Add Proposal Category -->
+<span *ngIf="access && access?.createAccess && responseLength == 0  && categoryIcon()">
+  <img src="assets/images/add-orange.png" title="Add Category" (click)="onProposalAdd()"
+    style="margin: 8px 0 0 10px;cursor: pointer;">
+</span>
+<div class="row">
+  <div class="col-md-12">
+    <div *ngIf="response[temp]">
+      <span style="margin-right: 10px;" *ngFor="let item of proposalCats;let i = index">
+        <button class="btn" [class.selected]="item === selectedCategory" id="btnDynamic"
+          (click)="onSelectCategory(item,i)">{{item}}
+        </button>
+        <i class="fa fa-close" title="Delete Category" *ngIf="access && access?.createAccess && categoryIcon()"
+          (click)="onDeleteCategory(item)"></i>
+      </span>
+      <span *ngIf="access && access?.createAccess && categoryIcon()">
+        <img src="assets/images/add-orange.png" title="Add Category" (click)=" onProposalAdd()"
+          style="margin-left:10px;cursor: pointer;">
+      </span>
+      <span *ngIf="access && access?.createAccess && categoryIcon()">
+        <i class="fa fa-clone" title="Clone Category" (click)="onCloneCategory()"></i>
+      </span>
+    </div>
+  </div>
+</div>
+<!-- Proposal starts here -->
+<form autocomplete="off">
+  <div id="bid_solution" *ngIf="response[temp] && contributors && bidData && access">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        <div class="bid_div">
+          <!-- Table Heading for the Proposal -->
+          <div class="bid_head">
+            <div class="row">
+              <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                <div class="row">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                    #
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    Item
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    Description
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    Contributor
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                    Start Date - End Date
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                    Remarks/Comments
+                  </div>
+                  <!-- <div class="col-md-1">
+                      Action Taken
+                    </div> -->
+                  <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1">
+                    <i class="fa fa-gear"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="response[temp].proposal_add">
+            <div class="row" *ngFor="let items of response[temp].proposal_add;let j=index; last as isLast">
+              <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div class="row">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">
+                    {{j+1}}
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <textarea type="text" class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                      name="response[temp].proposal_add[j].item_name"
+                      [disabled]="(!access?.createAccess && !isCoOwner) || !response[temp].proposal_add[j].draft[0].flag || disableRow()"
+                      [(ngModel)]="response[temp].proposal_add[j].item_name"></textarea>
+                    <!--  || (access?.craeteAccess && disabledFlag) -->
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <textarea type="text" class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                      name="response[temp].proposal_add[j].description"
+                      [disabled]="(!access?.createAccess && !isCoOwner) || !response[temp].proposal_add[j].draft[0].flag || disableRow()"
+                      [(ngModel)]="response[temp].proposal_add[j].description">
+                        </textarea>
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <select class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                      name="response[temp].proposal_add[j].contributor" [disabled]="((!access?.createAccess && !isCoOwner) || !response[temp].proposal_add[j].draft[0].flag || !actionFlag || disableRow())
+                                  && !response[temp].proposal_add[j].reassignFlag"
+                      [(ngModel)]="response[temp].proposal_add[j].contributor">
+                      <!-- <option [value]="contributor.user_id" *ngFor="let contributor of contributors" [disabled]="response[temp].proposal_add[j].reassignFlag
+                        && response[temp].proposal_add[j].originalContributor == contributor.user_id">
+                        <span>{{contributor.username}}
+                          -
+                          {{contributor.user_type == 'BID_OWNER' ? 'Co-Owner' : contributor.user_subtype}}</span>
+                        <span *ngIf=" response[temp].proposal_add[j].reassignFlag"> -
+                          {{ contributor.count }}</span>
+                      </option> -->
+
+                      <ng-container *ngFor="let contributor of contributors">
+                        <option [value]="contributor.user_id" [disabled]="contributor?.eleUserRemove == 'Removed' || (response[temp].proposal_add[j].reassignFlag
+                        && response[temp].proposal_add[j].originalContributor == contributor.user_id)"  *ngIf="!response[temp].proposal_add[j].draft[0].flag">
+                          <span >
+                            {{contributor.username }} -
+                            {{contributor.user_type == 'BID_OWNER' ? 'Co-Owner' : contributor.user_subtype}}
+                          </span>
+                          <span *ngIf="response[temp].proposal_add[j].reassignFlag">
+                            - {{ contributor.count }}
+                            </span>
+                        </option>
+
+                        <option [value]="contributor.user_id" [disabled]="response[temp].proposal_add[j].reassignFlag
+                        && response[temp].proposal_add[j].originalContributor == contributor.user_id " *ngIf="response[temp].proposal_add[j].draft[0].flag  && contributor?.eleUserRemove == 'notRemoved'">
+                          <span>
+                            {{contributor?.eleUserRemove == 'notRemoved' ?  contributor.username : contributor.username }} -
+                            {{contributor?.eleUserRemove == 'notRemoved' && contributor.user_type == 'BID_OWNER' ? 'Co-Owner' : contributor.user_subtype}}
+                          </span>
+                          <span *ngIf="response[temp].proposal_add[j].reassignFlag">
+                            - {{ contributor.count }}
+                            </span>
+                        </option>
+
+                      </ng-container>
+                    </select>
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                    <input placeholder="Date Time Range" class="form-control input-bar"
+                      [ngModelOptions]="{standalone: true}" [(ngModel)]="response[temp].proposal_add[j].dateTimeRange"
+                      [selectMode]="'range'" [min]="minDate" [max]="submission_date"
+                      [readonly]="access?.createAccess && actionFlag"
+                      [ngClass]="response[temp].proposal_add[j].draft[0].flag == false ? 'disableColor' : 'normalColor'"
+                      [disabled]="(!access?.createAccess && !isCoOwner) || !response[temp].proposal_add[j].draft[0].flag || disableRow()"
+                      (ngModelChange)="onDateSelect(temp,j)" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+                    <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                  </div>
+                  <div class="col-xs-1 col-sm-1 col-lg-2 col-md-2">
+                    <textarea type="text" class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                      name="response[temp].proposal_add[j].remarks" id="remarks" [disabled]="(!access?.remarkAccess || !response[temp].proposal_add[j].draft[1]?.flag || response[temp].proposal_add[j].contributor != userID) ||
+                   disableRemarks() || response[temp].proposal_add[j].reassignFlag"
+                      [(ngModel)]="response[temp].proposal_add[j].remarks">
+                  </textarea>
+                  </div>
+
+                  <!-- SubItem changes -->
+                  <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1 action">
+                    <!-- Arrow Attach Delete Download and Add Section Icon and Images Section  -->
+                    <span class="fa fa-ellipsis-v dropdown-toggle"
+                      *ngIf="response[temp].proposal_add[j]?.subItem?.length == 0" data-toggle="dropdown"
+                      [ngStyle]="{'color' : items.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}"
+                      aria-haspopup="true" aria-expanded="false"></span>
+                    <span> <i class="fa fa-caret-down" style="cursor:pointer;color: white;" aria-hidden="true"
+                        data-toggle="collapse" [attr.data-target]="'#'+ response[temp].proposal_add[j].item_id "
+                        *ngIf="response[temp].proposal_add[j]?.subItem?.length != 0"></i></span>
+                    <ul class="dropdown-menu dropdown-menu-left actionList">
+                      <span
+                        *ngIf="response[temp].proposal_add[0].draft.length > 1 && response[temp].proposal_add[j].contributor == userID && (proposalReviewFlag || !reviewComment) && !pocSubmited &&(!reviewCompleted || !rfiFlag) && !response[temp].proposal_add[j].reassignFlag">
+                        <i class="fa fa-undo faIcon" title="Revoke" (click)="onEdit(j,temp)"></i>
+                      </span>
+                      <!-- && proposalReviewFlag && !pocSubmited && (!reviewCompleted || !rfiFlag) -->
+                      <span
+                        *ngIf="isCoOwner && response[temp].proposal_add[0].draft.length > 1 && (proposalReviewFlag || !reviewComment)"
+                        (click)="onReassign(j, temp)"><i class="fa fa-user faIcon" title="Re-assign"></i></span>
+                      <span *ngIf="response[temp].proposal_add[j]?.subItem?.length == 0"> <i
+                          class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                          [ngStyle]="{'color' : items.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                          (click)="onDownloadDialog(j,temp)"></i></span>
+                      <span *ngIf="response[temp].proposal_add[j]?.subItem?.length == 0"> <i
+                          class="fa fa-paperclip faIcon" title="Attach" (click)="onUpload(j, temp)"></i></span>
+                      <span *ngIf="response[temp].proposal_add[j]?.subItem?.length == 0">
+                        <i class="fa fa-trash faIcon" title="Delete"
+                          [ngStyle]="{'cursor': response[temp].proposal_add[j]?.draft.length == 1 ? 'pointer' : 'not-allowed'}"
+                          (click)="deleteRow(j,temp)"  ></i></span>
+                    </ul>
+                    <span  *ngIf="response[temp].proposal_add[j].reassignFlag"
+                      (click)="onReassignSubmit(j, temp)"><i class="fa fa-check-circle" title="Re-assign"></i></span>
+                    <span *ngIf="response[temp].proposal_add[j].reassignFlag" (click)="onReassignClear(j, temp)"><i
+                        class="fa fa-times-circle" style="color:white" title="Cancel"></i></span>
+                    <span><i class="fa fa-plus-circle"
+                        *ngIf="access?.createAccess && isCoOwner && isLast && response[temp].proposal_add[j].draft[0].flag && proposalReviewFlag && !pocSubmited && bidStatus != 'DROPPED'"
+                        title="Add" (click)="addRow(j,temp)"></i></span>
+                    <div class="dropdown" *ngIf="items.contributorSubmitDate != null">
+                      <i class="fa fa-clock-o" style="color: white;"> </i>
+                      <div class="dropdown-content">
+                        {{ items.contributorSubmitDate  | date: "dd-MM-yyyy , h:mm:ss" }}
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+              <!--  -->
+
+              <div *ngIf="true" class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 collapse in"
+                    [attr.id]="response[temp].proposal_add[j].item_id">
+                    <div class="row" *ngFor="let item of items?.subItem;let k=index; last as subLast">
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">
+                        {{j+1}}.{{k+1}}
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        <textarea type="text" class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                          name="items.subItem[k].item_name" [(ngModel)]="items.subItem[k].item_name"
+                          [disabled]="disableSubItemRow()"></textarea>
+                        <!--  || (access?.craeteAccess && disabledFlag || items.item_id) -->
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        <textarea type="text" class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                          name="items.subItem[k].description" [(ngModel)]="items.subItem[k].description"
+                          [disabled]="disableSubItemRow()"></textarea>
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        <select class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                          name="items.subItem[k].contributor" [(ngModel)]="items.subItem[k].contributor"
+                          [disabled]="!items.subItem[k].reassignFlag && disableSubItemRow()">
+                          <!-- <option [value]="contributor.user_id" *ngFor="let contributor of contributors" [disabled]="items.subItem[k].reassignFlag
+                                              && items.subItem[k].originalContributor == contributor.user_id">
+                            {{contributor.username}} -
+                            {{contributor.user_type == 'BID_OWNER' ? 'Co-Owner' : contributor.user_subtype}}
+                            <span *ngIf="items.subItem[k].reassignFlag">
+                              - {{ contributor.count }}
+                            </span>
+                          </option> -->
+
+                          <ng-container *ngFor="let contributor of contributors">
+                            <option [value]="contributor.user_id" [disabled]="contributor?.eleUserRemove == 'Removed' || (items.subItem[k].reassignFlag
+                            && items.subItem[k].originalContributor == contributor.user_id)">
+                              <span >
+                                {{contributor.username }} -
+                                {{contributor.user_type == 'BID_OWNER' ? 'Co-Owner' : contributor.user_subtype}}
+                              </span>
+                              <span *ngIf="items.subItem[k].reassignFlag">
+                                - {{ contributor.count }}
+                                </span>
+                            </option>    
+                          </ng-container>
+
+                        </select>
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        <input placeholder="Date Time Range" class="form-control input-bar"
+                          [ngModelOptions]="{standalone: true}" [(ngModel)]="items.subItem[k].dateTimeRange"
+                          [disabled]="disableSubItemRow()" [selectMode]="'range'" (ngModelChange)="onDateSelect($event)"
+                          [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1">
+                        <owl-date-time [pickerType]="'calendar'" #dtRange1></owl-date-time>
+                      </div>
+                      <div class="col-xs-1 col-sm-1 col-lg-2 col-md-2">
+                        <textarea type="text" class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                          name="items.subItem[k].remarks" id="remarks" [(ngModel)]="items.subItem[k].remarks"
+                          [disabled]="(!access?.remarkAccess ||  item.contributor != userID) ||
+                            (item.contributor == userID && !items.subItem[k].draft[1].flag) || disableRemarks()
+                            || items.subItem[k].reassignFlag">
+                            </textarea>
+                      </div>
+
+                      <!-- Attach Delete Download and Add for Icon and Images Section  -->
+                      <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1 action" *ngIf="subLast">
+                        <span class="fa fa-ellipsis-v dropdown-toggle" style="color: #17b495;cursor: pointer;"
+                          [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+                        <ul class="dropdown-menu dropdown-menu-left actionListSubRow">
+                          <span
+                            *ngIf="response[temp].proposal_add[0].draft.length > 1 && items.subItem[k].contributor == userID  && (proposalReviewFlag || !reviewComment) && !pocSubmited &&(!reviewCompleted || !rfiFlag) && !items.subItem[k].reassignFlag"><i
+                              class="fa fa-undo faIcon" title="Revoke" (click)="onEdit(j,temp)"></i></span>
+                          <span
+                            *ngIf="isCoOwner && response[temp].proposal_add[0].draft.length > 1 && (proposalReviewFlag || !reviewComment)"
+                            (click)="onReassign(j, temp)"><i class="fa fa-user faIcon" title="Re-assign"></i></span>
+                          <span> <i class="fa fa-download faIcon" title="Download" style="cursor: pointer;"
+                              [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                              (click)="onDownloadDialog(j,temp)"></i></span>
+                          <span> <i class="fa fa-paperclip faIcon" title="Attach"
+                              (click)="onUploadReview(j, temp)"></i></span>
+                          <!-- <img src="assets/images/rubbish-bin.png"  title="Delete"
+                              (click)="deleteRow(j,temp)"> -->
+                        </ul>
+                        <span  *ngIf="items.subItem[k].reassignFlag"
+                          (click)="onReassignSubmit(j, temp)"><i class="fa fa-check-circle"
+                            title="Re-assign"></i></span>
+                        <span *ngIf="items.subItem[k].reassignFlag" (click)="onReassignClear(j, temp)"><i
+                            class="fa fa-times-circle" style="color:white" title="Cancel"></i></span>
+                        <div class="dropdown" *ngIf="items?.subItem[k]?.contributorSubmitDate != null">
+                          <i class="fa fa-clock-o" style="color: white;"> </i>
+                          <div class="dropdown-content">
+                            {{ items?.subItem[k]?.contributorSubmitDate  | date: "dd-MM-yyyy , h:mm:ss" }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- If there is no Proposal -->
+  <div class="aling-center bid_div color-white" style="margin-top:18px"
+    *ngIf="responseLength == 0 && (!access?.createAccess || !isCoOwner)">
+    Proposal Section is yet to be created
+  </div>
+  <!-- Action Button Save,Submit,Reset -->
+  <div class="container" *ngIf="access && access?.writeAccess && (isCoOwner || user_type=='CONTRIBUTOR')">
+    <div class="text-center" *ngIf="response[temp]">
+      <button type="submit" *ngIf="!revokeFlag" class="btn save-button" [disabled]="disableSubmitButtonBeforeRevoke()"
+        (click)="onSaveAsDraft(temp, 'save')">Save</button>
+      <button type="submit" *ngIf="!revokeFlag" class="btn draft-button" [disabled]="disableSubmitButtonBeforeRevoke()"
+        (click)="onSubmit(j,temp)">{{response[temp].proposal_add[0].draft[0].flag ? 'Assign' : 'Submit'}}</button>
+      <button type="submit" *ngIf="!revokeFlag" class="btn cancel-button" [disabled]="disableSubmitButtonBeforeRevoke()"
+        (click)="onReset()">Reset</button>
+      <!-- After revoke --> 
+      <button type="submit" *ngIf="revokeFlag" class="btn save-button" [disabled]="disableSubmitButtonAfterRevoke()"
+        (click)="onSaveAsDraft(temp, 'revoke')">Save</button>
+      <button type="submit" *ngIf="revokeFlag" class="btn draft-button" [disabled]="disableSubmitButtonAfterRevoke()"
+        (click)="onRevoke(j,temp)">Submit</button>
+      <button type="submit" *ngIf="revokeFlag" class="btn cancel-button" [disabled]="disableSubmitButtonAfterRevoke()"
+        (click)="onReset()">Reset</button>
+    </div>
+  </div>
+</form>
+<!-- Loader Section for the Proposal TAB-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

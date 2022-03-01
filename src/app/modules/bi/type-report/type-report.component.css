@@ -1,0 +1,76 @@
+#myChart {
+    height: 100%;
+    width: 100%;
+}
+
+.export {
+    float: right;
+    margin-left: 19px;
+    margin-right: 20px;
+}
+
+.date {
+    width: 160% !important;
+}
+
+.filterBox {
+    background-color: #f1f1f1 !important;
+    padding: 5px 17px;
+}
+
+.range {
+    padding: 6px 4px !important;
+    width: 108% !important;
+}
+
+.guion {
+    float: left;
+    margin-top: 5px;
+}
+
+.margin-left {
+    margin-left: -25px !important;
+}
+
+.btn-clear {
+    background-color: #F1A457 !important;
+    color: white !important;
+}
+
+.btn-submit {
+    background-color: #17b495 !important;
+    color: white !important;
+}
+
+.fa-refresh {
+    float: right !important;
+    margin-top: -48px !important;
+    margin-right: -18px !important;
+    cursor: pointer !important;
+}
+
+.heading {
+    float: right;
+    font-size: 16px;
+    padding: 9px;
+}
+
+.heading-caption {
+    float: left;
+    font-size: 16px;
+    padding-top: 9px;
+}
+
+.bidValue{
+    color: #41404E;
+    float: right;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.title {
+    color: #41404E;
+    text-transform: inherit;
+    font-family: Helvetica Neue, Helvetica, Arial, sans- serif;
+    font-weight: bold;
+}

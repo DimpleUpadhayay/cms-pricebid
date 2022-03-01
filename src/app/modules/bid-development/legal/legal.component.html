@@ -1,0 +1,104 @@
+<app-alert></app-alert>
+<fieldset [disabled]="bidStatus == 'DROPPED'">
+  <div class="row" *ngIf="response">
+    <div class="col-xs-12 col-md-12">
+      <div class="bid_div">
+        <!-- Table Heading for the Legal Response -->
+        <div class="bid_head">
+          <div class="row">
+            <div class="col-xs-1 col-md-1 align-center">
+              #
+            </div>
+            <div class="col-xs-2 col-md-2">
+              Description
+            </div>
+            <div class="col-xs-4 col-md-2">
+              Contributor
+            </div>
+            <div class="col-xs-4 col-md-2">
+              Start Date - End Date
+            </div>
+            <div class="col-xs-2 col-md-2">
+              Response
+            </div>
+            <div class="col-xs-2 col-md-2">
+              Assigned By
+            </div>
+            <div class="col-xs-3 col-md-1">
+              <i class="fa fa-gear"> </i>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngFor="let item of response[0].legalRisk_add; let i = index; last as isLast">
+          <div class="col-xs-1 col-md-1 align-center srno">
+            {{i+1}}
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <textarea class="form-control input-bar" [(ngModel)]="response[0].legalRisk_add[i].description"
+              [disabled]="!access?.createAccess || !response[0].legalRisk_add[i].draft[0].flag || pocSubmited"></textarea>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+            <select disabled class="form-control" [(ngModel)]="response[0].legalRisk_add[i].contributor">
+              <option [value]="item.user_id" *ngFor="let item of participants"> {{item.username}}</option>
+            </select>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+            <input placeholder="Date Time Range" class="form-control" [min]="minDate" [max]="submission_date"
+              [selectMode]="'range'" [owlDateTimeTrigger]="dt" [owlDateTime]="dt"
+              [(ngModel)]="response[0].legalRisk_add[i].dateTimeRange" (ngModelChange)="onDateSelect(i)"
+              [readonly]="access?.createAccess"
+              [disabled]="!access?.createAccess || !response[0].legalRisk_add[i].draft[0].flag || pocSubmited">
+            <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <textarea type="text" class="form-control input-bar" [(ngModel)]="response[0].legalRisk_add[i].mitigation"
+              [disabled]="!access?.mitigationAccess || !response[0].legalRisk_add[i].draft[1]?.flag || pocSubmited"></textarea>
+          </div>
+          <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+            <select disabled class="form-control" [(ngModel)]="response[0].legalRisk_add[i].user_id">
+              <option [value]="item.user_id" *ngFor="let item of contributors"> {{item.username}}</option>
+            </select>
+          </div>
+          <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+          <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1">
+            <span class="fa fa-ellipsis-v dropdown-toggle" title="Action" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"
+              [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"></span>
+            <ul class="dropdown-menu dropdown-menu-left actionList">
+              <span><i class="fa fa-download faIcon" aria-hidden="true" title="Download"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                  (click)="onDownloadDialog(i)"></i></span>
+              <span><i class="fa fa-paperclip faIcon" (click)="onUpload(i)" title="Attach"></i></span>
+              <span><i class="fa fa-trash faIcon" title="Delete" (click)="deleteRow(i)"></i></span>
+            </ul>
+            <span [hidden]="!isLast"> <i class="fa fa-plus-circle" title="Add" (click)="addRow()"
+                *ngIf="access && access?.createAccess && legalReviewFlag && !pocSubmited"></i></span>
+                <div class="dropdown" *ngIf="item?.contributorSubmitDate != null">
+                  <i class="fa fa-clock-o" style="color: white;"> </i>
+                  <div class="dropdown-content">
+                    {{ item?.contributorSubmitDate  | date: "dd-MM-yyyy , h:mm:ss"  }}
+                  </div>
+                </div>
+            <!-- *ngIf="access?.createAccess  && item.draft[0].flag" -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Button Save,Submit & Reset  -->
+  <div class="container" *ngIf="access && access?.writeAccess && response">
+    <div class="text-center">
+      <button type="submit" id="btnSubmit" class="btn save-button"
+        [disabled]="submitFlag || !legalReviewFlag || pocSubmited" (click)="onSaveAsDraft()">Save</button>
+      <button type="submit" id="btnSubmit" class="btn draft-button"
+        [disabled]="submitFlag || !legalReviewFlag || pocSubmited" (click)="onSubmit()">Submit</button>
+      <button type="submit" id="btnSubmit" class="btn cancel-button"
+        [disabled]="submitFlag || !legalReviewFlag || pocSubmited" (click)="onReset()">Reset</button>
+    </div>
+  </div>
+  <!-- Loader Section for the legal TAB-->
+  <div class="overlay" *ngIf="loader">
+    <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+  </div>
+</fieldset>

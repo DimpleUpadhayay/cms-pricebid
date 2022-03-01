@@ -1,0 +1,97 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+    <div class="mainadduserSection col-sm-6 col-md-6">
+      <div class="card mainuserSection">
+        <!-- Breadcrumb Section  -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"> Company Settings</li>
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" routerLink="/territory/list" aria-current="page">Territories</li>
+            <li class="breadcrumb-item active" aria-current="page">{{territory_id ? 'Update' : 'Create'}}
+            </li>
+          </ol>
+        </nav>
+        <div class="row text-center form-group">
+          <!-- Heading of the Page -->
+          <h4 class="formHeading">{{territory_id?'Update' :'Create New'}} Territory</h4>
+        </div>
+        <!-- Creating Territory Starts Here -->
+        <div class="formLogin">
+          <form [formGroup]="territoryForm">
+            <div class="">
+              <div class="row">
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-bottom"> Name&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('name')" class="form-control input-border input-bar" type="text"
+                    maxlength="50" formControlName="name" placeholder="Territory Name" required="required"
+                    [(ngModel)]="territory.name"
+                    [ngStyle]="{'box-shadow': formSubmitted && !territory.name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-bottom"> Territory Id&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('territory_number')" class="form-control input-border input-bar"
+                    type="text" maxlength="50" formControlName="territory_number" placeholder="e.g .. TCN0123"
+                    required="required" [(ngModel)]="territory.territory_number"
+                    [ngStyle]="{'box-shadow': formSubmitted && !territory.territory_number ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-bottom"> Description&nbsp;<span class="required_field">*</span></label>
+                  <textarea (input)="validateSingle('description')" class="form-control input-border input-bar"
+                    type="text" maxlength="50" formControlName="description" placeholder="Territory Description"
+                    [ngStyle]="{'box-shadow': formSubmitted && !territory.description ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    required="required" [(ngModel)]="territory.description">
+                                            </textarea>
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <!-- <label class="margin-bottom">Parent Territory &nbsp;<span class="required_field">*</span></label>
+                                <select class="form-control input-border" name="parent_id" formControlName="parent_id" [(ngModel)]="territory.parent_id">
+                                    <option value="root">Root (Global)</option>
+                                    <option value="{{territory._id}}" *ngFor="let territory of mainTerritories">{{territory.name}}</option>
+                                </select> -->
+                  <label class="margin-bottom" for="">Parent Territory<span class="required_field">*</span></label>
+                  <ng-select style="border-left: 5px solid #17b495 !important; border-radius:5px;"
+                    [items]="mainTerritories" bindLabel="name" bindValue="territory_id"
+                    (change)="validateSingle('parent_id')" placeholder="Select Parent Territory"
+                    formControlName="parent_id" [(ngModel)]="territory.parent_id"
+                    [ngStyle]="{'box-shadow': formSubmitted && !territory.parent_id ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                  </ng-select>
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-bottom" for="comment">CRM ID</label>
+                  <input type="text" [(ngModel)]="territory.RegionID" formControlName="RegionID"
+                    class="form-control input-border input-bar">
+                </div>
+              </div>
+              <br>
+              <!-- Action Button Update Create -->
+              <div class="row">
+                <div class="col-md-12 margin-bottom align-center">
+                  <!-- <button type="button" class="btn save-button" (click)="createTerritory()">{{territory_id?Update :Create}}
+                                    territory</button> -->
+                  <div class="text-center">
+                    <button type="button" id="btnSubmit" [disabled]="disableBtn"
+                      (click)="territory_id ? updateTerritory() : createTerritory()"
+                      class="btn save-button">{{territory_id?'Update':'Create'}}</button>
+                  </div>
+                  <!-- <button type="button" class="btn draft-button" (click)="createTerritoryResetForm()">Reset</button>
+                                <button type="button" class="btn cancel-button" [routerLink]="['/territory']">Cancel</button> -->
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+  </div>
+</div>
+<!-- Loader Section for the Main-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

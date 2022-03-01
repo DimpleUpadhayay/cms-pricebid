@@ -1,0 +1,431 @@
+<app-bid-details></app-bid-details>
+<app-alert></app-alert>
+<div class="container">
+  <!-- <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+      <li class="breadcrumb-item active" aria-current="page">Tender Fee</li>
+    </ol>
+  </nav> -->
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Page Heading In Bid-Documents -->
+      <div class="heading-profile" style="display: flex;">
+        <div class="titleTenderFee" style="display: flex; ">
+          <h2 style="width: 20rem;">Tender Fee</h2>
+          <span *ngIf="(access && access.writeAccess) && !bidVersionStatus && bidStatus != 'DROPPED'">
+            <img src="assets/images/add-orange.png" id="AddCategory" title="Create New Tender Fee"
+              (click)="onAddNewEOI()" *ngIf="multipleEOIFlag">
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+    </div>
+    <div class="options">
+      <div class="col-md-6">
+        <select id="selectMultiple" class="form-control" (change)="readEoi($event.target.value); selectDropdown();"
+          [(ngModel)]="selectedEOI" *ngIf="multipleEOIFlag">
+          <option value="" disabled selected>Select Tender Fee</option>
+          <option *ngFor="let details of allEOI;  let i = index;" [value]="details.eoiRequestId">
+            {{details.eoiRequestId}}</option>
+        </select>
+      </div>
+      <div class="col-md-6" *ngIf="multipleEOIFlag">
+        <i class="fa fa-info-circle" aria-hidden="true" style="font-size: 25px; cursor: pointer;">
+          <span class="tooltiptext">
+            {{eoidetails && eoidetails.approval_status ? eoidetails.approval_status : 'Draft'}}
+          </span>
+        </i>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="access && NoDataMultipleEOIFlag">
+    <ul class="nav nav-tabs" style="text-align: left;">
+      <li class="active"><a href="#first_emd" data-toggle="tab" id="first_tab">Tender Fee</a></li>
+      <li><a href="#second_eoi" data-toggle="tab" id="second_tab_eoi">Attachment</a></li>
+      <li><a href="#third_eoi" data-toggle="tab" id="third_tab_eoi"
+          *ngIf="eoidetails && approvalChainLength!=0">Timeline</a></li>
+    </ul>
+    <div class="tab-content">
+      <div id="first_emd" class="tab-pane fade in active">
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()">
+          <div class="container-wrapper"
+            style="border-style: solid;padding: 16px 0 10px 40px;border-color: #eaeae2;border-width: thin;border-radius: 5px;">
+            <div class="row" id="containerRow">
+              <div class="col" style="margin-left: 0.5rem;">
+                <div class="row" id="main-container"
+                  style="border-style: solid;margin-bottom: 5px;margin-right: auto;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <div class="row" style="margin-top: 1rem;margin-left: 1rem;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">
+                        <p style="font-size:15px ;">Tender Fee Request ID </p>
+                      </label>
+                      <input type="text" class="form-control" style="width: 23rem !important;"
+                        [(ngModel)]="eoidetails && eoidetails.eoiRequestId" [ngModelOptions]="{standalone: true}"
+                        id="hideInputfield" [disabled]="true">
+                    </div>
+                  </div>
+                  <p style="margin: 1rem;">Customer Information</p>
+                  <div class="row" style="margin-left: 1rem;" id="containerRow">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Customer Name </label>
+                      <textarea type="text" class="form-control" id="hideInputfield" value="{{bid?.account_name}}"
+                        [disabled]="true"></textarea>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Customer Location </label>
+                      <input type="text" class="form-control" id="hideInputfield" value="{{customerLocation}}"
+                        [disabled]="true">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 1rem;" id="containerRow">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Name of Employee </label>
+                      <input type="text" class="form-control" id="hideInputfield" value="{{accountManagerName}}"
+                        [disabled]="true">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Employee Code <span class="required_field"></span></label>
+                      <input type="text" class="form-control" [(ngModel)]="eoidetails && eoidetails.accountManagerCode"
+                        id="inputfield" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="main-container"
+                  style="border-style: solid;margin-bottom: 5px;margin-right: auto;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <p style="margin: 1rem;">Order Information</p>
+                  <div class="row" style="margin-left: 1rem;margin-bottom: 0.5rem; " id="containerRow">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Order Type <span class="required_field">*</span></label>
+                      <select type="text" class="form-control" id="inputfield"
+                        [(ngModel)]="eoidetails && eoidetails.orderType" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.orderType == '' || eoidetails.orderType == null )? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                        <option *ngFor="let order of orders" [value]="order">
+                          {{order}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group col" style="margin-left: 2rem;">
+                      <label for="exampleInputPassword1">Order Value (in Rs Mn) </label>
+                      <input type="text" class="form-control" id="inputfield" value="{{estimatedValueData}}"
+                        [disabled]="true" id="hideInputfield">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="row" id="main-container"
+                  style="border-style: solid;margin-bottom: 6px; margin-right: 22px;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <p style="margin: 1rem;">Tender Information</p>
+                  <div class="row" style="margin-left: 1rem;" id="containerRow">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Tender Number <span class="required_field">*</span></label>
+                      <input type="text" class="form-control" [(ngModel)]="eoidetails && eoidetails.tenderNumber"
+                        id="inputfield" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.tenderNumber == '' || eoidetails.tenderNumber == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col" style="margin-left: 1rem;">
+                      <label for="exampleInputPassword1">Tender Date <span class="required_field">*</span></label>
+                      <input [(ngModel)]="eoidetails && eoidetails.tenderDate" [ngModelOptions]="{standalone: true}"
+                        [owlDateTime]="dt" id="inputfield" [owlDateTimeTrigger]="dt" placeholder="Date Time"
+                        class="form-control"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.tenderDate == '' || eoidetails.tenderDate == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="main-container"
+                  style="border-style: solid;padding: 18px;margin-bottom: 6px;padding-left: 2rem;
+                margin-right: 22px;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <p style=" margin-left: -1rem;">Tender Fee Information</p>
+                  <div class="row" id="containerRow">
+                    <div class="form-group col" style="margin-left:0.5rem">
+                      <label for="exampleInputPassword1">Amount (in Rs)<span class="required_field">*</span></label>
+                      <input type="Number" min="0" class="form-control" id="inputfield"
+                        [(ngModel)]="eoidetails && eoidetails && eoidetails.eoiAmount"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.eoiAmount == '' || eoidetails.eoiAmount == null ) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col" style="margin-left: 1rem;">
+                      <label for="exampleInputPassword1">Tender Fee In Favour Of <span
+                          class="required_field">*</span></label>
+                      <textarea type="text" class="form-control" id="inputfield"
+                        [(ngModel)]="eoidetails && eoidetails.eoiInFavourOf" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.eoiInFavourOf == '' || eoidetails.eoiInFavourOf == null )? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </textarea>
+                    </div>
+
+                  </div>
+                  <div class="row" id="containerRow">
+                    <div class="form-group col" style="margin-left:0.5rem">
+                      <label for="exampleInputEmail1">Payable At <span class="required_field">*</span></label>
+                      <input type="text" class="form-control" id="inputfield"
+                        [(ngModel)]="eoidetails && eoidetails.payableAt" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.payableAt == '' || eoidetails.payableAt == null)? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col" style="margin-left: 1rem;">
+                      <label for="exampleInputEmail1">Mode of Payment <span class="required_field">*</span></label>
+                      <br> <input type="radio" value="DD" [(ngModel)]="eoidetails && eoidetails.modeOfPayment"
+                        [ngModelOptions]="{standalone: true}" id="dd"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+
+                      <label for="male">DD</label><br>
+                      <input type="radio" id="neft" value="NEFT" [(ngModel)]="eoidetails && eoidetails.modeOfPayment"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                      <label for="female">NEFT</label><br>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-bottom: -2rem;" id="containerRow">
+                    <div class="form-group col" style="margin-left:1rem ;">
+                      <label for="exampleInputEmail1" style="margin-top: -2rem;">Last Date for Submission <span
+                          class="required_field">*</span></label>
+                      <input [owlDateTime]="dt2" id="inputfield"
+                        [(ngModel)]="eoidetails && eoidetails.lastDateForSubmissionOfEoi"
+                        name="lastDateForSubmissionOfEoi" [owlDateTimeTrigger]="dt2" placeholder="Date Time"
+                        class="form-control"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (eoidetails.lastDateForSubmissionOfEoi == '' || eoidetails.lastDateForSubmissionOfEoi == null)? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+
+                      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    </div>
+                    <div class="form-group col" style="margin-left:0.5rem;">
+                      <label for="exampleInputPassword1">Remarks</label>
+                      <textarea type="text" class="form-control" id="inputfield"
+                        [(ngModel)]="eoidetails && eoidetails.remarks" name="remarks"
+                        [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                  </textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container" *ngIf="hideButtonPlusDiv()">
+            <div class="text-center" style="margin-left: -10rem;">
+              <!-- EDM Form buttons -->
+              <button id="btnReset" (click)="resetFormEoi()" class="btn cancel-button"
+                style="margin-left:- 10rem;font-size: 14px;margin-left: 6rem;"
+                [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                Reset
+              </button>
+              <button (click)="onSaveEoi('save')" style="font-size: 14px;" id="btnSave" class="btn save-button"
+                [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                Save
+              </button>
+              <button type="submit" id="btnSubmit" class="btn draft-button" (click)="onSaveEoi('next')"
+                style="background-color: #17b495;font-size: 14px;"
+                [disabled]="(access && !access.writeAccess)|| (eoidetails && eoidetails.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                Next </button>
+            </div>
+          </div>
+        </form>
+        <!-- Approver comment Section  -->
+        <div *ngIf="!bidVersionStatus && bidStatus != 'DROPPED'">
+          <div class="row" style="margin-top:40px" *ngIf="approvalFlag">
+            <div class="col-md-12">
+              <div class="caption">Comments</div>
+              <div class="ps_div1">
+                <br>
+                <div class="row" *ngFor="let item of ac_comment;let i = index;last as isLast">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center" style="margin-top:10;">1.</div>
+                  <div class="col-xs-11 col-sm-11 col-lg-11 col-md-11">
+                    <input type="text" class="form-control" [(ngModel)]="ac_comment[i].comment"
+                      [ngModelOptions]="{standalone: true}"
+                      style="border-left: 7px solid #17b495!important;margin-left: -25px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></div><br>
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 align-right">
+              <button type="button" (click)="actionButton('APPROVED')" class="btn approved-button">APPROVED
+              </button>
+              <button type="button" (click)="actionButton('REJECTED')" class="btn reject-button"
+                style="background-color: #e4332c;">REJECTED
+              </button>
+            </div>
+          </div>
+          <div style="text-align: center;margin-top: 15px;" *ngIf="completedFlag">
+            <button type="button" (click)="actionButton('COMPLETED')" class="btn approved-button">COMPLETED
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="second_eoi" class="tab-pane fade in" style="font-size: 14px; width: 1140px;height: 36rem;">
+        <form #attachForm="ngForm" style="background-color:rgb(234 247 220);padding:2rem;">
+          <div class="row" style="font-size:16px;display: flex;padding-left: 4rem;padding: 2rem;" autocomplete="off">
+            <div class="new-1 form-group" style=" font-size: 16px;">
+              #<br />
+            </div>
+            <div class="Attchfile">
+              <p id="exampleFormControlInput1">Document name</p>
+            </div>
+            <div class="Description">
+              <p id="exampleFormControlInput1">Attach File
+              </p>
+            </div>
+            <div class="Referance">
+              <p id="exampleFormControlInput1">Remark</p>
+            </div>
+            <div class="Attchments" style="text-align: center;">
+              <p id="exampleFormControlInput1">Attachments </p>
+            </div>
+          </div>
+          <div class="scrollContainer" style="height:23rem;overflow-y: scroll;margin-top:-4rem;padding: 2rem;">
+            <!-- DOWNLOADS -->
+            <div class="row" *ngFor="let file of uploadAttachments;let i = index; last as isLast"
+              style="display:flex ;">
+              <div class="new-1">
+                <p id="exampleFormControlInput1"> {{i+1}}</p>
+              </div>
+              <div class="form-group col" style="margin-left: 7rem;">
+                <input type="text" class="form-control input-bar" [(ngModel)]="uploadAttachments[i].cellRange"
+                  [ngModelOptions]="{standalone: true}" id="hideInputfield" [disabled]="true">
+              </div>
+              <div class="form-group col">
+                <textarea type="text" class="form-control input-bar" [(ngModel)]="uploadAttachments[i].original_name"
+                  [ngModelOptions]="{standalone: true}" id="hideInputfield" [disabled]="true"></textarea>
+              </div>
+              <div class="form-group col">
+                <textarea type="text" placeholder="Description" [(ngModel)]="uploadAttachments[i].description"
+                  [ngModelOptions]="{standalone: true}" id="hideInputfield" class="form-control input-bar"
+                  [disabled]="true"></textarea>
+              </div>
+              <div class="form-group col" style="text-align:center;margin-top: -1rem;margin-left: 3rem;">
+                <button type="button" class="btn btn-success" id="downloadBtn" title="Download"
+                  (click)="onDownload(i , 'upload')">
+                  <span class="glyphicon glyphicon-download"></span>
+                </button>
+                <button type="button" class="btn btn-danger" *ngIf="hideButtonPlusDiv()" title="Delete File"
+                  (click)="onRemoveUploadFile(i)">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- UPLOADS -->
+            <ng-container *ngIf="hideButtonPlusDiv()">
+              <div class="row" *ngFor="let file of files;let i = index; last as isLast" style="display:flex ;">
+                <div class="new-1">
+                  <p id="exampleFormControlInput1"> {{UploadAttachLength+1}}</p>
+                </div>
+                <div class="form-group col" style="margin-left: 7rem;">
+                  <input type="text" class="form-control input-bar" placeholder="Document name"
+                    [(ngModel)]="files[i].cellRange" [ngModelOptions]="{standalone: true}" id="hideInputfield1"
+                    [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col">
+                  <input type="file" #myInput (change)="onFileSelected($event,i)" class="form-control input-bar"
+                    id="hideInputfield1"
+                    [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" [(ngModel)]="files[i].description"
+                    [ngModelOptions]="{standalone: true}" id="hideInputfield1" class="form-control input-bar"
+                    [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"></textarea>
+                </div>
+                <div class="form-group col" style="text-align:center;margin-top: -1rem;margin-left: 3rem;">
+                  <button type="button" class="btn btn-success" id="UploadBtn" title="Upload" (click)="onUpload(i)"
+                    [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                    <span class="glyphicon glyphicon-upload"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </form>
+
+        <div class="container" *ngIf="hideButtonPlusDiv()">
+          <div class="text-center">
+            <button type="submit" id="btnReset" (click)="resetAttachmentFile()" class="btn cancel-button"
+              style="margin-left: 1rem;font-size: 14px;"
+              [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+              Reset
+            </button>
+            <button type="submit" (click)="saveSubmitEOI('save')" style="font-size: 14px;" id="btnSave"
+              class="btn save-button"
+              [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+              Save
+            </button>
+            <button type="submit" id="btnSubmit" class="btn draft-button"
+              style="background-color: #17b495;font-size: 14px;" (click)="finalSubmitEOI('submit')"
+              [disabled]="(access && !access.writeAccess)|| (eoidetails && (eoidetails.isSubmittedStatus != 'EOISubmitted' || eoidetails.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+              Submit Tender </button>
+          </div>
+        </div>
+      </div>
+      <!-- Approval Timeline -->
+      <div id="third_eoi" class="tab-pane fade in">
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()"
+          style=" background-color:rgb(234 247 220); -webkit-scrollbar:none;height: 30rem; padding:2rem;">
+          <div class="row" style="display: flex;padding:2rem;margin-bottom: 1.5rem;">
+            <div class="title-no" style=" font-size: 15px; ;">
+              #<br />
+            </div>
+            <div class="ApproverName ">
+              <p id="exampleFormControlInput1">Action </p>
+            </div>
+            <div class="actionApproval">
+              <p id="exampleFormControlInput1">Name</p>
+            </div>
+            <div class="dateOfAction">
+              <p id="exampleFormControlInput1">Date of Action</p>
+            </div>
+            <div class="comment">
+              <p id="exampleFormControlInput1">Comments</p>
+            </div>
+          </div>
+          <div>
+            <div class="scrollContainer" style="height:23rem;overflow-y: scroll;padding:2rem;margin-top:-5rem">
+              <div class="row" style="display: flex;"
+                *ngFor="let approval of approvalStatusArray; let i = index; last as isLast">
+                <div class="SRNo form-group" style="width: 5%; font-size: 14px;">
+                  <p>{{i+1}}</p>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="text" class="form-control" id="inputfield" [(ngModel)]="approval.action"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true">
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="text" class="form-control" id="inputfield" [(ngModel)]="approval.fullname"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true">
+                </div>
+                <div class="form-group col" id="contract-inputDate">
+                  <input id="inputfield" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" [(ngModel)]="approval.Date"
+                    class="form-control" [ngModelOptions]="{standalone: true}" [disabled]="true">
+                  <owl-date-time #dt4></owl-date-time>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <textarea type="text" class="form-control input-bar" id="inputfield" [(ngModel)]="approval.comments"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div>
+
+    <!-- If there is no Tender Fee -->
+    <div class="aling-center bid_div color-white" style="margin-top:18px;color:white;text-align: center;"
+      *ngIf="!NoDataMultipleEOIFlag && (!access?.createAccess)">
+      No Approvals requested yet
+    </div>
+    <!-- Loader Section for the Technical Solution TAB-->
+    <div class="overlay" *ngIf="loader">
+      <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+    </div>

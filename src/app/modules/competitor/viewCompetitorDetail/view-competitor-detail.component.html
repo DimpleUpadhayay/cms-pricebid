@@ -1,0 +1,61 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+    <div class="mainadduserSection col-sm-6 col-md-6">
+      <div class="card mainuserSection">
+        <!-- Breadcrumb Section -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"> Master Data</li>
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" routerLink="/competitor/list" aria-current="page">Competitors</li>
+            <li class="breadcrumb-item active" aria-current="page">View</li>
+          </ol>
+        </nav>
+        <div class="row" id="formBackground">
+          <div class="row text-center form-group">
+            <!-- Heading of the Page -->
+            <h4 class="col-md-11 formHeading">View Account-Detail</h4>
+            <span class="col-md-1 align-right"><img src="assets\images\edit.png" title="Edit" style="width: 21px;
+              margin: 5px; margin-left:-4px;cursor: pointer;" [routerLink]="['../../update',id]"></span>
+          </div>
+          <!-- Territory View Startsi Here -->
+          <div class="formLogin" *ngIf="competitor">
+            <form>
+              <div class="">
+                <div class="row margin-left">
+                  <div class="col-md-12 margin-bottom">
+                    <label class="margin-bottom"> Competitor Name :</label>
+                    <span>{{competitor.competitor_name}}</span>
+                  </div>
+                  <div class="col-md-12 margin-bottom">
+                    <label class="margin-top"> Website : </label>
+                    <span>{{competitor.competitor_website}}</span>
+                  </div>
+                  <div class="col-md-12 margin-bottom">
+                    <label class="margin-top"> Contact No : </label>
+                    <span>{{competitor.competitor_contact}}</span>
+                  </div>
+                  <div class="col-md-12 margin-bottom">
+                    <label class="margin-top" for="comment">Description :</label>
+                    <span>{{competitor.description}}</span>
+                  </div>
+                </div>
+                <br>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+  </div>
+</div>
+<!-- Loader Section -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

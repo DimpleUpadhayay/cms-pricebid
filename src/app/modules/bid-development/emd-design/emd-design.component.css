@@ -1,0 +1,358 @@
+/* ////////////////////////////////////////////////////////// */
+
+.heading-profile {
+  display: flex;
+}
+
+#btnDelete {
+  background-color: #d43f3a;
+}
+
+/* .heading-profile {
+  display: flex;margin-left: 1.5rem;
+} */
+
+#AddCategory {
+  height: 16px;
+  margin-top: 25px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.container {
+  font-size: 14px;
+  width: 1170px !important;
+}
+
+#exampleFormControlInput1 {
+  height: 34px;
+  font-size: 15px;
+}
+
+.nav-tabs {
+  border: none !important;
+}
+
+#buttons {
+  margin-left: 4rem;
+}
+
+#inputfieldAttachment {
+  margin-right: 5rem;
+}
+
+.remark-title {
+  margin-left: 5.5rem;
+}
+
+.Description {
+  margin-left: 18rem;
+  font-size: 14px;
+}
+
+.Referance {
+  margin-left: 22rem;
+  font-size: 14px;
+}
+
+#leftmargin {
+  margin-left: 1rem;
+}
+
+.Attchments {
+  margin-left: 26.5rem;
+  font-size: 14px;
+}
+
+#comments {
+  width: 50rem;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.ps_div1 {
+  background-color: white;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  padding: 2px 0;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #D3D3D3;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+.fa-plus-circle {
+  color: #ec9138;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.fa-trash {
+  color: #d43f3a;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.fa-upload {
+  color: #17b495;
+  font-size: 21px;
+  cursor: pointer;
+  margin-left: -12rem;
+}
+
+#finaldownload {
+  color: #f4a460;
+  margin-left: 1rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#download {
+  color: #f4a460;
+  margin-left: -18rem;
+  margin-top: 2rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#downloadBtn {
+  background-color: #ec9138;
+  border: none;
+}
+
+#referance_no, #two-input, #inputfield, select, textarea {
+  width: 22rem !important;
+  height: 34px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#inputfieldAttachment {
+  width: 24rem !important;
+  height: 34px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.Attchfile {
+  font-size: 14px;
+}
+
+#main-container {
+  background-color: rgb(234 247 220) !important;
+}
+
+#hideinput {
+  width: 22rem;
+  background-color: #eee;
+  opacity: .65;
+  cursor: not-allowed;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#three {
+  width: 16.5rem !important;
+  height: 34px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  margin-right: 1rem;
+  background-clip: padding-box;
+  /* border: 1px  #ccc; */
+  border-left: 7px solid #17b495!important;
+  /* border-radius: 0.25rem; */
+  /* transition: border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out; */
+}
+
+label {
+  font-weight: normal !important;
+}
+
+#two-inputdateTime {
+  margin-right: 7rem;
+}
+
+.ApproverName {
+  margin-left: 3rem;
+  font-size: 15px;
+}
+
+.actionApproval {
+  margin-left: 23rem;
+  font-size: 15px;
+}
+
+.dateOfAction {
+  margin-left: 22.5rem;
+  font-size: 15px;
+}
+
+.comment {
+  margin-left: 18rem;
+  font-size: 15px;
+}
+
+/* --------------- */
+
+.fa-plus-circle {
+  color: #ec9138;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.fa-trash {
+  color: #d43f3a;
+  font-size: 21px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.fa-info-circle {
+  position: relative;
+  display: inline-block;
+  margin-top: 3rem;
+  margin-left: 5rem;
+  margin-left: 10.5rem;
+  /* border-bottom: 1px dotted black; */
+}
+
+.fa-info-circle .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-family: 'Poppins', sans-serif;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.fa-info-circle:hover .tooltiptext {
+  visibility: visible;
+}
+
+.options {
+  display: flex;
+  margin-left: 85rem;
+}
+
+#btnDelete {
+  background-color: #d43f3a;
+}
+
+#selectMultiple {
+  width: 25rem !important;
+  margin-top: 23px;
+  border-left: 1px solid #17b495 !important;
+  border: 1px solid #17b495;
+  margin-left: -2em;
+  border-left: 7px solid #17b495!important;
+}
+
+.fa-info-circle {
+  position: relative;
+  display: inline-block;
+  margin-top: 3rem;
+  margin-left: 5rem;
+  margin-left: 4em;
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.fa-upload {
+  color: #17b495;
+  font-size: 21px;
+  cursor: pointer;
+  margin-left: -12rem;
+}
+
+#finaldownload {
+  color: #F4A460;
+  margin-left: 1rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#finalupload {
+  color: #5cb85c;
+  margin-left: 1rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#download {
+  color: #F4A460;
+  margin-left: -18rem;
+  margin-top: 2rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.new-1 {
+  margin-right: 4rem;
+}
+
+#two-input {
+  width: 23rem;
+  height: 34px;
+  margin-right: 5rem;
+}
+
+.scrollContainer {
+  height: 31rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.scrollContainer::-webkit-scrollbar, .scrollContainer::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 13px;
+  color: #17b495;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px;
+}

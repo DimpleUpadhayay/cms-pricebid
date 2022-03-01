@@ -1,0 +1,33 @@
+.bid_div {
+    background-color:#364453;
+    margin-bottom:4px;
+    border-radius:0px;   
+    padding:5px 5px;
+    margin-left: -14px;
+}
+.row {
+    margin-bottom:10px;
+}
+.bid_head {
+    color:#70D8C4;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+.allIcon {
+    margin-top: -5px;
+    margin-right: 3px;
+    width: 17px;
+}
+input[type="checkbox"] {
+    margin: 12px 0 0;
+    line-height: normal;
+}
+.item{
+    display: table;
+    margin: auto;
+    color: white;
+}
+.subItem{
+    left: 25px;
+    margin-top: 10px;
+}

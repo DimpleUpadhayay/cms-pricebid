@@ -1,0 +1,60 @@
+img {
+  width: 21px;
+  margin: 5px;
+  margin-top: -6px;
+}
+
+.fullDiv {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 4px;
+  border: 1px solid #d3d3d3;
+  -webkit-box-shadow: 5px 10px 8px #d3d3d3;
+  box-shadow: 5px 10px 8px #d3d3d3;
+  font-weight: 100;
+  font-family: Poppins, sans-serif;
+}
+
+.caption {
+  width: 100%;
+  background: #364453;
+  color: white;
+  padding: 1px;
+  padding: 9px;
+  font-size: 16px;
+}
+
+.text-line {
+  background-color: white;
+  color: #364453;
+  outline: none;
+  outline-style: none;
+  outline-offset: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #E8E8E8 1px;
+  padding: 3px 10px;
+  width: 100%;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+.submit-button {
+  background-color: #17b495;
+  font-family: 'Poppins', sans-serif;
+}
+
+form {
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-control {
+  margin-bottom: 7px !important;
+}
+
+.download {
+  color: #17b495;
+  margin-top: 37px;
+  font-size: 22px;
+}

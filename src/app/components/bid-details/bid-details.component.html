@@ -1,0 +1,42 @@
+<div class="container" style="font-size: 14px;">
+  <div class="content padding-top-52">
+    <!-- BID Details Showing in each and  every Bid  -->
+    <div *ngIf="bid">
+      <ul id="menu">
+        <li (click)=" goToMain()" style="cursor: pointer;">
+          <i class="fa fa-hashtag" title="Bid Number"></i> <u>{{bid?.bid_number}}</u>
+        </li>
+        <span id="vertical"></span>
+        <li class="bidName" title="{{bid?.name}}">
+          <i class="fa fa-bars " title="Bid Name"></i> {{bid?.name}}
+        </li><span id="vertical"></span>
+        <li class="accountName" title="{{bid?.account_name}}">
+          <i class="fa fa-asterisk " title="Account Name"></i>
+          {{bid?.account_name}}
+        </li><span id="vertical"></span>
+        <li>
+          <i class="fa fa-rupee" title="Annual Contract Value"></i> {{bid?.estimatedValue}} (Mn)
+        </li><span id="vertical"></span>
+        <li>
+          <i class="fa fa-calendar" title="Bid Submission Date"></i> {{bid?.date_submission | date:'dd-MM-yyyy'}}
+        </li><span id="vertical"></span>
+        <li class="circleThree">
+          {{stageNo}}
+        </li>
+        <li class="dropdown">
+          <button class="dropbtn">{{StageName}} &#9662;</button>
+          <div class="dropdown-content">
+            <div class="stage">{{allStage}}</div>
+          </div>
+        </li><span id="vertical"></span>
+        <li class="participants" *ngFor="let participant of participants">
+          <span id="circleThree" [className]="participant.class" title=" {{
+            participant?.fullname }} - {{participant?.userTypes && participant?.userTypes[0].user_subtype}} {{participant?.userTypes && participant?.userTypes[0].user_type
+            }}">
+            {{getSignatures(participant?.firstName,participant?.lastName )}}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

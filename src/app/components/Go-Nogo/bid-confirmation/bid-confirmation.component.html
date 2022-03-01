@@ -1,0 +1,194 @@
+<!-- <app-header></app-header> -->
+<div class="container">
+  <div class="content padding-top-100">
+    <div class="row">
+      <div class="mainadduserSection col-sm-2 col-md-2">
+      </div>
+      <div class="mainadduserSection col-sm-8 col-md-8">
+        <div class="col-md-12">
+          <h3>Bid Manger(Oppurtunities)</h3>
+        </div>
+        <form autocomplete="off">
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Lead Name&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50" 
+            [(ngModel)]="bidConfirm.leadName" [ngModelOptions]="{standalone: true}" 
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.leadName  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Lead Number&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.leadNo" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.leadNo  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Customer Name&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.custName" [ngModelOptions]="{standalone: true}"
+             [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.custName  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Estimated Deal Value (Mn)&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.estimateDeal" [ngModelOptions]="{standalone: true}" 
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.estimateDeal  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Eligibilty Score&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.eligibilityScore" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.eligibilityScore  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Deal Submission Date &nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.dealSubDate" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.dealSubDate ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Bid Submission Date &nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.bidSubDate" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.bidSubDate  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Deal Closure Date &nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.dealClosureDate" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.dealClosureDate  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Consultant&nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.consultant" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.consultant  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Business Unit &nbsp;<span class="required_field">*</span></label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.bUnit" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.bUnit  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Feasibility of Participation</label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.feasibility" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.feasibility  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Bidder Selection Process</label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.bidderSelecton" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.bidderSelecton  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Actual Participation</label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.actualPartic"
+             [ngModelOptions]="{standalone: true}"
+             [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.actualPartic  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-6 margin-top-12">
+            <label class="margin-bottom">Add GO-NO:GO Approver</label>
+            <input class="form-control input-border input-bar" type="text" maxlength="50"
+            [(ngModel)]="bidConfirm.gonogoAPP" [ngModelOptions]="{standalone: true}"
+            [ngStyle]="{'box-shadow': formSubmitted && !bidConfirm.gonogoAPP  ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+          </div>
+          <div class="col-md-12" style="margin-bottom: 50px; margin-top: 20px;">
+            <div class="caption">Challenges / Awaited Items</div>
+            <div class="fullDiv">
+              <div class="row" *ngFor="let challenge of challenges; let i=index; last as isLast">
+                <div class="col-md-1 align-center">
+                  {{i+1}}.
+                </div>
+                <div class="col-md-8">
+                  <input type="text" class="form-control input input-bar"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="challenge.chalInput" >
+                </div>
+                <div class="col-md-3 margin-right" style="margin-top: 5px;">
+                  <i class="fa fa-download download" title="Download" aria-hidden="true" style="margin: 6px;" (click)="onDownloadDialog()"></i>
+                  <img src="assets\images\attach1.png" title="Attach" (click)="openDialog()">
+                  <img src="assets/images/rubbish-bin.png" title="Delete" (click)="onDeleteChall(index)">
+                  <img src="assets/images/add-orange.png" title="add" *ngIf="flag && isLast" (click)="onAddChall();">
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 align-center" style="margin-top:10px;" >
+              <button type="button" class="btn save-button">Save</button>
+              <button type="button" class="btn submit-button" (click)="onSave()">Submit</button>
+
+            </div>
+          </div>
+          <div class="col-md-12" style="margin-bottom: 50px; margin-top: 20px;">
+            <div class="caption">GO-NO:GO Approval</div>
+            <div class="fullDiv">
+              <div class="row">
+                <div class="col-md-1">
+                  1.
+                </div>
+                <div class="col-md-6">
+                  <input type="text" placeholder="Comments" required class="text-line">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" placeholder="Approver" required class="text-line">
+                </div>
+                <div class="col-md-2">
+                  <input type="text" placeholder="Actions" required class="text-line">
+                </div>
+              </div>
+              <div class="row align-right" style="margin-right:10px;">
+                  <button type="button" class="btn approved-button">APPROVED
+                  </button>
+                  <button type="button" class="btn reject-button">REJECTED
+                  </button>
+                </div>
+            </div>
+          </div>
+          <div class="col-md-12" style="margin-bottom: 50px; margin-top: 20px;">
+            <div class="caption">Bid Confirmation </div>
+            <div class="fullDiv">
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="margin-bottom">Confirmed for Bidding:</label>
+                  <select class="form-control">
+                    <option>Select</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="margin-bottom">Bid Owner Name:</label>
+                  <input class="form-control input-border input-bar" type="text" maxlength="50">
+                </div>
+                <div class="col-md-3">
+                  <label class="margin-bottom">Priority:-</label>
+                  <select class="form-control">
+                    <option>Select</option>
+                    <option>A</option>
+                    <option>B</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="margin-bottom">Status:</label>
+                  <select class="form-control">
+                    <option>Select</option>
+                    <option>A</option>
+                    <option>B</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="margin-bottom">Remarks:</label>
+                  <textarea class="form-control input-border input-bar" type="text" maxlength="50"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

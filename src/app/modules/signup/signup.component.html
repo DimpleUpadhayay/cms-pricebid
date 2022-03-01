@@ -1,0 +1,103 @@
+<div class="account-user-sec registration-sec">
+  <div class="account-sec">
+    <div class="top-bar row">
+      <div class="col-md-5">
+        <div class="logo margin-top-12">
+          <img src="assets\images\ICONS\Logo\Logo.png" style="height: 50px;margin-left: 10px;width: 16%;"
+            class="logo-img" routerLink="/login" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="acount-sec">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="contact-sec">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="widget-title">
+                    <h3>Register Your Account</h3>
+                    <span>Fill your detail to get in</span>
+                  </div>
+                  <!-- Widget title -->
+                  <div class="account-form">
+                    <div class="alert alert-danger" *ngIf="errorMsg">
+                      {{errorMsg}}
+                    </div>
+                    <form [formGroup]="signupForm" novalidate>
+                      <div class="row">
+                        <div class="col-md-6 feild"
+                          [ngClass]="{'invalid':(signupForm.controls.username.invalid && (signupForm.controls.username.dirty || signupForm.controls.username.touched)) && signupForm.controls.username.errors.required}">
+                          <input type="text" formControlName="username" placeholder="Username" />
+                          <!-- <div *ngIf="signupForm.controls.username.invalid && (signupForm.controls.username.dirty || signupForm.controls.username.touched)"
+													class="alert alert-danger col-md-12">
+													  <div *ngIf="signupForm.controls.username.errors.required">
+														User Name is required.
+													  </div>
+													</div> -->
+                        </div>
+                        <div class="col-md-6 feild"
+                          [ngClass]="{'invalid':(signupForm.controls.email.invalid && (signupForm.controls.email.dirty || signupForm.controls.email.touched)) && signupForm.controls.email.errors.required}">
+                          <input type="text" formControlName="email" placeholder="Email" />
+                          <!-- <div *ngIf="signupForm.controls.email.invalid && (signupForm.controls.email.dirty || signupForm.controls.email.touched)"
+													class="alert alert-danger col-md-12">
+													  <div *ngIf="signupForm.controls.email.errors.required">
+														Email is required.
+													  </div>
+													</div> -->
+                        </div>
+                        <div class="col-md-6 feild"
+                          [ngClass]="{'invalid':(signupForm.controls.password.invalid && (signupForm.controls.password.dirty || signupForm.controls.password.touched)) && signupForm.controls.password.errors.required}">
+                          <input type="password" formControlName="password" placeholder="Password" />
+                        </div>
+                        <div class="col-md-6 feild"
+                          [ngClass]="{'invalid':(signupForm.controls.confirmPassword.invalid && (signupForm.controls.confirmPassword.dirty || signupForm.controls.confirmPassword.touched)) && signupForm.controls.confirmPassword.errors.required}">
+                          <input type="password" formControlName="confirmPassword" placeholder="Re-type Password" />
+                          <div
+                            *ngIf="(signupForm.controls.confirmPassword.invalid && (signupForm.controls.password.dirty || signupForm.controls.confirmPassword.touched)) && signupForm.controls.confirmPassword.errors?.mismatch"
+                            class="alert alert-danger col-md-12">
+                            <div *ngIf="signupForm.controls.confirmPassword.errors?.mismatch">
+                              Password & Confirm Password are Mismatch.
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div class="col-md-6 feild">
+													<select formControlname ="user_type">
+														<option *ngFor = "let cat of categories" [ngValue]="cat">{{cat}}</option>
+													</select>
+												</div> -->
+                        <div class="col-md-12">
+                          <label><input type="checkbox" formControlName="agree" /> By Clicking
+                            on this you are agree with our <a title="">license &
+                              agreements</a></label>
+                        </div>
+                        <div class="feild col-md-6">
+                          <input type="submit" [disabled]="!signupForm.valid" (click)="doSignUp(signupForm)"
+                            value="Register Now" />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="more-option">
+                    <span>OR</span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="creat-an-account">
+                    <span>Do you have an account?</span>
+                    <a [routerLink]="['/login']" title="">Login Now</a>
+                  </div>
+                  <!-- Create an account -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- Account Sec -->
+</div>

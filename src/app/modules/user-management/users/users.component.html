@@ -1,0 +1,406 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="mainadduserSection col-sm-10 col-md-8 col-md-offset-2">
+    <div class="card mainuserSection">
+      <!-- Breadcrumb Section -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"> Company Settings</li>
+          <li class="breadcrumb-item" [routerLink]="['/user/list']" aria-current="page">Users</li>
+          <li class="breadcrumb-item active" aria-current="page">{{user_id ? 'Update' : 'Create'}}</li>
+        </ol>
+      </nav>
+      <div class="row">
+        <div class="text-center">
+          <!-- Heading of the Page -->
+          <h4 class="formHeading">{{user_id ?'Update' : 'Create New'}} User</h4>
+        </div>
+        <!-- Creating User Starts Here -->
+        <div class="formLogin">
+          <form [formGroup]="form" #formDir="ngForm" autocomplete="off">
+            <!-- <div class="row">
+						</div> -->
+            <div class="row">
+              <!-- <div class="col-md-6 form-group">
+								<div class="form-group">
+									<div class="col-md-4">
+										<label class="frmLable">Full Name <span class="required_field">*</span></label>
+									</div>
+									<div class="col-md-8">
+										<input (input)="validateSingle('fullname');validateRegex('fullname')" type="text" formControlName="fullname"
+										 [(ngModel)]="user.fullname" class="form-control input-border" placeholder="Fullname" [ngStyle]="{'box-shadow': formSubmitted && !user.fullname ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+										 required>
+									</div>
+								</div>
+							</div> -->
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">First Name <span class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input (input)="validateSingle('firstName');validateRegex('firstName')" type="text"
+                      formControlName="firstName" [(ngModel)]="user.firstName"
+                      class="form-control input-border input-bar" placeholder="First Name"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.firstName ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">Last Name <span class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input (input)="validateSingle('lastName');validateRegex('lastName')" type="text"
+                      formControlName="lastName" [(ngModel)]="user.lastName" class="form-control input-border input-bar"
+                      placeholder="Last Name"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.lastName ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      required>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">Phone <span class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input (input)="validateSingle('phone');validateRegex('phone')" type="text" maxlength="11"
+                      formControlName="phone" [(ngModel)]="user.phone" class="form-control input-border input-bar"
+                      placeholder="Enter your phone"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.phone ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      required>
+                    <div class="message-warning" *ngIf="!user.phoneRegexValid">
+                      Valid phone is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">Department</label>
+                  </div>
+                  <div class="col-md-8">
+                    <!-- (input)="validateSingle('title');validateRegex('title')" -->
+                    <input type="text" formControlName="title" [(ngModel)]="user.title"
+                      class="form-control input-border input-bar" placeholder="Department" maxlength="25" required>
+                    <!-- <div class="message-warning" *ngIf="!user.usernameRegexValid">
+											Length should be greater than equeal to 5
+										</div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">Email <span class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input (input)="validateSingle('email');validateRegex('email')" type="text" formControlName="email"
+                      [(ngModel)]="user.email" class="form-control input-border input-bar" placeholder="Email"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.email ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      required>
+
+                    <div class="message-warning" *ngIf="!user.emailRegexValid">
+                      Valid email is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">User Name <span class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input (input)="validateSingle('username');validateRegex('username')" type="text"
+                      formControlName="username" [(ngModel)]="user.username" class="form-control input-border input-bar"
+                      placeholder="Username" maxlength="15"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.username ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      required>
+                    <div class="message-warning" *ngIf="!user.usernameRegexValid">
+                      Length should be greater than or equal to 5
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- *ngIf="!user_id" -->
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">Password <span *ngIf="!user.date_created"
+                        class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input id="pwd" (input)="validateSingle('password');validateRegex('password')" type="password"
+                      formControlName="password" class="form-control input-border input-bar" placeholder="********"
+                      [(ngModel)]="user.password"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.password && !user.user_id ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                    <span (click)="showPassword()"
+                      [ngClass]="!flag ? 'fa fa-fw fa-eye field-icon' : 'fa fa-eye-slash field-icon'"></span>
+                    <div class="message-warning" *ngIf="user.password && !user.passwordRegexValid ">
+                      Password should have minimum Length 8, with min 1 special, 1 numeric, 1
+                      capital latter.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="form-group">
+                  <div class="col-md-4">
+                    <label class="frmLable">Confirm Password <span *ngIf="!user.date_created"
+                        class="required_field">*</span></label>
+                  </div>
+                  <div class="col-md-8">
+                    <input (input)="validateSingle('confirm_password');validateRegex('confirm_password')"
+                      type="password" formControlName="confrm_password" class="form-control input-border input-bar"
+                      placeholder="********"
+                      [ngStyle]="{'box-shadow': formSubmitted && !user.confirm_password && !user.user_id ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      [(ngModel)]="user.confirm_password" required>
+                    <div class="message-warning" *ngIf="user.confirm_password && !user.confirm_passwordRegexValid">
+                      Please check that you've entered and confirmed your password!
+                    </div>
+                    <div class="message-warning" *ngIf="user.confirm_password && !user.confirm_passwordRegexCompareValid ">
+                      Password Mismatch.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="user.user_role == 'CUSTOM' || user.user_role == ''">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Role <span class="required_field">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                      <ng-select [items]="user_roles" class="custom"
+                        style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                        [(ngModel)]="user.role_id" bind placeholder="Select Role" bindValue="role_id"
+                        (change)="setRole($event)" formControlName="role_id" [multiple]="true"
+                        [ngStyle]="{'box-shadow': formSubmitted && user.role_id?.length == 0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable" >CRM ID</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="text" formControlName="userID" [(ngModel)]="user.userID"
+                      class="form-control input-border input-bar"  >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Business Unit <span class="required_field">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                      <ng-select [items]="business_units" class="custom"
+                        style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                        [multiple]="true" placeholder="Select Business unit" formControlName="bu_ids" bindValue="bu_id"
+                        [(ngModel)]="user.bu_ids" (change)="changeBUTerritory()"
+                        [ngStyle]="{'box-shadow': formSubmitted && user.bu_ids?.length == 0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Territory <span class="required_field">*</span></label>
+                    </div>
+                    <div class="col-md-8">
+                      <ng-select [items]="territorys" class="custom"
+                        style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                        [(ngModel)]="user.territory_ids" (change)="changeBUTerritory()" [multiple]="true"
+                        placeholder="Select territory" formControlName="territory_ids" bindValue="territory_id"
+                        [ngStyle]="{'box-shadow': formSubmitted && user.territory_ids?.length == 0 ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Business Unit Head</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="checkbox" formControlName="isBuHead" [(ngModel)]="user.isBuHead"
+                        (change)="onBUHeadCheckChange()" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Business Unit List</label>
+                    </div>
+                    <div class="col-md-8">
+                      <ng-select [items]="buHead" class="custom"
+                        style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                        [multiple]="true" placeholder="Select Business unit" formControlName="buHeadArray"
+                        bindValue="bu_id" [(ngModel)]="user.buHeadArray" (open)="getBUHead()">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Territory Head</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="checkbox" formControlName="isTerritoryHead" [(ngModel)]="user.isTerritoryHead"
+                        (change)="onTerritoryHeadCheckChange()" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Territory List</label>
+                    </div>
+                    <div class="col-md-8">
+                      <ng-select [items]="territoryHead" class="custom" (open)="getTerritoryHead()"
+                        style="border-left: 5px solid #17b495 !important; border-radius:5px;" bindLabel="name"
+                        [multiple]="true" placeholder="Select Territory" formControlName="territoryHeadArray"
+                        bindValue="territory_id" [(ngModel)]="user.territoryHeadArray">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Manager</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="checkbox" formControlName="isManager" [(ngModel)]="user.isManager"
+                        (change)="check($event)" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Manager Name <span class="required_field">*</span>
+                      </label>
+                    </div>
+                    <div class="col-md-8">
+                      <!-- <input (input)="validateSingle('manager_name');" type="text" formControlName="manager_name"
+                        [(ngModel)]="user.manager_name" class="form-control input-border input-bar" placeholder="Name"
+                        maxlength="50" required
+                        [ngStyle]="{'box-shadow': formSubmitted && !user.manager_name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"> -->
+                      <!-- <input id="managerList" autocomplete="off" list="comp" spellcheck="false"
+                        formControlName="manager_name" class="form-control input-border input-bar"
+                        [(ngModel)]="user.manager_name"> -->
+                      <!-- <datalist id="comp">
+                        <option *ngFor="let item of managerList;let i = index" style="cursor:pointer;"
+                          [value]="item.firstName + ' ' + item?.lastName">
+                        </option>
+                      </datalist> -->
+                      <input class="form-control input-border input-bar" id="managerList" type="search"
+                        [(ngModel)]="user.manager_name" [ngModelOptions]="{standalone: true}"
+                        placeholder="Search Manager Name"
+                        [ngStyle]="{'box-shadow': formSubmitted && !user.manager_name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                      <span id="showResults" style="position:absolute;display: none;z-index:900;color:black;">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item" *ngFor="let item of managerList;let i = index"
+                            [ngClass]="{active:i==activeIndex}" style="cursor:pointer;" (click)="setData(item)">
+                            {{item?.fullname}}
+                          </li>
+                          <!-- <li *ngIf="searchDataArray.length == 0">
+                              No record found, click on plus to add custom account
+                            </li> -->
+                        </ul>
+                      </span>
+                      <div class="accountMessage" *ngIf="managerList.length == 0">
+                        No record found
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Manager email</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input (input)="validateRegex('manager_email')" type="email" formControlName="manager_email"
+                        [(ngModel)]="user.manager_email" class="form-control input-border input-bar" [disabled]="true" required>
+                      <!-- <div class="message-warning" *ngIf="!user.manager_emailRegexValid">
+                      email must be valid.
+                    </div> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Manager Phone</label>
+                    </div>
+                    <div class="col-md-8">
+                      <!-- (input)="validateRegex('manager_phone')" -->
+                      <input (input)="validateRegex('manager_phone')" type="text" formControlName="manager_phone"
+                        [(ngModel)]="user.manager_phone" class="form-control input-border input-bar" maxlength="11"
+                        [disabled]="true" required>
+                      <!-- <div class="message-warning" *ngIf="user.manager_phone && !user.manager_phoneRegexValid">
+                        phone must be valid
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <div class="form-group">
+                    <div class="col-md-4">
+                      <label class="frmLable">Employee ID</label>
+                    </div>
+                    <div class="col-md-8">
+                      <input type="text" formControlName="emp_id" [(ngModel)]="user.emp_id"
+                      class="form-control input-border input-bar" placeholder="Employee ID" maxlength="30" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Action Button Update Create -->
+            <div class="text-center">
+              <button type="button" id="btnSubmit" (click)="user_id ? updateUser() : addUser()" class="btn save-button">
+                {{user_id ? 'Update' : 'Create'}}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Loader Section for the user-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

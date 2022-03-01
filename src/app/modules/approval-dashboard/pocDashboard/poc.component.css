@@ -1,0 +1,296 @@
+.nain-content {
+  font-size: 12px;
+}
+
+#scopeFav {
+  color: #364453;
+}
+
+.downloadIcon {
+  cursor: pointer;
+  margin-top: 5px !important;
+}
+
+/* Rfi css */
+
+.bid_div {
+  background-color: white !important;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  border-radius: 7px;
+  font-size: 12px;
+  padding: 5px 0;
+  margin-left: -15px;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #D3D3D3;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.bid_head {
+  color: #364453 !important;
+  font-size: 16px;
+  padding: 0px 4px;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.color-white {
+  color: white;
+  text-align: center;
+}
+
+#rfi1Btn {
+  border-radius: 1px;
+  border-color: #17b495;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #17b495;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  border-top: 3px solid #364453 !important;
+  font-size: 14px;
+  margin-left: -15px;
+}
+
+#rfi2Btn {
+  border-radius: 1px;
+  border-color: #17b495;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #17b495;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.draft {
+  background-color: #ec9138;
+  border: 1px solid#ec9138;
+  color: #fff;
+  border-color: #ec9138;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 12px;
+  margin-left: 360px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: .5rem 2rem;
+  margin-top: 73px;
+}
+
+.submit {
+  background-color: #17b495;
+  color: #fff;
+  border: 1px solid #17b495;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: .5rem 2rem;
+  font-size: 12px;
+  text-align: center;
+  margin-left: 13px;
+}
+
+.cancel {
+  text-align: center;
+  font-size: 12px;
+  border-radius: 20px;
+  border-color: #17b495;
+  color: black;
+  background-color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border: 1px solid #17b495;
+  padding: .5rem 2rem;
+  margin-left: 13px;
+}
+
+img {
+  width: 17px;
+}
+
+/* Rfi css closed */
+
+/* PROJECT SCOPE CSS */
+
+.ps_div {
+  background-color: #364453;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.ps_div1 {
+  background-color: white;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  /* border-radius:7px;    */
+  padding: 2px 0;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #D3D3D3;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.ps_head1 {
+  color: #17b495;
+  font-size: 16px;
+  padding: 4px 2px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.ps_head {
+  color: #17b495;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.fan, .color-white {
+  color: white;
+}
+
+.card-header {
+  padding: .75rem 0.25rem;
+  margin-bottom: 0;
+  background-color: #364453;
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  height: 40px;
+}
+
+.card-body {
+  padding: 1.25em;
+  border-left: 5px solid #17b495 !important;
+}
+
+.btn-link {
+  outline: none;
+  margin-top: -16PX;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+}
+
+.accordion {
+  border: 1px solid #364453;
+  border-radius: 3px;
+  margin-top: 13px;
+}
+
+.btn-link {
+  color: #17b495 !important;
+}
+
+/* CLOSED */
+
+.text-line {
+  background-color: white;
+  color: #364453;
+  outline: none;
+  outline-style: none;
+  outline-offset: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #E8E8E8 1px;
+  padding: 3px 10px;
+  width: 100%;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+#textArea {
+  width: 100%;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.download {
+  font-size: 32px !important;
+  color: #364453;
+  cursor: pointer;
+  margin-right: 0px !important;
+}
+
+.rfiButton {
+  cursor: pointer;
+  /* background: #17b495; */
+  background: white;
+
+}
+
+.nonRfiButton {
+  background: white
+}
+
+#scopeTextArea {
+  max-width: 950px !important;
+}
+
+.caption {
+  font-weight: bold;
+}
+
+.modal-header {
+  min-height: 59.428571px;
+}
+
+.similar {
+  background-color: #17b495;
+}
+
+.recent {
+  background-color: #17b495;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.titleResp {
+  margin-top: 12px !important;
+}
+
+.modal-content{
+  width: 140%;
+  margin-top: 100px;
+  border: 2px solid #17b495;
+  margin-left: -110px;
+}
+
+/* -------------Responsive view Mobile View Dashboard----------------------------------- */
+
+@media only screen and (max-width: 600px) {
+  .caption {
+    margin-top: 8% !important;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .caption {
+    margin-top: 8% !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .download {
+    margin-right: -10px;
+  }
+}

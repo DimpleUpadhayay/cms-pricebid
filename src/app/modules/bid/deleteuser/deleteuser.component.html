@@ -1,0 +1,75 @@
+<app-alert></app-alert>
+<!-- Technical Solution starts here -->
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+    <div class="panel-body">
+      <span>Reassign PendingTasks for <b style="font-size:17px;">{{contributorToBeDeleted.name}}</b></span>
+      <span>
+        <img src="assets/images/cancel.png" (click)="onClose()" id="cancel">
+      </span>
+    </div>
+  </div>
+</div>
+
+<div style="overflow-x:hidden;height: 240px;width: 100%;">
+  <ng-container *ngFor="let bidResponseType of bidResponseTypeWiseTasks; let i = index;">
+    <div class="task align-center">
+      {{bidResponseType.type }}
+    </div>
+    <form autocomplete="off">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+          <div class="bid_div">
+            <div class="bid_head">
+              <div class="row">
+                <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                    #
+                  </div>
+                  <div class="col-xs-3 col-sm-4 col-lg-4 col-md-3">
+                    Item
+                  </div>
+                  <div class="col-xs-3 col-sm-4 col-lg-4 col-md-3">
+                    Description
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    Contributor
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngFor="let item of bidResponseType.pendingTasks; let i = index;">
+                <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                    {{i+1}}
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-4 col-md-3">
+                    <textarea type="text" class="form-control input-bar"
+                      value="{{item.item_name ? item.item_name : 'NA'}}" readonly></textarea>
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-4 col-md-3">
+                    <textarea type="text" class="form-control input-bar"
+                    value="{{item.description ? item.description : 'NA'}}" readonly></textarea>
+                  </div>
+                  <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                    <select class="form-control" name="item.contributor" [(ngModel)]="item.contributor">
+                      <option [value]="contributor.user_id" *ngFor="let contributor of contributorList">
+                        <span>
+                          {{contributor.username}}
+                        </span>
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</div>
+<!-- Action Button Save,Submit,Reset -->
+<div class="text-center">
+  <button class="btn save-button" (click)="onReassign()">Re-assign</button>
+  <button class="btn cancel-button" (click)="onClose()">Cancel</button>
+</div>

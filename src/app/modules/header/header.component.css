@@ -1,0 +1,609 @@
+.menu-color {
+  background-color: #364453;
+}
+
+.fa-margin {
+  margin-top: 2;
+}
+
+.header {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  z-index: 10001;
+}
+
+.header>.top-bar {
+  background: #364453 none repeat;
+  height: 44px;
+  padding-top: 12px;
+  padding: 4px;
+}
+
+.header .sub-bar {
+  background: #eee;
+  height: 20px;
+}
+
+.header .header-search {
+  border: 1px solid grey;
+  width: 16%;
+  margin-left: 17%;
+}
+
+.left-mr {
+  margin-left: 10px;
+}
+
+.fa-home {
+  padding: 0px !important;
+}
+
+.fa-user {
+  padding: 0px !important;
+}
+
+.fa-bell {
+  padding: 0px !important;
+}
+
+.fa-user-circle-o {
+  padding: 0px !important;
+  margin: 5px !important;
+}
+
+.user-circle {
+  color: #364453;
+  margin-left: -4px !important;
+  margin-top: 7px;
+}
+
+.cms-logo {
+  height: 44px;
+  width: 13.5% !important;
+  margin-top: -16px;
+  margin-left: -4px;
+  background: white;
+  cursor: pointer;
+}
+
+/* .parent-menu ul {
+  list-style-type: none
+}
+
+.parent-menu ul li a {
+  color: white;
+} */
+
+/* Dropdown Button */
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  height: 40px;
+  padding: 2.5px;
+  /* padding: 16px;
+font-size: 16px; */
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.fa-address-book-o, .glyphicon-user, .fa-user-circle-o {
+  cursor: auto !important;
+}
+
+/* Dropdown Content (Hidden by Default) */
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+
+.dropdown-content #hov {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+
+.dropdown-content #hovRow:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+/* Show the dropdown menu on hover */
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+.top-bar-quick-sec {
+  margin-top: 9px;
+}
+
+#fa-user {
+  margin-top: 15px !important;
+  margin-left: 21px !important;
+}
+
+.fa-user {
+  font-size: 22px !important;
+  color: white;
+}
+
+.userImage {
+  width: 20px !important;
+  margin-top: -9px;
+}
+
+.caret {
+  color: #fff;
+  border-width: 6px;
+  margin-top: 9px;
+}
+
+hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: 0;
+  border-top: 1px solid antiquewhite;
+}
+
+.role-size {
+  width: 22px;
+  margin-left: -4px !important;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+#userRole {
+  /* margin-left: -16px !important; */
+  margin-top: 3px;
+  color: grey;
+  float: left;
+  word-break: break-all;
+}
+
+#userRole1 {
+  color: grey;
+  float: left;
+  word-break: break-all;
+  font-weight: bold;
+  margin-top: -7px !important;
+}
+
+.glyphicon-user {
+  font-size: 15px;
+  margin-left: 5px;
+  color: #364453;
+  margin-top: 14px;
+}
+
+.iconMargin {
+  margin: 0px 0px;
+}
+
+#icon {
+  color: #364453;
+  cursor: pointer;
+}
+
+#backgroundColor {
+  background-color: #F5F5F5;
+  margin: 0px 0px;
+}
+
+/* Bid details css */
+
+.image {
+  width: 25px;
+  padding: 5px;
+}
+
+.imageCurrency {
+  width: 23px;
+  padding: 5px;
+}
+
+.box {
+  /* background-color: #E8E8E8; */
+  /* padding: 8px; */
+  /* height: 33px; */
+  color: white;
+  float: right;
+  margin-right: 10px;
+}
+
+.logoWidth {
+  width: 60% !important;
+  position: absolute;
+  height: 46px !important;
+  margin-left: -4px !important;
+  margin-top: -18px !important;
+}
+
+.padding-top-52 {
+  padding-top: 52px;
+}
+
+#circleThree {
+  border: 1px solid #17b495 !important;
+  height: 27px;
+  width: 27px;
+  padding: 2px;
+  text-align: center;
+  padding-top: 5px;
+  font-size: 13px;
+  margin-left: 5px;
+  margin-bottom: 3px;
+}
+
+#vertical {
+  border: 1px solid grey;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+#Search {
+  color: white;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid gray;
+  outline: 0;
+  /* margin-right: -83px; */
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  left: 90%;
+  font-size: 10px;
+  line-height: 15px;
+  border-radius: 50%;
+  width: 22%;
+  height: 22px;
+  background-color: #17b495;
+  border: 4px solid #17b495;
+  color: #ffffff;
+  text-align: center;
+  padding: 0px;
+}
+
+#card {
+  border: 5px solid white;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  /* background-color: #EBEEF0; */
+  background-color: #f5f5f5;
+  width: 30%;
+  padding: 10px;
+  margin-top: 50px;
+  height: 585px;
+  max-height: 610px !important;
+  overflow-x: auto !important;
+  position: absolute;
+  margin-left: 71%;
+}
+
+.title>p {
+  display: block;
+  line-height: 30px;
+  border-bottom: 1px solid rgba(9, 45, 66, .13);
+  font-family: 'Poppins', sans-serif;
+}
+
+.fa-user-circle-o {
+  margin-top: 10px;
+}
+
+#close {
+  float: right !important;
+  margin-top: 5px;
+  color: grey;
+}
+
+.messageBox {
+  border: 1px solid #17b495;
+  padding: 9px;
+  /* height: 222px; */
+  max-height: 222px;
+  overflow: auto;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.scroll1::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll1::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+/* Heightlight class */
+
+.review-success {
+  background: #17b495;
+  color: white;
+}
+.bid-owner-highlight {
+  /* background: #17b495;
+  border:5px solid white; */
+  background: #364453;
+  color: white;
+  /* background-image: linear-gradient(#17b495, white); */
+}
+
+.review-blink {
+  background-color: #821A17;
+  color: white; /* -webkit-animation: example 1s infinite;
+  animation: example 1s infinite; */
+}
+
+.scroll1::-webkit-scrollbar-thumb {
+  background: #17b495;
+}
+
+.bidHeading {
+  margin-top: 0px;
+  border-bottom: 1px solid #D8DCDF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+}
+
+.accountName {
+  margin-top: 0px;
+  border-bottom: 1px solid #D8DCDF;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+}
+
+.messageContent {
+  border: 1px solid #364453;
+  padding: 5px;
+  background-color: white;
+  margin-bottom: 7px;
+  margin-top: 7px;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 9px;
+}
+
+.readContent {
+  border-bottom: 1px solid grey
+}
+
+/* .messageBox{
+   overflow: scroll;
+  }
+  ::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+  } */
+
+#notific {
+  font-size: 21px;
+  color: #2c3c50;
+  font-family: 'Poppins', sans-serif;
+}
+
+.fa-bell {
+  color: white;
+  font-size: 20px;
+  margin-top: 14px;
+  margin-left: 77px;
+  cursor: pointer;
+}
+
+.fa {
+  cursor: pointer;
+}
+
+/* -------------Responsive view Mobile View Dashboard----------------------------------- */
+
+@media only screen and (max-width: 800px) {
+  .logo-img {
+    width: 35% !important;
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-width:800px) {
+  .logo-img {
+    width: 20% !important;
+  }
+}
+
+/* @media only screen and (max-width: 1200px) and (min-width:900px) {
+  .homeMobileView {
+      display:none;
+   }
+ }
+ @media only screen and (max-width: 900px) {
+  .homeDesktop {
+      display:none;
+   }
+ } */
+
+@media only screen and (max-width: 600px) {
+  #Search {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #Search {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .fa-bell {
+    float: right;
+    margin-right: -21px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .fa-bell {
+    float: right;
+    margin-right: -21px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .badge {
+    width: 32px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .badge {
+    width: 23px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #card {
+    width: 46%;
+    margin-left: 55%;
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-width: 601px) {
+  #card {
+    width: 36%;
+    margin-left: 66%;
+  }
+}
+
+/* @media only screen and (max-width: 600px) {
+  .dismiss{
+    margin-top: 10px;
+    }
+ }
+ @media only screen and (max-width: 900px) {
+  .dismiss{
+    margin-top: -3px;
+    }
+ } */
+
+@media only screen and (max-width: 900px) {
+  .messageContent {
+    padding: 13px;
+  }
+}
+
+/* new css start */
+
+.fa-chevron-down {
+  float: right;
+}
+
+.rotate {
+  -moz-transition: all .5s linear;
+  -webkit-transition: all .5s linear;
+  transition: all .5s linear;
+}
+
+.rotate.up {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.fa {
+  padding: 5px;
+}
+
+.parent-menu ul {
+  list-style-type: none !important;
+}
+
+ul {
+  list-style-type: none !important;
+}
+
+.parent-menu ul li a {
+  color: white !important;
+  list-style-type: none !important;
+}
+
+li {
+  padding: 10px;
+}
+
+#hr {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: 0;
+  border-top: 1px solid #404040;
+}
+
+li:hover {
+  background-color: #17b495;
+  color: white;
+}
+
+li, a:hover {
+  color: white;
+}
+
+li, a {
+  color: white;
+}
+
+/* ----------Side Menu bar in Company Login , Supoort Login----------- */
+
+.side-menu {
+  background: #364453 none repeat scroll 0 0;
+  height: 100%;
+  left: 0px;
+  z-index: 3;
+  position: fixed;
+  /* top: -25px; */
+  width: 266px !important;
+  transition: 0.5s !important;
+  margin-left: -40px !important;
+}
+
+.side-menus {
+  float: left;
+  margin-bottom: 60px;
+  width: 100%;
+}
+
+.side-menus>span {
+  color: #a6a8b0;
+  float: left;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  margin-bottom: 20px;
+  padding: 0 27px;
+  width: 100%;
+}

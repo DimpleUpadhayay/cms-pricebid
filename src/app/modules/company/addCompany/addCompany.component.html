@@ -1,0 +1,176 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-2 col-md-2">
+    </div>
+    <div class="mainadduserSection col-sm-8 col-md-8">
+      <div class="card mainuserSection">
+        <!-- Breadcrumb section -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" routerLink='/company/list' aria-current="page">Company</li>
+            <li class="breadcrumb-item active" aria-current="page">{{company_id ? 'Update' : 'Create'}}</li>
+          </ol>
+        </nav>
+        <div class="row text-center form-group">
+          <h4 class="formHeading">{{company_id ? 'Update' : 'Create New'}} Company</h4>
+        </div>
+        <div class="formLogin">
+          <form [formGroup]="companyForm">
+            <div class="">
+              <div class="row">
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom "> Name&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('company_name')" class="form-control input-border" type="text"
+                    maxlength="50" formControlName="company_name" placeholder="Company Name"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.company_name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" required="required" [(ngModel)]="company.company_name">
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom"> Website&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('company_website');validateRegex('company_website')"
+                    class="form-control input-border" type="text" formControlName="company_website"
+                    placeholder="Company Website" required="required" [(ngModel)]="company.company_website"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.company_website ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar">
+                  <div class="message-warning" *ngIf="!company.company_websiteRegexValid">
+                    Website must be valid.
+                  </div>
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom"> Contact Number&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('company_phone');validateRegex('company_phone')"
+                    class="form-control input-border " type="text" maxlength="10" formControlName="company_phone"
+                    placeholder="Company Phone" required="required"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.company_phone ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" [(ngModel)]="company.company_phone">
+                  <div class="message-warning" *ngIf="!company.company_phoneRegexValid">
+                    Contact Number is required.
+                  </div>
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom "> Address&nbsp;<span class="required_field">*</span></label>
+                  <textarea (input)="validateSingle('company_address')" class="form-control input-border"
+                    formControlName="company_address" placeholder="Address" style="resize:none;"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.company_address ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" [(ngModel)]="company.company_address">
+                                </textarea>
+                </div>
+              </div>
+              <br>
+              <hr>
+              <div class="row">
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom"> Primary Contact Name&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('contact_name_primary')" class="form-control input-border input-bar"
+                    type="text" maxlength="50" formControlName="contact_name_primary" placeholder="Company Primary Name"
+                    required="required" [(ngModel)]="company.contact_name_primary"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.contact_name_primary ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar">
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom">Primary Contact Email&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('contact_email_primary');validateRegex('contact_email_primary')"
+                    class="form-control input-border" type="email" formControlName="contact_email_primary"
+                    placeholder="Primary Email" required="required" [(ngModel)]="company.contact_email_primary"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.contact_email_primary ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar">
+                  <div class="message-warning" *ngIf="!company.contact_email_primaryRegexValid">
+                    Valid email is required.
+                  </div>
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom">Primary Contact Phone&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('contact_phone_primary');validateRegex('contact_phone_primary')"
+                    class="form-control input-border" type="text" maxlength="10" formControlName="contact_phone_primary"
+                    placeholder="Company Primary Phone" required="required"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.contact_phone_primary ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" [(ngModel)]="company.contact_phone_primary">
+                  <div class="message-warning" *ngIf="!company.contact_phone_primaryRegexValid">
+                    Valid phone is required.
+                  </div>
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom">Product Type&nbsp;<span class="required_field">*</span></label>
+                  <!-- <input (input)="validateSingle('contact_email_primary');validateRegex('contact_email_primary')"
+                                        class="form-control input-border" type="email" formControlName="contact_email_primary"
+                                        placeholder="Primary Email" required="required" [(ngModel)]="company.contact_email_primary"
+                                        [ngStyle]="{'box-shadow': formSubmitted && !company.contact_email_primary ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                                        class="form-control input-border input-bar"> -->
+                  <select name="" id="" [(ngModel)]="company.product_type" class="form-control input-border"
+                    formControlName="product_type"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.product_type ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    (change)="validateSingle('product_type');">
+                    <option value="pricing">Pricing</option>
+                    <option value="nonpricing">Non Pricing</option>
+                  </select>
+                  <!--  <div class="message-warning" *ngIf="formSubmitted && !company.product_type">
+                                        Product Type is required.
+                                    </div> -->
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom "> No of Registered Users&nbsp;<span
+                      class="required_field">*</span></label>
+                  <input class="form-control input-border"
+                    type="number" min="1" maxlength="4" formControlName="no_of_registered_users"
+                    placeholder="No of Users"
+                    [ngStyle]="{'box-shadow': formSubmitted && !company.no_of_registered_users ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                    class="form-control input-border input-bar" required="required"
+                    [(ngModel)]="company.no_of_registered_users">
+                </div>
+              </div>
+              <br>
+              <hr>
+              <div class="row">
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom"> Secondary Contact Name&nbsp;</label>
+                  <input (input)="validateSingle('')" class="form-control input-border input-bar" type="text"
+                    maxlength="50" formControlName="contact_name_secondary" placeholder="Company Secondary Name"
+                    required="required" [(ngModel)]="company.contact_name_secondary">
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom">Secondary Contact Email&nbsp;</label>
+                  <input (input)="validateRegex('contact_email_secondary')" class="form-control input-border input-bar"
+                    type="email" formControlName="contact_email_secondary" placeholder="Secondary Email"
+                    required="required" [(ngModel)]="company.contact_email_secondary">
+                </div>
+                <div class="col-md-6 margin-top-12">
+                  <label class="margin-bottom">Secondary Contact Phone&nbsp;</label>
+                  <input (input)="validateRegex('contact_phone_secondary')" class="form-control input-border input-bar"
+                    type="string" type="text" maxlength="10" formControlName="contact_phone_secondary"
+                    placeholder="Company Secondary Phone" [(ngModel)]="company.contact_phone_secondary">
+                  <!-- <div class="message-warning" *ngIf="formSubmitted && !company.contact_phone_secondaryRegexValid">
+                                        Valid phone is required.
+                                    </div> -->
+                </div>
+              </div>
+              <br>
+              <!-- Action Button Update Create -->
+              <div class="row">
+                <div class="col-md-12" class="align-center">
+                  <!-- <button type="submit" class="save-button" (click)="createCompany()">Create
+                                    Company</button> -->
+                  <div class="text-center">
+                    <button type="submit" id="btnSubmit" (click)="company_id ? updateCompany() : createCompany()"
+                      class="btn save-button">{{company_id ? 'Update' : 'Create'}}</button>
+                    <button (click)="resetCompany()" class="btn cancel-button">Reset</button>
+                  </div>
+                  <!-- <button type="button" class="draft-button" (click)="createCompanyResetForm()">Reset</button>
+                                <button type="button" class="cancel-button" [routerLink]="['/company']">Cancel</button> -->
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-2 col-md-2">
+    </div>
+  </div>
+</div>
+<!-- Loader Section for the company-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

@@ -1,0 +1,64 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+    <div class="mainadduserSection col-sm-6 col-md-6">
+      <div class="card mainuserSection">
+        <!-- Breadcrumb Section  -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item" [routerLink]="['/categoryList']"> Category List</li>
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" aria-current="page">
+              {{categoryCreate.date_created ? 'Update' : 'Create'}}</li>
+          </ol>
+        </nav>
+        <div class="row text-center form-group">
+          <!-- Heading of the Page -->
+          <h4 class="formHeading"> Category</h4>
+        </div>
+        <!-- Creating Account Starts Here -->
+        <div class="formLogin">
+          <form>
+            <div class="">
+              <div class="col-md-12 margin-bottom">
+                <label class="margin-bottom"> Category Name&nbsp;<span class="required_field">*</span></label>
+                <input required="required" [(ngModel)]="categoryCreate.category_name"
+                  [ngModelOptions]="{standalone: true}"
+                  [ngStyle]="{'box-shadow' : categorySubmitted && !categoryCreate.category_name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}"
+                  type="text" class="form-control input-border input-bar" maxlength="35">
+              </div>
+              <div class="col-md-12 margin-bottom">
+                <label class="margin-top" for="comment">Description&nbsp;</label>
+                <textarea maxlength="50" [(ngModel)]="categoryCreate.description" [ngModelOptions]="{standalone: true}"
+                  type="text" class="form-control input-border input-bar">
+                  </textarea>
+              </div>
+            </div>
+            <br>
+            <!-- Action Button Update Create -->
+            <div class="row">
+              <div class="col-md-12 margin-bottom align-center">
+                <div class="text-center">
+                  <button type="button" style="margin-top:30px" class="btn draft-button align-center"
+                    (click)="categoryCreate.date_created  ? updateCategoryInfo() : saveCategoryInfo()">{{categoryCreate.date_created ? 'Update' : 'Save'}}</button>
+                  <button type="button" style="margin-top:30px" class="btn cancel-button"
+                    (click)="onResetCatgeoryInfo()">Reset</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+  </div>
+</div>
+
+<!-- Loader Section for the Catgeory-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

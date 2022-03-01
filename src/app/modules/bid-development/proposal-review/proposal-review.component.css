@@ -1,0 +1,130 @@
+.bid_head {
+  color: #70D8C4;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.bid_div {
+  margin-top: 5px !important;
+  background-color: #364453 !important;
+  padding: 5px 0;
+  border-radius: 5px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  color: #f9f9f9;
+  min-width: 82px;
+  -webkit-box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 3px 5px;
+  z-index: 1;
+  background-color: #364453;
+  border: 1px solid #17b495;
+  font-size: 12px;
+}
+
+.dropdown {
+  margin-left: 4.5rem;
+  margin-top: -2rem;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#btnDynamic {
+  border-radius: 5px !important;
+  border-color: #17b495;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #17b495;
+  font-size: 14px;
+  margin: 4px 0 4px 0;
+}
+
+.row {
+  margin-bottom: 6px;
+}
+
+.color-white {
+  color: white;
+  text-align: center;
+}
+
+img {
+  width: 17px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 0;
+}
+
+.fa-ellipsis-v {
+  color: #17b495;
+  cursor: pointer;
+  margin-top: -1px;
+  font-size: 20px;
+  margin-left: 5px !important;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.selected {
+  background: #364453 !important;
+  border-top: 3px solid #EC9138 !important;
+}
+
+#approve {
+  background: #364453 !important;
+  color: white !important;
+}
+
+.actionList {
+  background-color: #364453;
+  border: 1px solid #17b495;
+  padding: 5px;
+}
+
+.fa-plus-circle {
+  color: #EA8F38;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.faIcon {
+  padding: 4px;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+}
+
+/* ================Responsive Mobile View =================  */
+
+@media screen and (max-width:900px) and (min-width:601px) {
+  img {
+    width: 15px;
+    margin-left: -16px;
+  }
+}
+
+@media screen and (max-width:600px) {
+  img {
+    width: 13px;
+    margin-left: -19px;
+  }
+}
+
+@media screen and (max-width:900px) and (min-width:550px) {
+  .fa-download {
+    margin-left: -24px;
+  }
+}

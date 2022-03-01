@@ -1,0 +1,119 @@
+<app-alert></app-alert>
+<div style="height:100%;width:100%;position:fixed;">
+  <div style="height:6.5%;">
+    <!-- <app-header></app-header> -->
+  </div>
+
+  <div style="height:93.5%;">
+    <ej-spreadsheet   *ngIf="sheetId" id="spreadsheet" (load)="load($event)" (loadComplete)="loadComplete($event)"
+      enableContextMenu="true" (actionComplete)="actionComplete($event)" scrollSettings.allowScrolling="true"
+      scrollSettings.width="100%" scrollsettings.isResponsive="true" scrollSettings.allowVirtualScrolling="true"
+      scrollSettings.allowSheetOnDemand="true" exportSettings.allowExporting="true" [importSettings]="importSettings"
+      [exportSettings]="exportSettings"
+      >
+      <e-sheets>
+        <e-sheet>
+          <e-rangesettings>
+            <e-rangesetting startCell="A1" [headerStyles]="{'font-weight':'bold'}"></e-rangesetting>
+          </e-rangesettings>
+        </e-sheet>
+      </e-sheets>
+    </ej-spreadsheet>
+  </div>
+</div>
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="title">Assign Sheet</h4>
+        <button type="button" class="close" data-dismiss="modal" style=" margin-top: -23px;">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" style="padding: 18px;position: static;">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table_div">
+              <div class="div_head">
+                <div class="row">
+                  <div class="col-md-1 align-center">
+                    #
+                  </div>
+                  <div class="col-md-4">
+                    Contributor
+                  </div>
+                  <div class="col-md-3">
+                    Assign
+                  </div>
+                  <div class="col-md-2 align-center">
+                    Public
+                  </div>
+                  <!-- <div class="col-md-3">
+										Destination Sheet
+									</div> -->
+                  <div class="col-md-2">
+                    Action
+                  </div>
+                  <!-- <div class="col-md-3">
+										Show/hide
+									</div> -->
+                </div>
+              </div>
+              <div class="row" *ngFor="let row of assignmentData; let i=index;last as isLast">
+                <div class="col-md-1 align-center" id="sr">
+                  {{i+1}}
+                </div>
+                <div class="col-md-4">
+                  <select class="form-control" id="select" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="row.user_id">
+                    <option *ngFor="let user of participants" [selected]="user.user_id == row.user_id"
+                      [value]="user.user_id">
+                      {{user.username}}</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select class="form-control" [(ngModel)]="row.sourceSheetName" [ngModelOptions]="{standalone: true}">
+                    <option *ngFor="let item of sheetNamesArray" [selected]="item == row.sourceSheetName"
+                      [ngValue]="item">{{item}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="switch"><input type="checkbox" [(ngModel)]="row.isShow"
+                      (change)="hideShowToggle(row.isShow,i)" id="togBtn">
+                    <div class="slider round"></div>
+                  </label>
+                </div>
+                <!-- <div class="col-md-3">
+									<input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+										[(ngModel)]="row.destinationSheetName">
+								</div> -->
+
+                <div class="col-md-2" style="margin-top: 7px;">
+                  <!-- <img src="assets/images/edit1.png"title="edit"style=" margin-left: -15px;"  > -->
+                  <img src="assets/images/rubbish-bin.png" alt="delete" id="delete" title="Delete"
+                    (click)="deleteAssignRow(i)">
+                  <img src="assets/images/add-orange.png" alt="Add" id="add" [hidden]="!isLast" title="Add"
+                    (click)="addAssignRow();">
+                </div>
+                <!-- <div class="col-md-3" style="margin-top: 7px;">
+									<label class="switch"><input type="checkbox" id="togBtn">
+										<div class="slider round"></div>
+									</label>
+								</div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal body closed -->
+      <div class="container" style="margin-top:-21px">
+        <button id="saveBtn" type="button" class="btn save-button" (click)="assignSheet(assignmentData)">Submit</button>
+        <button id="cancelBtn" type="button" class="btn cancel-button" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

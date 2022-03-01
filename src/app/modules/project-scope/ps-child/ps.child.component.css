@@ -1,0 +1,153 @@
+.ps_div {
+  background-color: #364453;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+.dropdown-content{
+  color: #17b495;
+  margin-left: 90rem;
+}
+.ps_head {
+  color: #17b495;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.fan, .color-white {
+  color: white;
+}
+
+.faIcon {
+  padding: 4px;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+}
+
+.icon-size {
+  width: 17px;
+  margin-right: 10px !important;
+}
+
+
+img {
+  cursor: pointer;
+}
+
+
+.card-header {
+  padding: .75rem 0.25rem;
+  margin-bottom: 0;
+  background-color: #364453;
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  height: 40px;
+}
+
+.card-body {
+  padding: 1.25em;
+  border-left: 5px solid #17b495 !important;
+}
+
+.btn-link {
+  outline: none;
+  margin-top: -16PX;
+  color: black;
+  font-family: 'Poppins', sans-serif;
+}
+
+.accordion {
+  border: 1px solid #364453;
+  border-radius: 3px;
+  margin-top: 13px;
+}
+
+.btn-link {
+  color: #17b495 !important;
+}
+
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+textarea:read-only {
+  background: white
+}
+
+input:read-only {
+  background: white
+}
+
+.selected {
+  background: #364453 !important;
+}
+
+.fa-plus-circle {
+  color: #EA8F38;
+  font-size: 17px;
+  padding: 4px;
+  cursor: pointer;
+}
+.warning-message{
+  border:2px solid #17b495;
+  padding: 6px;
+}
+.underReview{
+  margin-top:18px;
+  padding: 5px;
+  text-align: center
+}
+
+
+/* ================Responsive Mobile View =================  */
+
+@media only screen and (max-width: 600px) {
+  .respIcon {
+    margin-left: -19px;
+    margin-top: -6px;
+    margin-right: -9px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .respAdd {
+    margin-left: -5px !important;
+  }
+}
+
+@media only screen and (max-width:700px) and (min-width:600px) {
+  .addIcon {
+    margin-left: -5px !important;
+  }
+}
+
+#container {
+  display: block;
+}
+
+#warning-message {
+  display: none;
+}
+
+@media only screen and (orientation:portrait) {
+  #wrapper {
+    display: none;
+  }
+  #warning-message {
+    display: block;
+  }
+}
+
+@media only screen and (orientation:landscape) {
+  #warning-message {
+    display: none;
+  }
+}

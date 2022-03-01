@@ -1,0 +1,152 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-10 col-md-9 col-md-offset-2">
+      <div class="card mainuserSection">
+        <!-- breadcrumb Section -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"> User Settings</li>
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" routerLink='/roles/list' aria-current="page">Roles</li>
+            <li class="breadcrumb-item active" aria-current="page">{{role_id ? 'Update' : 'Create'}}</li>
+          </ol>
+        </nav>
+
+        <div class="row text-center form-group">
+          <!-- Heading of the Page -->
+          <h4 class="formHeading">{{role_id ? 'Update' :'Create New'}} Role</h4>
+        </div>
+        <div class="formLogin">
+          <div class="row">
+            <div class="col-md-8">
+              <!-- <div class="form-group"> -->
+              <div class="col-md-4">
+                <label>Display Name&nbsp; <span class="required_field">*</span></label>
+              </div>
+              <div class="col-md-8">
+                <input (input)="validateSingle('name')" type="text" class="form-control input-border input-bar"
+                  placeholder="Role" [(ngModel)]="role.name" maxlength="25"
+                  [ngStyle]="{'box-shadow': formSubmitted && !role.name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                  required>
+                <!-- </div> -->
+              </div>
+            </div>
+            <!-- <div class="col-md-6 form-group">
+							<div class="form-group">
+								<div class="col-md-3">
+									<label class="frmLable">Display Name</label>
+								</div>
+								<div class="col-md-9">
+									<input (input)="validateSingle('display_name')" type="text" class="form-control input-border input-bar" placeholder="Display Name"
+									 [(ngModel)]="role.display_name"
+									 [ngStyle]="{'box-shadow': formSubmitted && !role.display_name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+
+									 required>
+
+								</div>
+							</div>
+						</div> -->
+          </div>
+          <div class="row" *ngIf="user && user.user_role == 'COMPANY_ADMIN'">
+            <div class="col-md-8">
+              <div class="col-md-4">
+                <label class="margin-bottom">Role Type&nbsp;<span class="required_field">*</span></label>
+              </div>
+              <div class="col-md-8">
+                <!-- <ng-select style="border-left: 5px solid #17b495 !important; border-radius:5px;" [items]="tags"
+                  bindLabel="name" [(ngModel)]="role.role_type_id" bind placeholder="Select Role"
+                  (ngModelChange)="subTypeChange($event)"
+                  (change)="validateSingle('role_type_id');getRoleModuleMapping(role.role_type_id)" bindValue="role_id"
+                  [ngStyle]="{'box-shadow': formSubmitted && !role.role_type_id ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                </ng-select> -->
+                <ng-multiselect-dropdown [placeholder]="'Role Type'" [data]="tags" [settings]="dropdownRoleSettings"
+                  [(ngModel)]="selectedRole" (onSelect)="onSelectRole($event)" (onDeSelect)="onDeSelectRole($event)"
+                  (change)="validateSingle('role_type_id');getRoleModuleMapping(role.role_type_id)"
+                  [ngStyle]="{'box-shadow': formSubmitted && !role.role_type_id ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+          </div>
+          <!-- *ngIf="user && user.user_role == 'COMPANY_ADMIN' && (role.role_type == 'REVIEWER' || role.role_type == 'CONTRIBUTOR' || role.role_type == 'APPROVER') " -->
+          <div class="row" *ngIf="user.user_role == 'COMPANY_ADMIN' && flag">
+            <div class=" col-md-8">
+              <div class="col-md-4">
+                <label class="margin-bottom">Sub Role Type&nbsp;<span class="required_field">*</span></label>
+              </div>
+              <div class="col-md-8">
+                <!-- <ng-select style="border-left: 5px solid #17b495 !important; border-radius:5px;" [items]="sub_roles"
+                  bindLabel="name" [(ngModel)]="role.sub_type" bind placeholder="Select Sub Role"
+                  (change)="validateSingle('sub_type');" bindValue=""
+                  [ngStyle]="{'box-shadow': formSubmitted && !role.sub_type ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                </ng-select> -->
+                <ng-multiselect-dropdown [placeholder]="'Sub Role Type'" [data]="sub_roles"
+                  [settings]="dropdownSubRoleSettings" [(ngModel)]="selectedSubRole"
+                  (onSelect)="onSelectSubRole($event)" (onDeSelect)="onDeSelectSubRole($event)"
+                  (change)="validateSingle('role_type_id');getRoleModuleMapping(role.role_type_id)"
+                  [ngStyle]="{'box-shadow': formSubmitted && !role.role_type_id ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }">
+                </ng-multiselect-dropdown>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-3">
+              <label class="frmLable">Map Modules</label>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="">
+              <div class="ps_div ps_head">
+                <div class="row">
+                  <div class="col-md-1 align-center">#</div>
+                  <div class="col-md-6">Module Name</div>
+                  <!-- <div class="col-md-2">
+										Select
+									</div> -->
+                  <div class="col-md-2 col-md-offset-1">Read</div>
+                  <div class="col-md-2">Write</div>
+                </div>
+              </div>
+              <div>
+                <fieldset [disabled]="user.user_role == 'COMPANY_ADMIN'">
+                  <div class="row" *ngFor="let item of role.module_list; let i = index;">
+                    <div class="col-md-1 align-center">{{i+1}}</div>
+                    <div class="col-md-6">
+                      <input (input)="validateSingle()" type="text" class="form-control"
+                        [(ngModel)]="role.module_list[i].module_name" value="{{role.module_list[i].module_name}}"
+                        disabled>
+                    </div>
+                    <!-- <div class="col-md-2">
+											<input (input)="validateSingle()" type="checkbox"
+												[(ngModel)]="role.module_list[i].flag" value="true" [checked]="true">
+										</div> -->
+                    <div class="col-md-2 col-md-offset-1">
+                      <input (input)="validateSingle()" type="radio" [value]="role.module_list[i].read"
+                        [checked]="role.module_list[i].read" name="access_{{i}}"
+                        (change)="updateValue(i, 'read', 'write', true)">
+                    </div>
+                    <div class="col-md-2">
+                      <input (input)="validateSingle()" type="radio" [value]="role.module_list[i].write"
+                        [checked]="role.module_list[i].write" name="access_{{i}}"
+                        (change)="updateValue(i, 'write', 'read', true)">
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Action Button Save Update -->
+        <div class="text-center">
+          <button type="button" id="btnSubmit" [disabled]="disableBtn" class="btn save-button"
+            (click)="role_id ? update() : save()">{{role_id
+							? 'Update' : 'Create'}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

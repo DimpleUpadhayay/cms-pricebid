@@ -1,0 +1,95 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- BreadCrumb Section -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" style="margin-top: 10px;">
+        <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+        <li class="breadcrumb-item active" aria-current="page">Approval Chain</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <!-- Page Heading In Approval Chains -->
+      <div class="col-md-6 column">
+        <h2>List of Approval Chains</h2>
+      </div>
+      <!-- Search Input Field -->
+      <div class="col-md-3">
+        <input type='text' class="searchBox" placeholder='Search' [(ngModel)]="filter">
+        <img src="assets/images/search.png" id="searchIcon">
+      </div>
+      <!-- Add Approval Chain Button  -->
+      <div class="col-md-3">
+        <div class="align-right">
+          <button *ngIf="approvalChains.length !== 0" id="createSchedule" type="button" class="btn create-button"
+            title="Add Approval chain" routerLink='/approvalChain' style="margin-top: 18px;">
+            <i style="padding-left:5px;font-size:12px;" class="fa fa-plus"></i>
+            NEW APPROVAL CHAIN</button>
+        </div>
+      </div>
+    </div>
+    <!-- Table for Approval Chain -->
+    <div class="row margin-top-12">
+      <div class="container-fluid">
+        <table class="table table-striped table-bordered dt-responsive nowrap">
+          <thead>
+            <tr class="blueTh">
+              <th class="align-center first-col" style="width: 5% !important;">Sr</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Created On</th>
+              <th class="align-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="approvalChains.length == 0">
+              <td routerLink='/approvalChain'><i title="Add Approval chain"
+                  style="padding-left:5px;font-size:20px; color: #f1a458;" class="fa fa-plus"></i>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr
+              *ngFor="let item of approvalChains | search : filter : 'name' | paginate:{ itemsPerPage:10,currentPage:p } let i = index;">
+              <td class="align-center">
+                {{i + (1+((p-1)*10))}}
+              </td>
+              <td>
+                {{item.name}}
+              </td>
+              <td class="f_parent">{{item.desc}}</td>
+              <td>
+                {{item.status}}
+              </td>
+              <td>
+                {{changeDate(item.date_created)}}
+              </td>
+              <td class="align-center">
+                <img src="assets/images/eye-open.png" title="View" class="icon-size"
+                  [routerLink]="['/viewApprovalChain',item.ac_id]">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/images/edit1.png" title="Edit" class="icon-size"
+                  [routerLink]="['/approvalChain', item.ac_id]">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/images/rubbish-bin.png" class="icon-size" title="Delete"
+                  (click)="deactivate(item.ac_id)">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Pagination for Approal Chain Table  -->
+        <pagination-controls class="align-center" (pageChange)="p=$event" *ngIf="approvalChains.length > 10">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<!-- Loader Section-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

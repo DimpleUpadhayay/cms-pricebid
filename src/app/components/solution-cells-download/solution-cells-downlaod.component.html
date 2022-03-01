@@ -1,0 +1,67 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand"> Download Files<span class=" glyphicon glyphicon-download-alt"></span></p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-md-12" *ngIf="attachment_data && attachment_data?.length >0">
+  <div id="download_head">
+    <div class="row" id="row1">
+      <div class="col-md-1">
+        <b>#</b>
+      </div>
+      <div class="col-md-3 align-center">
+        <strong>cells</strong>
+      </div>
+      <div class="col-md-4 align-center">
+        <strong>Description</strong>
+      </div>
+      <div class="col-md-2 align-center">
+        <strong style="
+        margin-left: 62px;">Action</strong>
+
+      </div>
+      <div class="col-md-1">
+
+      </div>
+      <div class="col-md-1">
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 10px;"
+    *ngFor="let attachment of attachment_data;let i = index; last as isLast">
+    <div class="col-md-1" id="nos">
+      <span>{{i+1}}.</span>
+    </div>
+    <div class="col-md-3">
+      <input type="text" class="form-control" readonly [(ngModel)]="attachment_data[i].cellRange">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" readonly [(ngModel)]="attachment_data[i].description">
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-success" id="downloadBtn" title="Download" (click)="onDownload(i)">
+        <span class="glyphicon glyphicon-download"></span>
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button type="button" id="removeBtn" class="btn btn-danger"
+        [disabled]="attachment_data[i].user_id != user.user_id" title="Remove" (click)="onRemove(i)">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-primary" id="btnRefresh"
+        [disabled]="attachment_data[i].user_id != user.user_id || (attachment_data[i].user_id == user.user_id && attachment_data[i].revision)"
+        title="Revision" (click)="onVersion(i)">
+        <i class="fa fa-refresh"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="col-md-12" *ngIf="attachment_data && attachment_data?.length == 0">
+  <p>No Results!</p>
+</div>

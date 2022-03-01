@@ -1,0 +1,213 @@
+<div>
+  <!-- <app-header></app-header> -->
+  <app-alert></app-alert>
+  <div class="container">
+    <div class="content padding-top-100">
+      <!-- BreadCrumb Section -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <!-- <li class="breadcrumb-item" (click)="changeState()" aria-current="page">Menu</li> -->
+          <li class="breadcrumb-item" routerLink='/approvalChainList' aria-current="page">Approval
+            chains</li>
+          <li class="breadcrumb-item active" aria-current="page">View</li>
+        </ol>
+      </nav>
+      <div class="row">
+        <!-- Page Heading -->
+        <div class="col-md-12 column">
+          <div class="heading-profile">
+            <h2>Approval Chain View</h2>
+            <!-- <span>Welcome back <i class="userNametxt">Admin</i></span> -->
+          </div>
+        </div>
+      </div>
+      <!-- Approval chain View Starts Here step 1 and 2 Both -->
+      <fieldset disabled>
+        <div class="main-content-area margin-top-12">
+          <div class="row">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-6 margin-top-12">
+                  <form [formGroup]="acForm">
+                    <!-- Step 1 of 2 Approval  -->
+                    <div class="">
+                      <div class="caption">Step 1 of 2</div>
+                      <div class="acDiv">
+                        <div class="row">
+                          <div class="col-md-6 margin-top-12">
+                            <label class="margin-top-12">Name :&nbsp;</label>
+                            <span>{{approvalChain.name}}</span>
+
+                          </div>
+                          <div class="col-md-6 margin-top-12">
+                            <label class="margin-top-12">Description :&nbsp;</label>
+                            <span>{{approvalChain.desc}}</span>
+
+                          </div>
+                          <div class="col-md-6 margin-top-12">
+                            <label class="margin-top-12">Territory :&nbsp;</label>
+                            <span *ngFor="let territoryName of territoryNames; let isLast=last">
+                              <span>{{territoryName}} {{isLast ? ' . ' : ',' }}</span>
+                            </span>
+                          </div>
+                          <div class=" col-md-6 margin-top-12">
+                            <label class="margin-top-12">Business Unit :&nbsp;</label>
+                            <span *ngFor="let businessUs of businessU; let isLast=last">
+                              <span>{{businessUs}} {{isLast ? ' . ' : ',' }}</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- Approval Sequences and Approval sequences Step 2 of 2 -->
+                <div class="col-md-6 margin-top-12">
+                  <div class="caption">
+                    Step 2 of 2
+                  </div>
+                  <div class="acDiv">
+                    <div class="row margin-top">
+                      <div class="col-sm-5 margin-top" dnd-droppable (onDropSuccess)="removeApprovers($event)"
+                        [dropZones]="['selected-users']">
+                        <div class="panel panel-success">
+                          <div class="row ps_head">
+                            <div class="col-md-12 align-center ps_head">
+                              Approvers List
+                            </div>
+                          </div>
+                          <div class="panel-body handle-overflow">
+                            <div>
+                              <div *ngFor="let user of approvedUsers;let i = index;">
+                                {{i+1}}. {{user.username}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2 align-center" style="margin-top:14%">
+
+                      </div>
+                      <div class="col-sm-5 margin-top">
+                        <div dnd-droppable
+                          [dropZones]="['add-approver']" class="panel panel-success">
+                          <div class="row align-center ps_head">
+                            <div class="col-md-12 margin-top-12 align-center ps_head ">
+                              Approval Sequence
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                          </div>
+                          <div *ngFor="let user of approvalChain.users;let i = index"
+                            style="padding:5px;cursor:not-allowed;">
+                            <div class="margin-left">
+                              {{i+1}}. {{user.name ? user.name : user.fullname}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="message-warning"
+                          *ngIf="approvalChain.users && formSubmitted && approvalChain.users.length == 0">
+                          List of Approvers required.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 50px;margin-bottom: 50px;" *ngIf="rules.length > 0">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                <div class="business-body">Business Rule (Optional)</div>
+              </div>
+            </div>
+            <div class="row ps_head margin-top-12 margin-top">
+              <!-- Table Heading for the Business -->
+              <div class="business_div">
+                <div class="business_head">
+                  <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                    <div class="row">
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                        #
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        Rule
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        Operator
+                      </div>
+                      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                        Min Value (Mn.)
+                      </div>
+                      <div class="col-xs-3 col-sm-3 col-lg-2 col-md-2">
+                        Operator (Optional)
+                      </div>
+                      <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                        Max Value (Mn.) (Optional)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row margin-top-12 margin-top">
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <div class="margin-top-12 margin-top" *ngFor="let rule of rules;let i = index;">
+                      <div class="col-md-1 align-center">{{i+1}}</div>
+                      <div class="col-md-2">
+                        <input (input)="validateSingle()" type="text" value="Rule Name" name="{{rule.name}}"
+                          [(ngModel)]="rule.name" [disabled]="true" class="form-control input-border"></div>
+                      <div class="col-md-2">
+                        <select class="form-control input-border" [(ngModel)]="rule.l_operator">
+                          <option>Select</option>
+                          <!-- <option value="lt">
+                                <
+                              </option>  -->
+                          <option value="gt">>
+                          </option>
+                          <option value="eq">=</option>
+                          <option value="gte">>=</option>
+                          <!-- <option value="lte"> -->
+                          <!-- <= -->
+                          <!-- </option>  -->
+                        </select> </div>
+                      <div class="col-md-2">
+                        <input (input)="validateSingle()" type="number" class="form-control input-border"
+                          [(ngModel)]="rule.l_amount" placeholder="value" (input)="checkMinMaxValue('l_amount', i)"
+                          required>
+                      </div>
+                      <div class="col-md-2">
+                        <select class="form-control input-border" [(ngModel)]="rule.r_operator">
+                          <option>Select</option>
+                          <option value="lt"
+                            [disabled]="rule.l_operator == 'lt' || rule.l_operator == 'lte' || rule.l_operator == 'eq'">
+                            < </option> <!-- <option
+                              [disabled]="rule.l_operator == 'gt' || rule.l_operator == 'gte' || rule.l_operator == 'eq'"
+                              value="gt">
+                              > -->
+                              <!-- </option> -->
+                          <option value="eq"
+                            [disabled]="rule.l_operator == 'eq' || rule.l_operator == 'lt' || rule.l_operator == 'gte' || rule.l_operator == 'lte'">
+                            =</option>
+                          <!-- <option value="gte" [disabled]="rule.l_operator == 'gte' || rule.l_operator == 'gt' || rule.l_operator == 'eq'">>=</option> -->
+                          <option value="lte"
+                            [disabled]="rule.l_operator == 'lte' || rule.l_operator == 'lt' || rule.l_operator == 'eq'">
+                            <= </option> </select> </div> <div class="col-md-2">
+                              <input (input)="validateSingle()" type="number" class="form-control input-border"
+                                [disabled]="rule.l_operator == 'eq'" [(ngModel)]="rule.r_amount"
+                                (input)="checkMinMaxValue('r_amount', i)" placeholder="value" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</div>

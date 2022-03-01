@@ -1,0 +1,563 @@
+.tabset {
+  margin-left: 2rem;
+}
+
+#total-acv {
+  margin-left: 51rem;
+}
+
+#btnDelete {
+  background-color: #d43f3a;
+}
+
+#selectMultiple {
+  width: 25rem;
+  margin-top: 23px;
+  border-left: 1px solid #17b495 !important;
+  border: 1px solid #17b495;
+  margin-left: 3em;
+  border-left: 7px solid #17b495!important;
+}
+
+.heading-profile {
+  display: flex;
+}
+
+#total-tcv {
+  margin-left: 13rem;
+}
+
+#AddCategory {
+  height: 16px;
+  margin-top: 25px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.business-unit {
+  margin-left: 3.5rem;
+}
+
+#three {
+  width: 16.5rem;
+  margin-right: 1rem;
+}
+
+.inside-container-row {
+  margin-left: 5px;
+  display: flex;
+}
+
+.container {
+  font-size: 14px;
+}
+
+#two-input {
+  width: 23rem;
+  height: 34px;
+  margin-right: 3rem;
+}
+
+.ApproverName {
+  margin-left: 4rem;
+  font-size: 15px;
+}
+
+.actionApproval {
+  margin-left: 23rem;
+  font-size: 15px;
+}
+
+.dateOfAction {
+  margin-left: 22.5rem;
+  font-size: 15px;
+}
+
+.comment {
+  margin-left: 17rem;
+  font-size: 15px;
+}
+
+.dropdown-option {
+  margin-right: 20rem;
+}
+
+#contract-inputOne {
+  margin-right: 1rem;
+  height: 34px !important;
+  width: 26rem;
+}
+
+.title-no {
+  margin-left: 1.5rem;
+  font-size: 14px;
+}
+
+.business-type {
+  margin-left: 5rem;
+}
+
+/*
+#abc::-webkit-scrollbar {
+  display: none;
+} */
+
+.product-title {
+  margin-left: 7rem;
+}
+
+.acv-title {
+  margin-left: 4.7rem;
+}
+
+.disableColor {
+  background: #eee !important;
+}
+
+.tcv-title {
+  margin-left: 10.5rem;
+}
+
+.contribution-title {
+  margin-left: 11rem;
+}
+
+#downloadBtn {
+  background-color: #ec9138;
+  border: none;
+}
+
+#false {
+  background-color: #17b495;
+}
+
+.add {
+  background-color: #ec9138 !important;
+}
+
+.remark-title {
+  margin-left: 6rem;
+}
+
+.Description {
+  margin-left: 20rem;
+  font-size: 16px;
+}
+
+.Referance {
+  margin-left: 21.5rem;
+  font-size: 16px;
+}
+
+.Attchments {
+  margin-left: 27rem;
+  font-size: 16px;
+}
+
+input {
+  font-size: 14px;
+}
+
+.main-container {
+  border-style: solid;
+  margin-bottom: 20px;
+  margin-right: auto;
+  border-width: thin;
+  border-color: #e0eeef;
+  background-color: rgb(234 247 220);
+  border-radius: 5px;
+}
+
+.container-wrapper {
+  margin-right: 1rem;
+  width: 48rem;
+  flex: 1;
+}
+
+form {
+  padding: 1rem;
+}
+
+#contract-input {
+  margin-right: 1rem;
+  height: 34px !important;
+  width: 13rem;
+}
+
+#contract-timeline {
+  margin-right: 1rem;
+  height: 34px !important;
+  width: 26rem;
+}
+
+#product-input {
+  margin-right: 1rem;
+  height: 34px !important;
+  width: 11rem
+}
+
+.product-name {
+  margin-left: 3.5rem;
+}
+
+.product-code {
+  margin-left: 2.5rem;
+}
+
+.qty {
+  margin-left: 3rem;
+}
+
+.unit-price {
+  margin-left: 6.5rem;
+}
+
+.total {
+  margin-left: 5.5rem;
+}
+
+.IsB2B {
+  margin-left: 9rem;
+}
+
+.NameOEM {
+  margin-left: 7.5rem;
+}
+
+.remark {
+  margin-left: 2rem;
+}
+
+#date {
+  height: 34px;
+}
+
+input, select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495 !important;
+  height: 34px !important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+  border-left: 7px solid #17b495 !important;
+}
+
+.cancel-button {
+  color: black;
+  border: 1px solid darkgrey !important;
+  background-color: white;
+}
+
+.save-button {
+  background-color: #ec9138;
+  border: 1px solid#ec9138;
+}
+
+.ps_div1 {
+  background-color: white;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  padding: 2px 0;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #D3D3D3;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+#btn {
+  background-color: rgb(23 180 149);
+}
+
+.container-for-referance-no {
+  display: flex;
+}
+
+#btn-add {
+  background-color: orange;
+}
+
+#exampleInputEmail1 {
+  height: 34px;
+}
+
+option {
+  font-size: 14px;
+}
+
+select {
+  font-size: 14px;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495 !important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.container-new {
+  padding-left: 7rem;
+  padding-top: 1rem;
+  background-color: rgb(234 247 220);
+  width: 100%;
+  padding-bottom: 15rem;
+}
+
+.container-modal {
+  padding-left: 2rem;
+  padding-top: 1rem;
+  background-color: rgb(234 247 220);
+  width: 100%;
+  padding-bottom: 15rem;
+}
+
+.new-1 {
+  font-size: 14px;
+}
+
+.circleThree {
+  border: 1px solid #364453 !important;
+  height: 27px;
+  width: 27px;
+  border-radius: 25px;
+  padding: 2px;
+  text-align: center;
+  padding-top: 5px 2px 2px;
+  font-size: 13px;
+  margin-left: 5px;
+  font-size: 900;
+  margin-bottom: 3px;
+  margin-top: 2rem;
+  background-color: orange;
+}
+
+.circleThree-new {
+  border: 1px solid #364453 !important;
+  margin-top: 2rem;
+  height: 27px;
+  width: 27px;
+  border-radius: 25px;
+  padding: 2px;
+  text-align: center;
+  padding-top: 5px 2px 2px;
+  font-size: 13px;
+  margin-left: 5px;
+  font-size: 900;
+  margin-bottom: 3px;
+  background-color: rgb(23 180 149);
+}
+
+#btn {
+  background-color: rgb(23 180 149);
+}
+
+.btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#btn-add {
+  background-color: orange;
+}
+
+.new-1 {
+  padding-left: 15px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: 14px;
+}
+
+.fa-plus-circle {
+  color: #ec9138;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.fa-trash {
+  color: #d43f3a;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.fa-upload {
+  color: #17b495;
+  font-size: 21px;
+  cursor: pointer;
+  margin-left: -12rem;
+}
+
+#finaldownload {
+  color: #f4a460;
+  margin-left: 1rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#download {
+  color: #f4a460;
+  margin-left: -18rem;
+  margin-top: 2rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.one-1 {
+  display: block;
+  width: 3%;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495 !important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+btn {
+  cursor: pointer;
+  text-align: center;
+  font-size: 1em;
+  outline: none;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  padding: 0.5rem 2rem;
+  margin: 5px;
+  border-radius: 5px !important;
+}
+
+#csv-link {
+  margin-left: 68rem;
+}
+
+/* #attach::-webkit-scrollbar {
+  display: none;
+} */
+
+.cancel-button {
+  color: black;
+  border: 1px solid darkgrey !important;
+  background-color: white;
+}
+
+#btnNext {
+  background-color: rgb(23, 180, 149);
+}
+
+#downloadCsv {
+  margin-left: -18rem;
+  margin-top: 2rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+#attachmentRow {
+  width: 25rem;
+  margin-right: 3rem;
+}
+
+#results {
+  /* overflow-y: scroll;*/
+  height: 30rem;
+  /* padding: 1rem; */
+  background-color: rgb(234 247 220);
+}
+
+.outside-container {
+  overflow-y: scroll;
+  height: 30rem;
+  border: 1px solid #e8e8e8;
+}
+
+.save-button {
+  background-color: #ec9138;
+  border: 1px solid#ec9138;
+}
+
+.download-csv {
+  display: flex;
+  margin-left: 10rem;
+}
+
+#downloadCsv {
+  margin-left: 13.5rem;
+  font-size: 25px;
+  margin-top: 3rem;
+}
+
+#exampleFormControlInput1 {
+  height: 34px;
+  font-size: 15px;
+}
+
+#exampleFormControlInput11 {
+  height: 34px;
+  font-size: 15px;
+}
+
+.message-warning {
+  width: 165px !important;
+}
+
+#attachment-row {
+  width: 25rem;
+  margin-right: 2rem;
+}
+
+.scrollContainer {
+  height: 31rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.scrollContainer::-webkit-scrollbar, .scrollContainer::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 13px;
+  color: #17b495;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px;
+}

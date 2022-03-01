@@ -1,0 +1,34 @@
+.mainuserSection {
+  margin-top: 8em;
+}
+
+.roleLabel {
+  margin: 5px !important;
+}
+
+.ps_div {
+  background-color: #364453;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.ps_head {
+  color: #70D8C4;
+  font-size: 16px;
+  padding: 4px 2px;
+  text-transform: capitalize;
+}
+
+#formBackground {
+  color: #333;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}

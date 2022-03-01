@@ -1,0 +1,120 @@
+<!-- <app-header></app-header> -->
+<div class="container">
+  <app-alert></app-alert>
+  <div class="content padding-top-100">
+    <div class="row">
+      <div class="col-md-offset-2 col-md-12 col-md-8 col-lg-offset-2 col-lg-8">
+        <!-- BreadCrumb Section -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" style="margin-top: 0px;">
+            <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+            <li class="breadcrumb-item active" aria-current="page">View Bid Details</li>
+          </ol>
+        </nav>
+        <div class="well profile">
+          <div class="col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-8">
+              <div class="col-md-12">
+                <!-- User Login Information Details -->
+                <h2 class="align-center">{{bidData?.name}}</h2>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Bid Name:</strong> {{bidData?.name}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Bid Number:</strong> {{bidData?.bid_number}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Account Name:</strong> {{bidData?.account_name}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Annual Contract Value (Mn) :</strong> {{bidData?.estimatedValue}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Deal Received date:</strong> {{bidData?.date_received | date:'dd-MM-yyyy'}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Bid Submission date:</strong> {{bidData?.date_submission | date:'dd-MM-yyyy'}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Deal Closure date:</strong> {{bidData?.date_closing | date:'dd-MM-yyyy'}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Category :</strong> {{categoryName ? categoryName : 'NA'}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Sales Manager :</strong> {{salesManagerName ? salesManagerName : 'NA'}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <span><strong>TYPES : </strong></span>
+                  <span class="Types" *ngFor="let typeName of typeList; let isLast=last">
+                    <span> {{typeName ? typeName : 'NA'}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                  <span class="Types" *ngIf="typeList.length == 0">
+                    <span> NA </span>
+                  </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <strong>Territory : </strong>
+                  <span class="territory" *ngFor="let  territory of  territoryName; let isLast=last">
+                    <span> {{territory ? territory : 'NA'}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <span><strong>Business Unit : </strong></span>
+                  <span class="Business unit" *ngFor="let bUnit of businessDataName; let isLast=last">
+                    <span> {{bUnit ? bUnit : 'NA' }} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Co-Owner :</strong> {{bidData?.coOwnerTypes ? bidData?.coOwnerTypes : 'NA'}} </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <strong>Contributors: </strong>
+                  <span class="contributor" *ngFor="let  contributor of  contributorName; let isLast=last">
+                    <span> {{contributor ? contributor : 'NA'}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <span><strong>Reviewers : </strong></span>
+                  <span class="reviewerName" *ngFor="let reviewer of reviewerName; let isLast=last">
+                    <span> {{reviewer ? reviewer : 'NA'}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Approval Chains : </strong> {{approvalChainName}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Attachments:</strong> <i class="fa fa-download download"
+                      [ngStyle]="{'color' : bidData?.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}"
+                      style="cursor:pointer" title="Download" aria-hidden="true" (click)="onDownloadDialog()"></i> </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <strong>Tags : </strong>
+                  <span class="tags" *ngFor="let  tag of  bidData?.tags; let isLast=last">
+                    <span> {{tag?.name ? tag?.name : 'NA' }} {{isLast ? ' . ' : ',' }} </span>
+                  </span>
+                  <span class="tags" *ngIf="bidData?.tags.length == 0">
+                    <span> NA </span>
+                  </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Comments:</strong> {{bidData?.comments ? bidData?.comments : 'NA'  }} </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Breadcrumb Section  -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" style="margin-top: 10px;">
+        <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+        <li class="breadcrumb-item"> User Settings</li>
+        <li class="breadcrumb-item active" aria-current="page">Roles</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <!-- Heading of the Page -->
+      <div class="col-md-7 column">
+        <h2>List of Roles</h2>
+      </div>
+      <div class="col-md-3">
+        <!-- Search Input field -->
+        <input type='text' class="searchBox" placeholder='Search' [(ngModel)]="filter">
+        <img src="assets/images/search.png" id="searchIcon">
+      </div>
+      <div class="col-md-2">
+        <!-- Add Role Button  -->
+        <div class="align-right">
+          <button *ngIf="role_list.length !==0" id="createSchedule" type="button" class="btn create-button"
+            title="Add Role" [routerLink]="['../create']" style="margin-top: 18px;">
+            <i style="padding-left:5px;font-size:12px;" class="fa fa-plus"></i>
+            NEW ROLE</button>
+        </div>
+      </div>
+    </div>
+    <!-- Table for Role List Starts Here -->
+    <div class="row margin-top-12">
+      <div class="container-fluid">
+        <table class="table table-striped table-bordered dt-responsive nowrap">
+          <thead>
+            <tr class="blueTh">
+              <th class="align-center first-col" style="width: 5% !important;">Sr</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Category</th>
+              <th class="align-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="role_list.length == 0">
+              <td [routerLink]="['../create']"><i title="Add User"
+                  style=" padding-left:5px;font-size:20px; color: #f1a458;" class="fa fa-plus"></i>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr
+              *ngFor="let item of role_list | search : filter : 'name' | paginate:{ itemsPerPage:10,currentPage:p } let i = index;">
+              <td class="align-center first-col">
+                {{i + (1+((p-1)*10))}}
+              </td>
+              <td class="f_parent">
+                {{getRoleName(item.name)}}
+              </td>
+              <td>
+                {{item.status}}
+              </td>
+              <td>
+                {{item.sub_type ? item.sub_type : ''}} {{item.role_type ? item.role_type : 'ROOT'}}
+              </td>
+              <td class="align-center">
+                <img src="assets/images/eye-open.png" title="view" class="icon-size"
+                  [routerLink]="['../view', item.role_id]">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/images/edit1.png" title="Edit" class="icon-size"
+                  [routerLink]="['../update', item.role_id]">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/images/rubbish-bin.png" title="Delete" class="icon-size"
+                  (click)="delete(item.role_id)">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Pagination using for Role List TABLE  -->
+        <pagination-controls class="align-center" (pageChange)="p=$event"></pagination-controls>
+      </div>
+    </div>
+    <!-- Table for Role List Ends Here -->
+  </div>
+</div><!-- Panel Content -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

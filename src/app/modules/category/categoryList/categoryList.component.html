@@ -1,0 +1,81 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Breadcrumb Section -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" style="margin-top: 10px;">
+        <li class="breadcrumb-item active" aria-current="page">Category List</li>
+      </ol>
+    </nav>
+    <!-- Page Heading -->
+    <div class="row">
+      <div class="col-md-6 column">
+        <h2>List of Category </h2>
+      </div>
+      <!-- Search Input Field -->
+      <div class="col-md-3">
+        <input type='text' class="searchBox" [(ngModel)]="filter" placeholder='Search'>
+        <img src="assets/images/search.png" id="searchIcon">
+      </div>
+      <!-- Add Category Button -->
+      <div class="col-md-3">
+        <div class="align-right">
+          <button id="createSchedule" *ngIf="categorys.length != 0" type="button" routerLink="/category"
+            class="btn create-button" title="Add New Category" routerLink="/category" style="margin-top: 18px;">
+            <i style="padding-left:5px;font-size:20 px;" class="fa fa-plus"></i>
+            NEW CATEGORY</button>
+        </div>
+      </div>
+    </div>
+    <!-- Table for CATEGORY List -->
+    <div class="row margin-top-12">
+      <div class="container-fluid">
+        <table class="table table-striped table-bordered dt-responsive nowrap">
+          <thead>
+            <tr class="blueTh">
+              <th class="align-center first-col" style="width: 5% !important;">Sr</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th class="align-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="categorys.length == 0">
+              <td><i title="Add New Category" routerLink="/category"
+                  style="padding-left:5px;font-size:20px;color: #f1a458" class="fa fa-plus"></i></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr
+              *ngFor="let category of categorys | search : filter : 'category_name' | paginate:{ itemsPerPage:10,currentPage:p }let i = index;">
+              <td class="align-center first-col">
+                {{i + (1+((p-1)*10))}}
+              </td>
+              <td>{{category.category_name}}</td>
+              <td>{{category.description ? category.description : 'NA'}}</td>
+
+              <!-- Action Button for Edit , View And Delete  -->
+              <td class="align-center">
+                <img src="assets/images/eye-open.png" title="View" [routerLink]="['/categoryView',category._id]"
+                  class="icon-size">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/images/edit1.png" title="Edit" [routerLink]="['/category',category._id]"
+                  class="icon-size">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="assets/images/rubbish-bin.png" (click)="deleteCategory(category._id)" class="icon-size"
+                  title="Delete">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Pagination for Category Detail Table   -->
+        <pagination-controls class="align-center" (pageChange)="p=$event" *ngIf="categorys.length > 10">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div><!-- Panel Content -->
+<!-- Loader Section of the Category Detail -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

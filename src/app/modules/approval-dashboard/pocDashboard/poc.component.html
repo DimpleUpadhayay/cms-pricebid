@@ -1,0 +1,921 @@
+<!-- <app-header></app-header> -->
+<!-- <app-bid-details></app-bid-details> -->
+<app-alert></app-alert>
+<app-bid-development></app-bid-development>
+<div class="container">
+  <!-- Breadcumb Section -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink="/dashboard">Home</li>
+      <li class="breadcrumb-item active" aria-current="page">Approval Dashboard</li>
+    </ol>
+  </nav>
+  <!-- Page Heading  in Approuvl Dashboard-->
+  <div class="row">
+    <div class="col-xs-9 col-sm-9 col-lg-9 col-md-9">
+      <h2 class="titleResp"> Approval Dashboard</h2>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-right">
+      <!-- Modal Rcent 5 Starts Here -->
+      <button type="button" class="btn recent" data-toggle="modal" data-target="#recentModalLong"
+        (click)="readRecent(undefined)">
+        Recent-5
+      </button>
+
+      <div class="modal fade" id="recentModalLong" tabindex="-1" role="dialog" aria-labelledby="recentModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content align-center">
+            <div class="modal-header">
+              <div class="col-md-2">
+                <h2 class="modal-title" style="font-size: 18px !important;float: left !important;"
+                  id="recentModalLongTitle">RECENT-5</h2>
+              </div>
+
+              <!-- <div class="col-md-2" style="margin-top: 5px;">
+                    <input type="radio" name="BU" value="only" [(ngModel)]="multiflagBu"> Only
+                    <input type="radio" name="BU" value="All" [(ngModel)]="multiflagBu"> All
+                  </div>
+                  <div class="col-md-3" style="margin-left:-25px">
+                    <ng-multiselect-dropdown [placeholder]="'Business Unit'" [data]="business_units"
+                      [settings]="dropdownBUSettings" [(ngModel)]="selectedBUs" (onSelect)="onItemSelect($event)"
+                      (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+                      (onDeSelectAll)="onDeSelectAll($event,'BU')">
+                    </ng-multiselect-dropdown>
+                  </div>
+                  <div class="col-md-2" style="margin-top: 5px;">
+                    <input type="radio" name="territory" value="only" [(ngModel)]="multiflagTerritory"> Only
+                    <input type="radio" name="territory" value="All" [(ngModel)]="multiflagTerritory"> All
+                  </div>
+                  <div class="col-md-3" style="margin-left:-25px">
+                    <ng-multiselect-dropdown [placeholder]="'Territory'" [data]="territories"
+                      [settings]="dropdownTerritorySettings" [(ngModel)]="selectedTerritories"
+                      (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+                      (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'Territory')">
+                    </ng-multiselect-dropdown>
+                  </div> -->
+
+              <!-- <div class=" valueRange">
+                    <div class="col-md-1" style="width:11%">
+                      <input type="text" placeholder="Start" class="form-control">
+                    </div>
+                    <div class="col-md-1" style="width:11%">
+                      <input type="text" placeholder="End" class="form-control">
+                    </div>
+                    <div class="col-md-1">
+                      <button class="form-control" style="    background-color: #ddd;
+                            border: 1px solid #364453;padding: 5px;">Go</button>
+                    </div>
+                  </div> -->
+
+              <!-- <div class="fa fa-refresh" style="cursor:pointer;" title="Reset" (click)="onClear()">
+
+                  </div> -->
+
+
+              <button style="margin-top: -13px;margin-right: -9px;" type="button" class="close" data-dismiss="modal"
+                aria-label="Close" (click)="onClose()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!-- If there is no Bid -->
+            <div class="modal-body" *ngIf="recent.length == 0">
+              <h5>No recent bids</h5>
+            </div>
+            <div class="modal-body" *ngIf="recent.length != 0">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="align-center">Sr</th>
+                    <th class="align-center">Account Name</th>
+                    <th class="align-center">Deal Name</th>
+                    <th class="align-center">Decision</th>
+                    <th class="align-center">Date of Submission</th>
+                    <th class="align-center">Deal Value <i class="fa fa-inr"> (Mn)</i> </th>
+                    <th class="align-center">Won By</th>
+                    <th class="align-center">Our Price <i class="fa fa-inr"> (Mn)</i> </th>
+                    <th class="align-center">Winning Price <i class="fa fa-inr"> (Mn)</i> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of recent;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.account_name}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.bid_result ? item.bid_result : 'Decision Awaited'}}</td>
+                    <td>{{(item.date_submission) |  date:'dd-MM-yyyy' }}</td>
+                    <td>{{item.estimatedValue}}</td>
+                    <td>{{item.bid_winner_name ? item.bid_winner_name : '-'}}</td>
+                    <td>{{item.bid_our_value ? item.bid_our_value : '-' }}</td>
+                    <td>{{item.bid_winner_value ? item.bid_winner_value : '-'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Recent5 ends here -->
+    <!-- Modal Similar5 Start Here -->
+    <div class="col-lg-1 col-md-1 align-right">
+      <button type="button" class="btn similar" data-toggle="modal" data-target="#similarModalLong"
+        (click)="readBidSimilar()">
+        Similar-5
+      </button>
+      <div class="modal fade" id="similarModalLong" tabindex="-1" role="dialog" aria-labelledby="similarModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content align-center">
+            <div class="modal-header">
+              <div class="col-md-5">
+                <h2 class="modal-title" style="float:left;" id="recentModalLongTitle"> SIMILAR-5
+                </h2>
+              </div>
+              <div class="col-md-7 align-right">
+                <button type="button" style="margin-top: -13px;
+									margin-right: -21px;" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            <div class="modal-body" *ngIf="similar.length == 0">
+              <h5>No similar bids</h5>
+            </div>
+            <div class="modal-body" *ngIf="similar.length != 0">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="align-center">Sr</th>
+                    <th class="align-center">Account Name</th>
+                    <th class="align-center">Deal Name</th>
+                    <th class="align-center">Decision</th>
+                    <th class="align-center">Date of Submission</th>
+                    <th class="align-center">Deal Value <i class="fa fa-inr"> (Mn)</i> </th>
+                    <th class="align-center">Won By </th>
+                    <th class="align-center">Our Price <i class="fa fa-inr"> (Mn)</i> </th>
+                    <th class="align-center">Winning Price <i class="fa fa-inr"> (Mn)</i> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let simi of similar;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{simi.account_name}}</td>
+                    <td>{{simi.name}}</td>
+                    <td>{{simi.bid_result ? simi.bid_result : 'Decision Awaited'}}</td>
+                    <td>{{(simi.date_submission) |  date:'dd-MM-yyyy' }}</td>
+                    <td>{{simi.estimatedValue}}</td>
+                    <td>{{simi.bid_winner_name ? simi.bid_winner_name : '-'}}</td>
+                    <td>{{simi.bid_our_value ? simi.bid_our_value : '-' }}</td>
+                    <td>{{simi.bid_winner_value ? simi.bid_winner_value : '-'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Similar5  Ends Here -->
+    <div class="col-xs-3 col-sm-3 col-md-1 col-lg-1 align-right" style="margin-top:12px"
+      *ngIf="user.product_type == 'nonpricing'">
+      <i class="fa fa-download download " aria-hidden="true" title="Pricing to be Approved" (click)="onDownload()"></i>
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-1 col-lg-1 align-right" style="margin-top:12px" *ngIf="
+      user.product_type == 'pricing'">
+      <!-- target="_blank" [routerLink]="['/bid-development/sheets/', bid_id]" -->
+      <a>
+        <i class="fa fa-download download" aria-hidden="true" title="Pricing to be Approved" (click)="onDownload()"></i>
+      </a>
+    </div>
+  </div>
+  <!-- [routerLink]="['/view',bid_id]" -->
+  <!-- Heading Sec -->
+  <!-- <div class="main-content-area"> -->
+  <!-- Main section -->
+  <div class=" caption align-center">
+    Project Summary
+  </div>
+  <div class="ps_div1" style="max-height:245px;overflow-x: hidden;">
+    <tabset>
+      <tab heading="Account Info"> 
+        <!-- *ngIf="productType == 'pricing'" -->
+        <div class="row" *ngIf="productType == 'pricing'">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+            <div class="ps_div margin-top-12">
+              <div class="row ps_head">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                  #
+                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                  Scope
+                </div>
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+              </div>
+              <div class="row" *ngFor="let item of ps.scope_summary; let i = index;last as isLast">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.
+                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                  <textarea id="scopeTextArea"
+                    [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                    type="text" [(ngModel)]="ps.scope_summary[i].name" name="{{ps.scope_summary[i].name}}"
+                    class="form-control input-bar">
+													</textarea>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="productType == 'nonpricing'">
+          <div class="col-md-12">
+            <div class="ps_div margin-top-12">
+              <div class="row ps_head">
+                <div class="col-md-1 align-center">
+                  #
+                </div>
+                <div class="col-md-5">
+                  Strategy Drivers
+                </div>
+                <div class="col-md-5">
+                  Response
+                </div>
+                <div class="col-md-1">
+                  <i class="fa fa-gear" id="margin-left"></i>
+                </div>
+              </div>
+              <div class="row" *ngFor="let item of ps.executive_summary; let i = index; last as isLast"
+                style="color:rgba(255, 255, 255, 0.863)">
+                <div class="col-md-1 align-center">{{i+1}}.
+                </div>
+                <div class="col-md-5">
+                  <textarea
+                    [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited || item.read"
+                    type="text" [(ngModel)]="ps.executive_summary[i].name" name="{{ps.executive_summary[i].name}}"
+                    class="form-control input-bar"></textarea>
+
+                </div>
+
+                <div class="col-md-5" *ngIf="ps.executive_summary[i]?.type == 'input'">
+                  <textarea
+                    [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                    type="text" name="{{ps.executive_summary[i].value}}" [(ngModel)]="ps.executive_summary[i].value"
+                    required class="form-control input-bar"></textarea>
+
+
+                </div>
+                <div class="col-md-5 fan" *ngIf="ps.executive_summary[i]?.type == 'multiInput'">
+                  <div class="row margin-top-12">
+                    <div class="col-md-2">
+                      <span class="input-group-text">Favour</span>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        type="text" class="form-control input-bar"
+                        [(ngModel)]="ps.executive_summary[i].value.favour"></textarea>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row margin-top-12">
+                    <div class="col-md-2">
+                      <span class="input-group-text">Against</span>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        type="text" class="form-control input-bar"
+                        [(ngModel)]="ps.executive_summary[i].value.against"></textarea>
+
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row margin-top-12">
+                    <div class="col-md-2">
+                      <span class="input-group-text">Neutral</span>
+                    </div>
+                    <div class="col-md-10">
+                      <textarea
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        type="text" class="form-control input-bar"
+                        [(ngModel)]="ps.executive_summary[i].value.neutral"></textarea>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5" *ngIf="ps.executive_summary[i]?.type == 'dropdown'">
+                  <select class="form-control" name="" [(ngModel)]="ps.executive_summary[i].value"
+                    [disabled]="submitted != '' || user.user_type != 'BID_OWNER'">
+                    <option value="">Choose one</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Timeline">
+        <!--Section:timeline part-->
+        <div id="scope_timeline">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+              <div class="ps_div margin-top-12">
+                <div class="ps_head">
+                  <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">#</div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Milestone</div>
+
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Date</div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row" *ngFor="let item of ps.timeline;let i = index; last as isLast">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <textarea
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        type="text" name="{{ps.timeline[i].name}}" [(ngModel)]="ps.timeline[i].name" required
+                        class="form-control input-bar">
+                          </textarea>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <input
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        [owlDateTime]="dt1" [min]="min" class="form-control input-border input-bar"
+                        [(ngModel)]="ps.timeline[i].value" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Criterion">
+        <!--Section:criterion part-->
+        <div id="scope_criterion">
+          <div style="margin: 10px;">
+            <button class="btn category-button" (click)="eligibility = true">Eligibility
+              Criterion</button>
+            <button class="btn ps-button" (click)="eligibility = false">Evaluation
+              Criterion</button>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+              <div class="ps_div margin-top-12" *ngIf="eligibility">
+                <div class="ps_head">
+                  <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">#</div>
+                    <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10"> Eligibilty Criterion</div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                  <div>
+                    <div class="row" *ngFor="let criterion of ps.criterion.eligibility;let i = index;last as isLast;">
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.
+                      </div>
+                      <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                        <textarea
+                          [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                          class="form-control input-bar" type="text" name="{{ps.criterion.eligibility[i].name}}"
+                          [(ngModel)]="ps.criterion.eligibility[i].name">
+                              </textarea>
+                      </div>
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ps_div margin-top-12" *ngIf="!eligibility">
+                <div class="ps_head">
+                  <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">#</div>
+                    <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10"> Evaluation Criterion</div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                  <div>
+                    <div class="row" *ngFor="let criterion of ps.criterion.evaluation;let i = index;last as isLast;">
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.
+                      </div>
+                      <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                        <textarea
+                          [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                          class="form-control input-bar" type="text" name="{{ps.criterion.evaluation[i].name}}"
+                          [(ngModel)]="ps.criterion.evaluation[i].name">
+                            </textarea>
+                      </div>
+                      <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Financial T & Cs">
+        <!-- Financial T & cs -->
+        <!-- *ngIf="productType == 'nonpricing'" -->
+        <div id="scope_financial">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="ps_div margin-top-12">
+                <div class="ps_head">
+                  <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">#</div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Financial T & Cs</div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Response</div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+                <div class="row" *ngFor="let item of ps.financial;let i =index;last as isLast;">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.</div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                    <input
+                      [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited || item.read"
+                      type="text" name="{{ps.financial[i].name}}" [(ngModel)]="ps.financial[i].name" required
+                      class="form-control input-bar">
+                  </div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5" *ngIf="ps.financial[i]?.type == 'input'">
+                    <textarea
+                      [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                      type="text" name="{{ps.financial[i].value}}" [(ngModel)]="ps.financial[i].value" required
+                      class="form-control input-bar">
+                        </textarea>
+                  </div>
+                  <div class="col-md-5" *ngIf="ps.financial[i]?.type == 'dropdown'">
+                    <select class="form-control" name="" [(ngModel)]="ps.financial[i].value"
+                      [disabled]="submitted != '' || user.user_type != 'BID_OWNER'">
+                      <option value="">Choose one</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="quartely">Quartely</option>
+                    </select>
+                  </div>
+
+                  <div class="col-xs-4 col-md-5" *ngIf="ps.financial[i]?.type == 'multiInput'">
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                      [readonly]="!reviewFlag || pocSubmited || bid?.parent || userType != 'BID_OWNER'" type="text"
+                      placeholder="&#8377;" name="{{ps.financial[i].value}}" [(ngModel)]="ps.financial[i].value"
+                      required class="form-control input-bar">
+                  </div>
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- *ngIf="productType == 'pricing'" -->
+        <!-- <div class="accordion" id="accordionExample">
+								<div class="card">
+									<div class="card-header" id="headingOne">
+										<h5 class="mb-0">
+											<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+												aria-expanded="true" aria-controls="collapseOne">
+												Payment Terms
+											</button>
+										</h5>
+									</div>
+
+									<div id="collapseOne" class="collapse in" aria-labelledby="headingOne" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[0].value}}" [(ngModel)]="ps.financial[0].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header" id="headingTwo">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+												data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+												style="outline: none;">
+												Earnest Money Deposit
+											</button>
+										</h5>
+									</div>
+									<div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[1].value}}" [(ngModel)]="ps.financial[1].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header" id="headingThree">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+												data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+												Bank Guarantee
+											</button>
+										</h5>
+									</div>
+									<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[2].value}}" [(ngModel)]="ps.financial[2].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header" id="headingFour">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+												data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+												Liquidated Damages
+											</button>
+										</h5>
+									</div>
+									<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[3].value}}" [(ngModel)]="ps.financial[3].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header" id="headingFive">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+												data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+												Penalties
+											</button>
+										</h5>
+									</div>
+									<div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[4].value}}" [(ngModel)]="ps.financial[4].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header" id="headingSix">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+												data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+												Service Level Agreement
+											</button>
+										</h5>
+									</div>
+									<div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[5].value}}" [(ngModel)]="ps.financial[5].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header" id="headingSeven">
+										<h5 class="mb-0">
+											<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+												data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+												Performance Security Deposit
+											</button>
+										</h5>
+									</div>
+									<div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+										<div class="card-body">
+											<textarea
+												[readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+												type="text" name="{{ps.financial[6].value}}" [(ngModel)]="ps.financial[6].value" required
+												class="form-control input-bar"></textarea>
+										</div>
+									</div>
+								</div>
+							</div> -->
+      </tab>
+
+      <tab heading="Delivery T & Cs">
+        <!-- *ngIf="productType == 'pricing'" -->
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+            <div class="ps_div margin-top-12">
+              <div class="row ps_head">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                  #
+                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                  Delivery T & Cs
+                </div>
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+              </div>
+              <div class="row" *ngFor="let item of ps.delivery_tc; let i = index;last as isLast">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}
+                </div>
+                <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                  <textarea
+                    [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                    type="text" [(ngModel)]="ps.delivery_tc[i].name" name="{{ps.delivery_tc[i].name}}"
+                    class="form-control input-bar">
+                      </textarea>
+                </div>
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div id="scope_delivery" *ngIf="productType == 'nonpricing'">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="ps_div margin-top-12">
+											<div class="ps_head">
+												<div class="row">
+													<div class="col-md-1 align-center">#</div>
+													<div class="col-md-4"> Delivery T & Cs</div>
+													<div class="col-md-5"> Response</div>
+													<div class="col-md-2 align-left">
+														<i id="margin-left" class="fa fa-gear"></i>
+													</div>
+												</div>
+											</div>
+											<div>
+												<div class="row" *ngFor="let item of ps.delivery;let i = index;last as isLast">
+													<div class="col-md-1 align-center srno">{{i+1}}.</div>
+													<div class="col-md-4">
+														<input [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited || item.read" type="text" name="{{ps.delivery[i].name}}"
+															[(ngModel)]="ps.delivery[i].name" required class="form-control input-bar">
+													</div>
+													<div class="col-md-5">
+														<input [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited" class="form-control input-bar" type="text" name="{{ps.delivery[i].value}}"
+															[(ngModel)]="ps.delivery[i].value">
+													</div>
+													<div class="col-md-2 action" *ngIf="submitted">
+															<i class="fa fa-download" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+													</div>
+													<div class="col-md-2 action" *ngIf="!ps.delivery[i].icon && !ps.delivery[i].allIcon && !submitted">
+															<i class="fa fa-download" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+														<img src="assets/images/attachment.png" *ngIf="user.user_type == 'BID_OWNER'"
+															(click)="openDialog(i, 'delivery')" title="Attach" class="icon-size attachIcon1">
+													</div>
+													<div class="col-md-2 action" *ngIf="ps.delivery[i].icon && !submitted">
+															<i class="fa fa-download" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+														<img src="assets/images/attachment.png" *ngIf="user.user_type == 'BID_OWNER'"
+															(click)="openDialog(i, 'delivery')" title="Attach" class="icon-size attachIcon2">
+														<img src="assets/images/add-orange.png" *ngIf="user.user_type == 'BID_OWNER' && reviewFlag && !pocSubmited"
+															[hidden]="!isLast" class="icon-size addIcon" (click)="addItem('delivery')">
+													</div>
+													<div class="col-md-2 action" *ngIf="ps.delivery[i].allIcon && !submitted">
+															<i class="fa fa-download" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+														<img src="assets/images/attachment.png" *ngIf="user.user_type == 'BID_OWNER'"
+															(click)="openDialog(i, 'delivery')" title="Attach" class="icon-size attachIcon2">&nbsp;&nbsp;&nbsp;&nbsp;
+														<img src="assets/images/rubbish-bin.png" title="Attach" class="icon-size deleteIcon"
+															(click)="deleteItem(i, 'delivery')">&nbsp;&nbsp;&nbsp;&nbsp;
+														<img src="assets/images/add-orange.png" *ngIf="user.user_type == 'BID_OWNER' && reviewFlag && !pocSubmited"
+															[hidden]="!isLast" class="icon-size addIcon" (click)="addItem('delivery')">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div> -->
+      </tab>
+
+      <tab heading="Support T & Cs">
+        <!-- SUPPORT -->
+        <div id="scope_support">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+              <div class="ps_div margin-top-12">
+                <div class="ps_head">
+                  <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">#</div>
+                    <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10"> Support T & Cs</div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+                <div *ngIf="ps && ps.support">
+                  <div class="row" *ngFor="let item of ps.support;let i = index;last as isLast">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-lg-10 col-md-10">
+                      <!-- <textarea [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited" class="form-control input-bar" type="text" name="{{ps.support[i].value}}"
+															[(ngModel)]="ps.support[i].value"></textarea> -->
+                      <textarea
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        class="form-control input-bar" type="text" name="{{ps.support[i].name}}"
+                        [(ngModel)]="ps.support[i].name">
+                          </textarea>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Scope">
+        <!--ACCOUNT INFO -->
+        <div id="scope_account">
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+              <div class="ps_div margin-top-12">
+                <div class="ps_head">
+                  <div class="row">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">#</div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Scope</div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Response</div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="row" *ngFor="let item of ps.account;let i = index;last as isLast">
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">{{i+1}}.
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <input
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited || item.read"
+                        type="text" name="{{ps.account[i].name}}" [(ngModel)]="ps.account[i].name" required
+                        class="form-control input-bar">
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <textarea
+                        [readonly]="submitted || (user.user_type != 'BID_OWNER' && !submitted) || !reviewFlag || pocSubmited"
+                        type="text" name="{{ps.account[i].value}}" [(ngModel)]="ps.account[i].value" required
+                        class="form-control input-bar">
+                          </textarea>
+                    </div>
+                    <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+
+  <div class="content padding-top-30" *ngIf="response[0].approval_add && response[0].approval_add.length > 0">
+    <!-- <app-approval-required></app-approval-required> -->
+    <div class="caption align-center">
+      Approvals Required
+    </div>
+    <div class="ps_div1">
+      <div class="ps_head1">
+        <div class="row">
+          <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+            #
+          </div>
+          <div class="col-xs-6 col-sm-5 col-lg-5 col-md-5">
+            Approval Required
+          </div>
+          <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+            Justification
+          </div>
+          <div class="col-xs-5 col-sm-1 col-lg-1 col-md-1">
+            <i class="fa fa-gear"></i>
+          </div>
+        </div>
+      </div>
+      <div style="max-height:190px;overflow-x:hidden">
+        <div class="row" *ngFor="let item of response[0].approval_add; let i=index;last as isLast">
+          <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+            {{i+1}}.
+          </div>
+          <div class="col-xs-6 col-sm-6 col-lg-5 col-md-5">
+            <input readonly class="text-line" name="{{item.approval_required}}" required
+              [ngModelOptions]="{standalone:true}" [(ngModel)]="response[0].approval_add[i].approval_required" required>
+          </div>
+          <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+            <input readonly class="text-line" name="{{item.justification}}" required
+              [ngModelOptions]="{standalone:true}" [(ngModel)]="response[0].approval_add[i].justification">
+          </div>
+          <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1">
+            <i class="fa fa-download downloadIcon" style="font-size: 18px;" aria-hidden="true" title="Download"
+              [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#364453'}"
+              (click)="onDownloadDialog(i)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="newArray.length  >= 1" class="content padding-top-30">
+    <!-- Approvl comments -->
+    <div>
+      <div class="caption align-center">Approval Timeline</div>
+      <!-- Rfi starts here -->
+      <!-- <div class="align-center" *ngIf="newArray.length == 0">
+        No Data
+      </div> -->
+      <div id="bid_rfi">
+        <div class="ps_div1 align-center">
+          <div class="ps_head1">
+            <div class="row">
+              <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                #
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                Approver name
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                Action
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                Date of Action
+              </div>
+              <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                Comments
+              </div>
+            </div>
+          </div>
+          <div style="max-height:190px;overflow-x:hidden">
+            <div class="row" *ngFor="let item of newArray;let i = index;">
+              <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                {{i+1}}.
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                <input type="text" readonly class="text-line align-center" readonly placeholder="Dummy"
+                  [(ngModel)]="newArray[i].approver_name" required>
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                <input type="text" readonly class="text-line align-center" readonly placeholder="N/A"
+                  [(ngModel)]="newArray[i].comment_type" (click)="onRfi(i)"
+                  [ngClass]="newArray[i]?.comment_type == 'INFORMATION REQUIRED' ? 'rfiButton' : 'nonRfiButton' "
+                  required>
+              </div>
+              <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2">
+                {{newArray[i].date ? (newArray[i].date | date:'dd-MM-yy') : '-' }}
+              </div>
+              <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                <input type="text" readonly class="text-line align-center" readonly [(ngModel)]="newArray[i].comment"
+                  required>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content padding-top-30">
+    <!-- Approval,RFI,Reject Action Button -->
+    <div class="row margin-top" *ngIf="!read && showNow">
+      <div class="col-md-12">
+        <div class="caption">Comments</div>
+
+        <div class="ps_div1">
+
+          <div class="row" *ngFor="let item of ac_comment.comment_add;let i = index;last as isLast">
+            <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center ">{{i+1}}.</div>
+            <div class="col-xs-9 col-sm-9 col-lg-9 col-md-9">
+              <input type="text" name="{{ac_comment.comment_add[i].comment}}"
+                [(ngModel)]="ac_comment.comment_add[i].comment" required class="text-line">
+            </div>
+            <!-- <div class="col-md-2 align-left" *ngIf="i == 0">
+              <img src="assets/images/add-orange.png" class="icon-size" (click)="addComment()">
+            </div> -->
+            <!-- <div class="col-md-2 align-left">
+              <img src="assets/images/rubbish-bin.png" title="Attach" class="icon-size" (click)="deleteComment(i)">
+              <img src="assets/images/add-orange.png" class="icon-size" *ngIf="isLast" (click)="addComment()">
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></div>
+      <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 align-right">
+        <button type="button" (click)="save('APPROVED')" [disabled]="disabled" class="btn approved-button">APPROVED
+        </button>
+        <button type="button" (click)="save('REJECTED')" [disabled]="disabled" class="btn reject-button">REJECTED
+        </button>
+        <button type="button" (click)="save('CONDITIONALLY_APPROVED')" [disabled]="disabled"
+          class="btn conditionally-button">CONDITIONALLY
+          APPROVED
+        </button>
+        <button type="button" (click)="save('RFI')" [disabled]="disabled" class="btn information-button">INFORMATION
+          REQUIRED
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="message-warning align-center" *ngIf="read">
+    {{read}}
+  </div>
+</div>
+<!-- Alert -->
+
+
+<!-- Loader Section for the Approval Dashboard-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

@@ -1,0 +1,25 @@
+.mainadduserSection {
+    margin-top: 8em;
+}
+
+.input-border, ng-select, textarea {
+    box-shadow: 0 0 .5px .5px #17b495;
+}
+
+.field-icon {
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+    color: #17b495;
+}
+
+.ng-select.custom ::ng-deep .ng-select-container {
+    max-height: 35px;
+    overflow: auto;
+}
+
+input:read-only {
+    background: white
+}

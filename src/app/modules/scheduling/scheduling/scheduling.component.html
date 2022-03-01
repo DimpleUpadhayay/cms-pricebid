@@ -1,0 +1,228 @@
+<!-- <app-header></app-header> -->
+<app-bid-details></app-bid-details>
+<div class="container">
+  <div class="content padding-top-100">
+    <app-alert></app-alert>
+    <!-- Breadcrumb Section -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+        <!-- <li class="breadcrumb-item" (click)="changeState()">{{bid_id}}</li> -->
+        <li class="breadcrumb-item active" aria-current="page">Scheduling</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <!-- Page Heading -->
+      <div class="col-xs-8 col-sm-9 col-lg-9 col-md-9">
+        <h2>Scheduling</h2>
+      </div>
+      <!-- Add New Milestone Button -->
+      <div class="col-xs-4 col-sm-3 col-lg-3 col-md-3">
+        <div class="align-right">
+          <button id="createSchedule" *ngIf="!submitted && user.user_type == 'BID_OWNER'" type="button"
+            class="btn create-button" title="Add New Milstone" (click)="addMilestone()" style="margin-top: 15px;">
+            <i class="fa fa-plus"></i>
+            NEW MILESTONE</button>
+        </div>
+      </div>
+    </div>
+    <div class="ps_div">
+      <div class="row margin-top-12">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+          <div class="ps_head">
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="row">
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">#</div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Milestones</div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Assign to</div>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+                <div class="row">
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">Start Date</div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">End Date</div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">
+                    <i class="fa fa-gear"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-top-12" *ngFor="let item of milestones;let i = index">
+            <!-- Miltestone -->
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+              <div class="row">
+                <!-- Parent Task row scheduling -->
+                <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">{{i+1}}</div>
+                <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                  <input type="text" class="form-control input-border input-bar" placeholder="Add Milestone"
+                    required="true" [(ngModel)]="milestones[i].name"
+                    [readonly]="milestones[i].name && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent">
+                </div>
+                <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                  <select class="form-control input-border"
+                    [disabled]="submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                    [(ngModel)]="milestones[i].contributor">
+                    <option *ngFor="let user of users;let i = index" value="{{user.user_id}}">
+                      {{user.username}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+              <div class="row">
+                <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                  <input [owlDateTime]="dt1" class="form-control input-border input-bar" [min]="minDate"
+                    [max]="submission_date" [(ngModel)]="milestones[i].startDate"
+                    [readonly]="milestones[i].startDate && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                    [readonly]="submitFlag || true" [owlDateTimeTrigger]="dt1" placeholder="Start Date">
+                  <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                  <input [owlDateTime]="dt2" [min]="milestones[i].startDate" [max]="submission_date"
+                    class="form-control input-border input-bar" [(ngModel)]="milestones[i].endDate"
+                    [readonly]="milestones[i].endDate && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                    [readonly]="submitFlag || true" [owlDateTimeTrigger]="dt2" placeholder="Closing Date">
+                  <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"
+                  *ngIf="item.icon && !submitted && user.user_type == 'BID_OWNER'">
+                  <img src="assets/images/add-orange.png" class="icon-size" (click)="addTask(i)"
+                    style="margin-left:0px;">
+                </div>
+                <!--  Delete , Add Section   -->
+                <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"
+                  *ngIf="item.allIcon && !submitted && user.user_type == 'BID_OWNER'">
+                  <img src="assets/images/rubbish-bin.png" title="Delete" class="icon-size deleteResp"
+                    (click)="deleteMilestone(i)">
+                  <img src="assets/images/add-orange.png" title="Add" class="icon-size" (click)="addTask(i)">
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngFor="let task of item.task;let j = index">
+              <!-- Task -->
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                <div class="row" style="margin-left:2px;">
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">{{(i+1) + '.' +
+                                        (j+1)}}</div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5"> <input type="text"
+                      class="form-control input-border input-bar" placeholder="Add Task" required="true"
+                      [(ngModel)]="milestones[i].task[j].name"
+                      [readonly]="milestones[i].task[j].name && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent">
+                  </div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                    <select class="form-control input-border"
+                      [disabled]="submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                      [(ngModel)]="milestones[i].task[j].contributor">
+                      <option *ngFor="let user of users;let i = index" value="{{user.user_id}}">
+                        {{user.username}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                <div class="row" style="margin-right:-2px;">
+                  <div class=" col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                    <input [owlDateTime]="dt3" class="form-control input-border input-bar" [min]="minDate"
+                      [max]="submission_date" [(ngModel)]="milestones[i].task[j].startDate"
+                      [readonly]="milestones[i].task[j].startDate && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                      [readonly]="submitFlag || true" [owlDateTimeTrigger]="dt3" placeholder="Start Date">
+                    <owl-date-time [pickerType]="'calendar'" #dt3></owl-date-time>
+                  </div>
+                  <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                    <input [owlDateTime]="dt4" [min]="milestones[i].task[j].startDate" [max]="submission_date"
+                      class="form-control input-border input-bar" [(ngModel)]="milestones[i].task[j].endDate"
+                      [readonly]="milestones[i].task[j].endDate && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                      [readonly]="submitFlag || true" [owlDateTimeTrigger]="dt4" placeholder="Closing Date">
+                    <owl-date-time [pickerType]="'calendar'" #dt4></owl-date-time>
+                  </div>
+                  <!--  Delete , Add Section    -->
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center"
+                    *ngIf="task.icon && !submitted && user.user_type == 'BID_OWNER'">
+                    <img src="assets/images/add-orange.png" title="Add" class="icon-size"
+                      (click)="addSubTask(i, j)">
+                  </div>
+                  <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center"
+                    *ngIf="task.allIcon && !submitted && user.user_type == 'BID_OWNER'">
+
+                    <img src="assets/images/rubbish-bin.png" title="Delete" class="icon-size deleteResp"
+                      (click)="deleteTask(item, j)" style="    margin-left: -22px;">
+                    <img src="assets/images/add-orange.png" title="Add" class="icon-size"
+                      (click)="addSubTask(i, j)">
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngFor="let subTask of task.subTask;let k = index">
+                <!--  Sub Task row in schedling -->
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <div class="row" style="margin-left:12px;">
+                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center">{{(i+1) + '.' +
+                                            (j+1) + '.' + (k+1)}}</div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5"> <input type="text"
+                        class="form-control input-border input-bar" placeholder="Add Sub Task" required="true"
+                        [(ngModel)]="milestones[i].task[j].subTask[k].name"
+                        [readonly]="milestones[i].task[j].subTask[k].name && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent">
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <select class="form-control input-border"
+                        [disabled]="submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                        [(ngModel)]="milestones[i].task[j].subTask[k].contributor">
+                        <option *ngFor="let user of users;let i = index" value="{{user.user_id}}">{{user.username}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <div class="row" style="margin-right:12px;">
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <input [owlDateTime]="dt5" class="form-control input-border input-bar" [min]="minDate"
+                        [max]="submission_date" [(ngModel)]="milestones[i].task[j].subTask[k].startDate"
+                        [readonly]="milestones[i].task[j].subTask[k].startDate && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                        [readonly]="submitFlag || true" [owlDateTimeTrigger]="dt5" placeholder="Start Date">
+                      <owl-date-time [pickerType]="'calendar'" #dt5></owl-date-time>
+                    </div>
+                    <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                      <input [owlDateTime]="dt6" class="form-control input-border input-bar"
+                        [min]="milestones[i].task[j].subTask[k].startDate" [max]="submission_date"
+                        [(ngModel)]="milestones[i].task[j].subTask[k].endDate"
+                        [readonly]="milestones[i].task[j].subTask[k].endDate && submitted || user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+                        [readonly]="submitFlag || true" [owlDateTimeTrigger]="dt6" placeholder="Start Date">
+                      <owl-date-time [pickerType]="'calendar'" #dt6></owl-date-time>
+                    </div>
+                    <!--  Delete ,Add Section  Section  -->
+                    <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2 align-center"
+                      *ngIf="subTask.allIcon && !submitted && user.user_type == 'BID_OWNER'">
+                      <img src="assets/images/rubbish-bin.png" title="Add" class="icon-size"
+                        (click)="deleteSubTask(task, k)" style="    margin-left: -49px;">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Action Button Save , Submit and Reset in Scheduling -->
+    <div class="row margin-top-12">
+      <div class="text-center" *ngIf="!submitted">
+        <input type="button" [disabled]="user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+          value="SAVE" class="btn save-button" (click)="submit('draft')">
+        <input type="button" [disabled]="user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+          value="SUBMIT" class="btn draft-button" (click)="submit()">
+        <input type="button" [disabled]="user.user_type != 'BID_OWNER' || pocSubmited || !reviewFlag || bid?.parent"
+          value="RESET" class="btn cancel-button" (click)="reset()">
+      </div>
+      <div class="message-warning align-center" *ngIf="submitted">
+        Data permanently saved
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Loader Section  for the Scheduling-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

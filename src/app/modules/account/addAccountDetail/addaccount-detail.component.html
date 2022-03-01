@@ -1,0 +1,94 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+    <div class="mainadduserSection col-sm-6 col-md-6">
+      <div class="card mainuserSection">
+        <!-- Breadcrumb Section  -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"> Master Data</li>
+            <li class="breadcrumb-item" routerLink="/account/list" aria-current="page">Accounts</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ accountCreate.date_created ? 'Update' : 'Create'}}
+              Account
+            </li>
+          </ol>
+        </nav>
+        <div class="row text-center">
+          <!-- Heading of the Page -->
+          <h4 class="formHeading">{{ accountCreate.date_created ? 'Update' : 'Create'}} Account</h4>
+        </div>
+        <!-- Creating Account Starts Here -->
+        <div class="formLogin">
+          <form>
+            <div class="">
+              <div class="row">
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-bottom"> Account Name&nbsp;<span class="required_field">*</span></label>
+                  <input required="required" type="text" [(ngModel)]="accountCreate.account_name"
+                    class="form-control input-border input-bar" [ngModelOptions]="{standalone: true}" maxlength="35"
+                    [ngStyle]="{'box-shadow' : accountSubmitted && !accountCreate.account_name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-top"> Website&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('account_website');validateRegex('account_website')" type="text"
+                    [(ngModel)]="accountCreate.account_website" class="form-control input-border input-bar"
+                    required="required" [ngModelOptions]="{standalone: true}"
+                    [ngStyle]="{'box-shadow' : accountSubmitted && !accountCreate.account_website ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+                  <div class="message-warning" style="font-size: 13px; position: absolute; width: 95%;"
+                    *ngIf="accountCreate.account_website  && !accountCreate.account_websiteRegexValid">
+                    Website must be valid.
+                  </div>
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-top"> Contact No&nbsp;<span class="required_field">*</span></label>
+                  <input (input)="validateSingle('account_contact');validateRegex('account_contact')" type="text"
+                    [(ngModel)]="accountCreate.account_contact" class="form-control input-border input-bar"
+                    required="required" [ngModelOptions]="{standalone: true}" maxlength="11"
+                    [ngStyle]="{'box-shadow' : accountSubmitted && !accountCreate.account_contact ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495'}">
+                  <div class="message-warning" style="font-size: 13px; position: absolute; width: 95%;"
+                    *ngIf="accountCreate.account_contact && !accountCreate.account_contactRegexValid">
+                    Valid phone is required.
+                  </div>
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-top" for="comment">Description&nbsp;</label>
+                  <textarea (input)="validateSingle('description')" maxlength="50" type="text"
+                    [(ngModel)]="accountCreate.description" [ngModelOptions]="{standalone: true}"
+                    class="form-control input-border input-bar">
+                    </textarea>
+
+                </div>
+                <div class="col-md-12 margin-bottom">
+                  <label class="margin-top" for="comment">CRM ID</label>
+                  <input type="text" [(ngModel)]="accountCreate.AccountID" [ngModelOptions]="{standalone: true}"
+                    class="form-control input-border input-bar">
+                   </div>
+              </div>
+              <br>
+              <!-- Action Button Update Create -->
+              <div class="row">
+                <div class="col-md-12 margin-bottom align-center">
+                  <div class="text-center">
+                    <button type="button"  class="btn draft-button align-center"
+                      (click)=" accountCreate.date_created  ? updateAccountInfo() : saveAccountInfo()">{{accountCreate.date_created ? 'Update' : 'Save'}}</button>
+                    <button type="button"  class="btn cancel-button"
+                      (click)="onResetAccountInfo()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+  </div>
+</div>
+ <!-- Loader Section for the Account-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

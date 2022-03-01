@@ -1,0 +1,111 @@
+<!-- panel body Starts here -->
+<app-alert></app-alert>
+<div class="row" *ngIf="response && response[0] && response[0].main_add && access">
+  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+    <div class="panel-body">Bid Action Summary</div>
+  </div>
+</div>
+<!-- panel body ends here -->
+<!-- Mains Starts Here -->
+<fieldset [disabled]="bidStatus == 'DROPPED'">
+  <form #userForm="ngForm" novalidate autocomplete="off">
+    <div id="bid_mains" *ngIf="response && response[0] && response[0].main_add && access">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+          <div class="bid_div">
+            <!-- Table Heading for the Main -->
+            <div class="bid_head">
+              <div class="row">
+                <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center">
+                  #
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                  Actions
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                  Description
+                </div>
+                <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
+                  Remarks
+                </div>
+                <!-- <div class="col-md-2">
+                  Attachment Name
+                </div> -->
+                <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1">
+                  <i class="fa fa-gear"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngFor="let item of response[0].main_add;let i=index;last as isLast">
+              <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center srno">
+                {{i+1}}
+              </div>
+
+              <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <textarea type="text" class="form-control input-bar" id="name" name="{{item.item_name}}"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="response[0].main_add[i].item_name"
+                  [readOnly]="!access?.writeAccess || !response[0].main_add[i].draft[0].flag" required></textarea>
+              </div>
+              <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                <textarea type="text" class="form-control input-bar" id="description" name="{{item.description}}"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="response[0].main_add[i].description"
+                  [readOnly]="!access?.writeAccess || !response[0].main_add[i].draft[0].flag" required>
+                  </textarea>
+              </div>
+              <div class="col-xs-3 col-sm-3 col-lg-4 col-md-4">
+                <textarea type="text" class="form-control input-bar" id="risk" name="{{item.remarks}}"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="response[0].main_add[i].remarks"
+                  [readOnly]="!access?.writeAccess || !response[0].main_add[i].draft[0].flag" required>
+                  </textarea>
+              </div>
+              <!-- Attach Delete Download and Add for Icon and Images Section  -->
+              <div class="col-xs-2 col-sm-2 col-lg-1 col-md-1 action">
+                <span class="fa fa-ellipsis-v dropdown-toggle" data-toggle="dropdown"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : '#17b495'}" aria-haspopup="true"
+                  aria-expanded="false"></span>
+                <ul class="dropdown-menu dropdown-menu-left actionList">
+                  <span><i class="fa fa-download faIcon" aria-hidden="true" title="Download"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i)"></i></span>
+                  <span><i class="fa fa-paperclip faIcon" title="Attach" (click)="onUpload(i)"></i></span>
+                  <!-- <span  *ngIf="isLast"><img src="assets/images/edit1.png" id="pencil" title="Edit"
+                    (click)="onEdit(i)"></span> -->
+                  <span><i class="fa fa-trash faIcon"
+                       [ngStyle]="{'cursor': response[0].main_add[i]?.draft[0]?.flag == true ? 'pointer' : 'not-allowed'}"
+                      title="Delete" (click)="deleteRow(i)"></i></span>
+                </ul>
+                <span *ngIf="isLast && plusButton()">
+                  <i class="fa fa-plus-circle" title="Add" (click)="addRow()"></i></span>
+                  <div class="dropdown" *ngIf="item.submission_date != null">
+                <i class="fa fa-clock-o" style="color: white;"> </i>
+
+                <div class="dropdown-content">
+
+                  {{ item.submission_date | date: "dd-MM-yyyy , h:mm:ss" }}
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Button Save,Submit & Reset for the Main  -->
+      <div class="container">
+        <div class="text-center">
+          <button type="submit" class="btn save-button" (click)="onSaveAsDraft()"
+            [disabled]="disabledButton()">Save</button>
+          <button type="submit" class="btn draft-button" (click)="onSubmit()"
+            [disabled]="disabledButton()">Submit</button>
+          <button type="submit" class="btn cancel-button" (click)="onReset()"
+            [disabled]="disabledButton()">Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Loader Section for the Main-->
+  <div class="overlay" *ngIf="loader">
+    <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+  </div>
+</fieldset>

@@ -1,0 +1,50 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Clone Category</p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-md-12 box">
+  <div class="col-md-6 boxBorderRight">
+    <span><b>Step 1</b></span>
+    <div class="boxStep1">
+      <h5>Which Category do you want to clone?</h5>
+    </div>
+    <label class="container">
+      <input type="checkbox" [checked]="allChecked" (change)="onClickAllCateg($event, solutionCats)" name="checkbox">
+      All
+    </label>
+    <span *ngFor="let solnCat of solutionCats; let i =index ">
+      <label class="container">
+        <input type="checkbox" name="checkbox" value="value" [(ngModel)]="solnCat.checked">
+        <input class="text-line" [(ngModel)]="solnCat.name" value="{{solnCat.name}}">
+      </label>
+    </span>
+  </div>
+  <div class="col-md-6">
+    <span><b>Step 2</b></span>
+    <div class="boxStep2">
+      <h5>Where do you want to copy?</h5>
+    </div>
+    <label class="container">
+      <input type="checkbox" [checked]="allChecked" (change)="onClickAllDestin($event, targetCat)"> All
+    </label>
+    <span *ngFor="let target of targetCat ; let i = index">
+      <label class="container">
+        <input type="checkbox" (ngModelChange)="validatecheck(target.name, i)" [(ngModel)]="target.checked">
+        {{target.name}}
+      </label>
+    </span>
+  </div>
+</div>
+<div class="col-md-12 align-center">
+  <button class="btn btn-success" id="cloneBtn" (click)="onClone()">Clone</button>
+  <button class="btn cancel-button" id="cloneBtn" (click)="onReset()">Reset</button>
+</div>
+<!-- Loader Section for the Cloning-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

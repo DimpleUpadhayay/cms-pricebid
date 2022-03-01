@@ -1,0 +1,36 @@
+.mainuserSection {
+  margin-top: 8em;
+}
+
+.role_css {
+  font-size: 12px;
+  color: #ffffff;
+  background: #10A1A6;
+  padding: 1px 2.5px;
+  border-radius: 8.5px;
+  border: 1px solid #a5a5a5;
+  border: 1px solid transparent;
+}
+
+.ps_div {
+  background-color: #364453;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.row {
+  margin-bottom: 10px;
+}
+
+.ps_head {
+  color: #70D8C4;
+  font-size: 16px;
+  padding: 4px 2px;
+  text-transform: capitalize;
+}
+
+.input-border, ng-select, textarea {
+  box-shadow: 0 0 .5px .5px #17b495;
+}

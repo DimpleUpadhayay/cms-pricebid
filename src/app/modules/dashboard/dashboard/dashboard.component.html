@@ -1,0 +1,800 @@
+<!-- <app-header></app-header> -->
+
+<!-- <app-loader></app-loader> -->
+<app-alert></app-alert>
+<div class="container" *ngIf="access">
+  <!-- <div style="text-align:center;line-height:800px;background:rgb(0, 0, 0,.3);height:100%;width:100%;">
+    <img src="assets/Logo/Pricebid logo only final.jpg" id="loading" alt="" />
+  </div> -->
+  <div class="content padding-top-100">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12" style="margin-left: 6px;
+      margin-bottom: 14px;">
+        <!-- Page Heading In Dashboard -->
+        <div class="col-xs-8 col-sm-10 col-lg-10 col-md-10">
+          <span id="bidRoleDashboardHeadingId">
+            {{access?.createAccess ? 'BID OWNER DASHBOARD' : 'MY BID DASHBOARD'}}
+          </span>
+          <!-- <button type="button" class="btn create-button" *ngIf="access?.createAccess" class="btn create-button"
+            title="Create New Bid" routerLink='/bid'>
+            <i class="fa fa-plus"></i>
+            Create Bid</button> -->
+        </div>
+        <!-- Year Picker -->
+        <div class="col-xs-2 col-sm-1 col-lg-1  col-md-1 align-right">
+          <select class="form-control onGoing" [(ngModel)]="year" (ngModelChange)="onMonthYearChange()">
+            <option value="{{year}}" *ngFor="let year of years">{{year}}</option>
+          </select>
+        </div>
+
+        <!-- <div class="col-md-1 align-right">
+					<input class="onGoing" [owlDateTimeTrigger]="dt" [owlDateTime]="dt" [formControl]="date">
+					<owl-date-time [pickerType]="'calendar'" [startView]="'multi-years'" (yearSelected)="chosenYearHandler($event)"
+					 (monthSelected)="chosenMonthHandler($event, dt)" #dt="owlDateTime"></owl-date-time>
+				</div> -->
+        <!-- <div class="col-md-1 align-right">
+					<input class="onGoing" [owlDateTimeTrigger]="dt" [owlDateTime]="dt">
+					<owl-date-time [pickerType]="'calendar'" [startView]="'year'" (yearSelected)="chosenYearHandler($event)"
+					 (monthSelected)="chosenMonthHandler($event, dt)" #dt="owlDateTime"></owl-date-time>
+				</div> -->
+        <!-- <div class="col-md-1 align-right onGoing">
+					<input type="text" id="datepicker" (click)="getYear()" />
+				</div> -->
+        <!-- <mat-form-field>
+					<input matInput [matDatepicker]="dp" placeholder="Month and Year" [formControl]="date">
+					<mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+					<mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)" (monthSelected)="chosenMonthHandler($event, dp)"
+					 panelClass="example-month-picker">
+					</mat-datepicker>
+				</mat-form-field> -->
+        <!-- <div class="col-md-1 align-right">
+					<select class="form-control onGoing" name="test">
+						<option value="ongoing">Ongoing</option>
+						<option value="closed">Closed</option>
+					</select>
+        </div> -->
+
+        <!-- Bi Reports Section  -->
+        <div class="col-xs-2 col-lg-1 col-sm-1  col-md-1 align-right" *ngIf="access?.viewGraphAccess">
+          <i class="fa fa-bar-chart" aria-hidden="true" title="Bid Analysis" style="font-size: 23px; cursor: pointer;
+					color: #17b495;
+					margin-top: 11px;" (click)="onReports()"></i><!-- routerLink="/analysis" -->
+        </div>
+      </div>
+    </div>
+    <!-- Year Tab in Dashboard  -->
+    <div class="row margin-top-12" id="dataTabs" *ngIf="!searchFlag">
+      <ul>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 0 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 0;onMonthYearChange();">JAN</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 1 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 1;onMonthYearChange();">FEB</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 2 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 2;onMonthYearChange();">MAR</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 3 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 3;onMonthYearChange();">APR</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 4 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 4;onMonthYearChange();">MAY</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 5 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 5;onMonthYearChange();">JUN</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 6 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 6;onMonthYearChange();">JUL</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 7 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 7;onMonthYearChange();">AUG</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 8 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 8;onMonthYearChange();">SEP</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 9 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 9;onMonthYearChange();">Oct</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 10 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 10;onMonthYearChange();">NOV</li>
+        <li class="date-buttons"
+          [ngStyle]="{'border-bottom': value == 11 ? '8px solid #182735' : '8px solid lightgray' }"
+          (click)="value = 11;onMonthYearChange();">DEC</li>
+      </ul>
+    </div>
+
+    <!-- <div class="row margin-top-12" style="margin-left: 18px;border-bottom: 1px solid #364453;" *ngIf="searchFlag">
+
+      <span style="font-size:18px;color:#364453">
+        Search results
+      </span>
+    </div> -->
+    <!-- sumit -->
+    <div class="row" style="margin-left: 5px;" *ngIf="searchFlag">
+      <div class="col-md-6">
+        <div class="heading-profile">
+          <h2>Search results</h2>
+        </div>
+      </div>
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-1">
+      </div>
+    </div>
+
+    <!-- <div> -->
+    <!-- *ngIf="flag" -->
+    <!-- Filter in Bid-Documents Section Starts Here -->
+    <div class="container" *ngIf="searchFlag">
+      <div class="content padding-top-100" style="padding-top: 20px !important;">
+        <!-- Filter Starts Here -->
+        <div class="col-md-1">
+          <input type="radio" name="BU" value="only" [(ngModel)]="multiflagBu"> Only<br>
+          <input type="radio" name="BU" value="All" [(ngModel)]="multiflagBu"> All<br>
+        </div>
+        <div class="col-md-2 ">
+          <ng-multiselect-dropdown [placeholder]="'Business Unit'" [data]="bussiness_unit"
+            [settings]="dropdownBUSettings" [(ngModel)]="selectedBUs" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event,'BU')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-1">
+          <input type="radio" name="territory" value="only" [(ngModel)]="multiflagTerritory"> Only<br>
+          <input type="radio" name="territory" value="All" [(ngModel)]="multiflagTerritory"> All<br>
+        </div>
+        <div class="col-md-2">
+          <ng-multiselect-dropdown [placeholder]="'Territory'" [data]="territory" [settings]="dropdownTerritorySettings"
+            [(ngModel)]="selectedTerritories" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event,'Territory')">
+          </ng-multiselect-dropdown>
+        </div>
+
+        <div class="valueRange">
+          <div class="col-md-1">
+            <label style="margin-top:7px"> &#8377;Range :</label>
+          </div>
+          <div class="col-md-1">
+            <input type="number" [(ngModel)]="start" oninput="validity.valid||(value=value.replace(/[^0-9.]+/g, ''))"
+              (ngModelChange)="onItemSelect($event)" placeholder="&#8377; From" class=" range form-control">
+          </div>
+          <!-- <div class="guion"> - </div> -->
+          <div class="col-md-1">
+            <input type="number" [(ngModel)]="end" oninput="validity.valid||(value=value.replace(/[^0-9.]+/g, ''))"
+              (ngModelChange)="onItemSelect($event)" placeholder="&#8377; To" class=" range form-control">
+          </div>
+        </div>
+        <div class="col-md-2">
+          <input placeholder="Date Time Range" class="form-control" [(ngModel)]="dateTimeRange" [selectMode]="'range'"
+            (ngModelChange)="onItemSelect($event)" [owlDateTimeTrigger]="dtRange1" [owlDateTime]="dtRange1"
+            style="width:140px">
+          <owl-date-time #dtRange1></owl-date-time>
+        </div>
+        <div class="col-md-1" style="margin-top:-7px;float:right;">
+          <button class="btn btn-clear" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+    <!-- end of code -->
+    <div class="margin-top-12">
+
+      <div class="row" *ngIf="bids && bids.length > 0">
+        <!-- BID Section Starts Here -->
+        <div class="col-xs-6 col-lg-3 col-sm-4 col-md-3 bid" style="position:relative;margin-top:24px;" *ngFor="let item of bids |  query : value : year : bidName
+					| paginate:{ itemsPerPage:8,currentPage:p,totalItems:bidsPerMonth}">
+          <div class="col-xs-11 col-md-11">
+            <div class="bid-block color-orange" title="{{item?.droppedReason?.reason_name}}"
+              [ngClass]="item?.bidFinalStatus == 'DROPPED' ? 'headerOrangeDrop' : 'headerOrangeNoDrop'">
+              <div class="row">
+                <!-- Bid Number  -->
+                <!-- [routerLink]="['/bid-development',item.bid_id]" -->
+                <div class="col-xs-10 col-lg-10 col-sm-10 col-md-10 margin-top-12 BidNumber">
+                  <a style="color:grey;padding:7px;cursor: pointer;" (click)="gotoLink(item.bid_id)">Bid
+                    No: <span> <b title="{{item?.bid_number}}">{{item?.bid_number}}</b></span>
+                  </a>
+                </div>
+                <!-- Action Icon Approved , Reject and Conditionally APPROVED -->
+                <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2 margin-top-12">
+                  <span title="Approved" *ngIf="item.poc_docs && item.bidApprovalStatus =='APPROVED'">
+                    <i style="font-size: 12px; color: limegreen; margin-left: -22px;" class="fa fa-check-circle"
+                      aria-hidden="true"></i>
+                  </span>
+                  <span title="Conditionally Approved" *ngIf="item.poc_docs && item.bidApprovalStatus=='CONDITIONALLY_APPROVED'"><i
+                      style="font-size:
+										 12px; color: orange; margin-left: -22px;" class="fa fa-check-circle" aria-hidden="true"></i></span>
+                  <span title="Rejected" *ngIf="item.poc_docs && item.bidApprovalStatus=='REJECTED'"><i style="font-size: 12px; color:
+										 red; margin-left: -22px;" class="fa fa-times-circle" aria-hidden="true"></i></span>
+                </div>
+              </div>
+              <!-- Account NAME  -->
+              <div class="row">
+                <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 AccountName">
+                  <a style="color:grey;padding:7px;text-decoration:none;">Acc
+                    Name: <span title="{{item?.account_name}}"> <b>{{item?.account_name}}</b></span>
+                  </a>
+                </div>
+              </div>
+              <!-- Bid Name -->
+              <div class="row">
+                <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 bidName">
+                  <span style="color: #17b495;padding:7px;text-decoration:none;">
+                    <span title="{{item?.name}}"> <b>{{item?.name}}</b></span>
+                  </span>
+                </div>
+              </div>
+              <hr class="hr-style">
+              <div class="row">
+                <!-- Estimated Deal Value (Mn)  -->
+                <div class=" col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail" style="margin-left: 5px;">
+                  <div class="text-truncate first-circle-color" title="Annual Contract Value (Mn)"><span
+                      class="bid-number-center">
+                      {{dealValueLength(item.estimatedValue)}} </span></div>
+                  <div style="font-size:10px;margin-left: 10px;">₹</div>
+                </div>
+                <!-- Bid Submission -->
+                <div class=" col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                  <div class="text-truncate second-circle-color" title="Submission Date">
+                    <span class="bid-number-center">
+                      {{getSubmissionDate(item.date_submission)}}</span></div>
+                  <div style="margin-left:7px">{{getSubmissionMonth(item.date_submission)}}</div>
+                </div>
+                <!-- Bid Staging -->
+                <div class="  col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                  <!-- title="{{item?.staging}}" -->
+                  <div class="text-truncate third-circle-color" title="{{item?.staging}}"><span
+                      class="bid-number-center">{{item.bid_stage.total ? item.bid_stage.total : 1}}</span>
+                  </div>
+                  <div>Stage</div>
+                </div>
+                <!-- Bid Percentage -->
+                <!-- <div class=" col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                  <div class="text-truncate fourth-circle-color" title="Bid Completed"><span
+                      class="bid-number-center">{{item.bid_stage.percentage ? item.bid_stage.percentage : 5}}</span>
+                  </div>
+                  <div style="margin-left:11px">%</div>
+                </div> -->
+                <!-- Bid Created -->
+                <div class=" col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                  <div class="text-truncate second-circle-color" title="Creation Date">
+                    <span class="bid-number-center">
+                      {{item.date_created|date:'dd'}}</span></div>
+                  <div style="margin-left:7px">{{getBidCreatedMonth(item.date_created)}}</div>
+                </div>
+              </div>
+              <hr class="hr-style">
+              <!-- Participant list in the bid -->
+              <div class="row" id="contributorCircle" *ngIf="item.nonApprovers"
+                style="max-height: 30px; overflow-y: auto; overflow-x: hidden;">
+                <span class=" col-xs-2 col-lg-2 col-sm-2 col-md-2" style="margin-left: 1px;"
+                  *ngFor="let item of item.nonApprovers">
+                  <span [className]="item.class" *ngIf="item.user_type || item.userTypes"><span class="bid-text-center"
+                      title="{{ item?.fullname }} - {{ item?.userTypes && item?.userTypes[0]?.user_subtype}} {{ item?.userTypes && item?.userTypes[0]?.user_type }} {{item.desc}}">{{getSignatures(item?.firstName,item?.lastName)}}</span>
+                  </span>
+                </span>
+              </div>
+              <div class="actionicons" style="height: 100%;">
+                <!-- Project Scope -->
+                <span style="cursor: pointer;" title="Project Summary"><a
+                    [routerLink]="['/projectscope', item.bid_id]"><i class="fa fa-envelope"
+                      aria-hidden="true"></i></a></span>
+                <!-- Go No Go Process -->
+                <!-- <span class="action" title="Go : No-Go Coming Soon"><a> <i class="fa fa-thumbs-o-up"
+                      aria-hidden="true"></i><i class="fa fa-thumbs-o-up" aria-hidden="true"
+                      style="transform: rotate(180deg);"></i></a></span> -->
+
+                <span class="action" title="Win-Loss Summary"><a (click)="checkBidSummary('bid-summary', item)">
+                    <i class="fa fa-list-alt"
+                      [ngStyle]="{'color': WinLossSubmitStatus(item , 'Win-Loss-Summary') ? '#17b495' : 'darkgray' }"
+                      aria-hidden="true"></i></a></span>
+                <!-- Approval Chain List  -->
+                <div class="dropdown">
+                  <span class="action" title="Approval Chain"><a><i class="fa fa-sitemap"
+                        aria-hidden="true"></i></a></span>
+                  <div class="dropdown-content ">
+                    <div class="row">
+                      <div class="col-xs-7 col-lg-7 col-sm-7 col-md-7 approvalChain align-center">Name</div>
+                      <div class="col-xs-5 col-lg-5 col-sm-5 col-md-5 approvalChain">Level</div>
+                    </div>
+                    <div *ngFor="let item of item.approvalChainUsers | orderBy:'level'">
+                      <div class="row">
+                        <div class="col-xs-7 col-lg-7 col-sm-7 col-md-7 align-center">
+                          {{item.fullname ? item.fullname : item.name}}
+                        </div>
+                        <div class="col-xs-5 col-lg-5 col-sm-5 col-md-5 align-center">{{item.level}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Scheduling for the Bid -->
+                <!-- <span class="action" title="Scheduling"><a [routerLink]="['/scheduling', item.bid_id]"><i
+                      class="fa fa-calendar" aria-hidden="true"></i></a></span> -->
+                <!-- Timeline for the BId -->
+                <span class="action" title="Bid Timeline" (click)="onBidTimeline(item , 'normalModal')" ><a>T</a></span>
+                <!-- Approval Dashboard for the Bid -->
+                <span class="action" title="Approval Dashboard">
+                  <a (click)="item.poc_docs.length>0 ? changeState('approvalDashboard', item.bid_id): ''"><i
+                      class="fa fa-desktop" [ngStyle]="{'color': item.poc_docs.length>0 ? '#17b495' : 'darkgray' }"
+                      aria-hidden="true"></i></a></span>
+              </div>
+              <!-- <div class="border">
+								<ul class="list-group listDetail" *ngIf="item.bid_id == showList && showList">
+									<div class="row">
+										<div class="col-md-6">Name</div>
+										<div class="col-md-6">Level</div>
+									</div>
+									<li class="list-group-item"
+										*ngFor="let item of item.totalApprovers | orderBy:'level'">
+										<div class="row">
+											<div class="col-md-6">{{item.fullname ? item.fullname : item.name}}</div>
+											<div class="col-md-3">{{item.level}}</div>
+										</div>
+									</li>
+								</ul>
+							</div> -->
+            </div>
+            <!-- <a (click)="showList = item.bid_id" *ngIf="!showList"><span class="caret"></span></a>
+						<a (click)="showList = false" *ngIf="showList"><span class="caret"></span></a> -->
+            <!-- </div> -->
+          </div>
+          <!-- Three dot Menu Icon Using in the Bid at the right side of the Bid No  -->
+          <div class="col-xs-1 col-lg-1 col-sm-1 col-md-1 openEllipsis"
+            (click)="userRoleBasedButtonAccessControl(item.bid_id)">
+            <span class="fa fa-ellipsis-v dropdown-toggle dropdown-toggle-split"
+              style="color:#17b495;font-size: 20px;cursor: pointer;" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+            <div class="dropdown-menu" *ngIf="accessBtn">
+              <!-- Bid Documents -->
+              <span class="dropdown-item"><img src="assets/images/DOCUMENT.png" id="book" title="Documents"
+                  [routerLink]="['/bid-documents',item.bid_id]"></span>
+
+              <!-- Edit Bid  only Bid Manager-->
+              <span class="dropdown-item" *ngIf="accessBtn?.bidEditAccess"><img src="assets/images/edit1.png"
+                  id="pencil" title="Edit" [routerLink]="['/bid', item.bid_id]"></span>
+              <!-- View Bid for all user users except Bid Manager -->
+              <span class="dropdown-item" *ngIf="accessBtn?.bidViewAccess"><img src="assets/images/edit1.png"
+                  id="pencil" title="View Bid Details" [routerLink]="['/bid/viewbid',item.bid_id]"></span>
+              <!-- ------------sof---------- -->
+              <!-- Delete Bid  && !item.disableDelete -->
+              <span class="dropdown-item" *ngIf="accessBtn?.bidDeleteAccess"><img src="assets/images/rubbish-bin.png"
+                  *ngIf="accessBtn?.bidDeleteAccess" id="delete" title="Delete"
+                  (click)="deactivate(item.bid_id)"></span>
+              <!-- Timeline for the BId -->
+              <!-- <span class="dropdown-item" id="timeline" title="Bid Timeline" [routerLink]="['/timeline',item.bid_id]">
+                T</span> -->
+              <!-- Revised Bid  -->
+              <span class="dropdown-item" id="timeline" *ngIf="item.revisedBids" title="View Old Versions"
+                (click)="openOldVersion(item.bid_revision_id, item.bid_id)">
+                V</span>
+              <span class="dropdown-item" *ngIf="accessBtn?.bidCloneAccess" id="clone" title="Clone bid"
+                (click)="clone(item)">
+                <i class="fa fa-clone"></i></span>
+              <!-- Competitior Icon -->
+              <!-- <span class="dropdown-item fa fa-list-alt" id="bidSummary" title="Win-Loss Summary" *ngIf="accessBtn?.bidWinLossSummaryAccess && item.poc_docs && (item.bidApprovalStatus =='APPROVED' || item.bidApprovalStatus=='CONDITIONALLY_APPROVED'
+							|| item.bidApprovalStatus=='REJECTED')" [routerLink]="['/bid-summary',item.bid_id]">
+              </span> -->
+              <!-- Drop Icon -->
+              <span *ngIf="accessBtn?.bidDropAccess && WinLossSubmitDrop(item , 'Drop')"
+                (click)="onDrop(item , item?.bidFinalStatus == 'DROPPED' ?  'Live' :'Drop')"
+                title="{{item?.bidFinalStatus == 'DROPPED' ? 'Revive Bid' :'Drop Bid'}}">
+                <i class="fa fa-times-circle"></i>
+              </span>
+              <span class="dropdown-item" *ngIf="accessBtn?.tenderFeeEditAcess"><i class="fa fa-money"
+                  title="Tender Fee" [routerLink]="['/EOI',item.bid_id]" aria-hidden="true" id="form"></i>
+              </span>
+              <span *ngIf="accessBtn?.emdPBGEditAccess" class="dropdown-item"><i class="fa fa-credit-card"
+                  [routerLink]="['/EMD',item.bid_id]" title="EMD" aria-hidden="true" title="EMD" id="form"></i>
+              </span>
+              <span class="dropdown-item" *ngIf="accessBtn?.emdPBGEditAccess && item.poc_docs && (item.approvedStatus == 'approved' || item.approvedStatus ==  'condition')
+                 && WinLossSubmitStatus(item , 'PBG') "><i class="fa fa-university" [routerLink]="['/PBG',item.bid_id]"
+                  title="PBG" aria-hidden="true" id="form"></i>
+              </span>
+              <span *ngIf="accessBtn?.sofEditAccess && item.poc_docs && (item.approvedStatus == 'approved' || item.approvedStatus ==  'condition')
+                 && WinLossSubmitStatus(item , 'SOF')" class="dropdown-item"><i class="fa fa-wpforms"
+                  [routerLink]="['/salesOrderForm', item.bid_id]" aria-hidden="true" id="form" title="SOF"></i>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="item.revisedBids">
+            <div [style.position]="'absolute'" [style.z-index]="element.z_index" [style.left.px]="element.leftPos"
+              [style.top.px]="element.topPos" *ngFor="let element of item.revisedBids;let i=index;">
+              <div class="col-xs-11 col-lg-11 col-sm-11 col-md-11" *ngIf="i<1">
+                <div class="bid-block color-gray"
+                  [ngClass]="element?.bidFinalStatus == 'DROPPED' ? 'headerGrayDrop' : 'headerGrayNoDrop'">
+                  <div class="row">
+                    <!-- Bid Number for the Bid -->
+                    <div class="col-xs-10 col-lg-10 col-sm-10 col-md-10 margin-top-12 BidNumber">
+                      <a style="color:grey;padding:7px;" (click)="hideModal('bid-development', element.bid_id)">
+                        Bid No: <span> <b title="{{element?.bid_number}}">{{element?.bid_number}}</b></span>
+                      </a>
+                    </div>
+                    <!-- Action Icon  Approved , Reject and  conditionally aproved  -->
+                    <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2 margin-top-12">
+                      <span title="Approved" *ngIf="element.poc_docs && element.bidApprovalStatus =='APPROVED'">
+                        <i style="font-size: 12px; color: limegreen; margin-left: -22px;" class="fa fa-check-circle"
+                          aria-hidden="true"></i>
+                      </span>
+                      <span title="Conditionally Approved"
+                        *ngIf="element.poc_docs && element.bidApprovalStatus=='CONDITIONALLY_APPROVED'"><i style="font-size:
+										 12px; color: orange; margin-left: -22px;" class="fa fa-check-circle" aria-hidden="true"></i></span>
+                      <span title="Rejected" *ngIf="element.poc_docs && element.bidApprovalStatus=='REJECTED'"><i style="font-size: 12px; color:
+										 red; margin-left: -22px;" class="fa fa-times-circle" aria-hidden="true"></i></span>
+                    </div>
+                  </div>
+                  <!-- Account NAME  -->
+                  <div class="row">
+                    <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 AccountName">
+                      <a style="color:grey;padding:7px;text-decoration:none;">Acc
+                        Name: <span title="{{element?.account_name}}"> <b></b></span>
+                      </a>
+                    </div>
+                  </div>
+                  <!-- Bid Name -->
+                  <div class="row">
+                    <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 bidName">
+                      <span style="color: #17b495;padding:7px;text-decoration:none;">
+                        <span title="{{element?.name}}"> <b></b></span>
+                      </span>
+                    </div>
+                  </div>
+                  <hr class="hr-style">
+                  <div class="row" id="numberCircle" style="padding:0px 5px;">
+                    <!-- Estimated Deal Value (Mn)  -->
+                    <div class="col-xs-3 col-lg-3 col-sm-3 col-md-3 div-detail">
+                      <div class="text-truncate first-circle-color" title="Annual Contract Value (Mn)">
+                        <span class="bid-number-center">
+                          {{dealValueLength(element.estimatedValue)}} </span></div>
+                      <div style="font-size:10px">₹</div>
+                    </div>
+                    <!-- Bid Submission  -->
+                    <div class="col-xs-3 col-lg-3 col-sm-3 col-md-3 div-detail">
+                      <div class="text-truncate second-circle-color"
+                        title="{{getSubmissionDate(element.date_submission)}}"><span class="bid-number-center">
+                          {{getSubmissionDate(element.date_submission)}}</span></div>
+                      <div style="margin-left:7px">
+                        {{getSubmissionMonth(element.date_submission)}}</div>
+                    </div>
+                    <!-- Staging for the bid -->
+                    <div class="col-xs-3 col-lg-3 col-sm-3 col-md-3 div-detail">
+                      <div class="text-truncate third-circle-color" title="{{element?.staging}}"><span
+                          class="bid-number-center">{{element.bid_stage.total ? element.bid_stage.total : 1}}</span>
+                      </div>
+                      <div>Stage</div>
+                    </div>
+                    <!-- Bid Percentage for the bid -->
+                    <div class="col-xs-3 col-lg-3 col-sm-3 col-md-3 div-detail">
+                      <div class="text-truncate fourth-circle-color " style="border: 2px solid whitesmoke ;"><span
+                          class="bid-number-center">{{element.bid_stage.percentage ? element.bid_stage.percentage : 5}}</span>
+                      </div>
+                      <div style="margin-left:11px">%</div>
+                    </div>
+                  </div>
+
+                  <hr class="hr-style">
+                  <!-- Participant List in the Bid -->
+                  <div class="row" id="contributorCircle" *ngIf="element.nonApprovers" style="max-height: 30px;
+							overflow-y: auto;overflow-x:none">
+                    <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2" style="margin-left: 5px;"
+                      *ngFor="let item of element.nonApprovers">
+                      <div class="text-truncate second1-circle-color circleThree"
+                        [ngClass]=" element?.userTypes && element?.userTypes[0]?.user_type === 'BID_OWNER' ? 'bidManager' : 'nobidManager'"
+                        *ngIf="element.user_type"><span class="bid-text-center"
+                          title="{{element.fullname}} - {{ element?.userTypes && element?.userTypes[0]?.user_subtype}} {{ element?.userTypes && element?.userTypes[0]?.user_type }}">{{getSignatures(item?.firstName,item?.lastName)}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="actionicons" style="height: 100%;">
+                    <!-- Project scope for BId -->
+                    <span style="cursor: pointer;" title="Project Scope"
+                      (click)="hideModal('projectscope', element.bid_id)"><a><i class="fa fa-envelope"
+                          aria-hidden="true"></i></a></span>
+                    <!-- Go No go Process  -->
+                    <span class="action" title="Go : No-Go"><a> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><i
+                          class="fa fa-thumbs-o-up" aria-hidden="true"
+                          style="transform: rotate(180deg);"></i></a></span>
+                    <!-- Approval Chain List -->
+                    <span class="action" title="Approval Chain"><a title="List of Approvers"><i class="fa fa-sitemap"
+                          aria-hidden="true"></i></a></span>
+                    <!-- Scheduling for Bid -->
+                    <span class="action" title="Scheduling" (click)="hideModal('scheduling', element.bid_id)"><a><i
+                          class="fa fa-calendar" aria-hidden="true"></i></a></span>
+                    <!-- Approval Dashboard -->
+                    <span class="action" title="Approval Dashboard">
+                      <a (click)="element.poc_docs ? changeState('approvalDashboard', element.bid_id): ''"><i
+                          class="fa fa-desktop" [ngStyle]="{'color': element.poc ? '#17b495' : 'darkgray' }"
+                          aria-hidden="true"></i></a></span>
+                  </div>
+                  <!-- Approval Chain List in Dashboard -->
+                  <div class="border">
+                    <ul class="list-group listDetail" *ngIf="element.bid_id == showList && showList">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-6 col-sm-6">Name</div>
+                        <div class="col-md-6 col-lg-6 col-sm-6">Level</div>
+                      </div>
+                      <li class="list-group-item" *ngFor="let obj of element.approvalChainUsers | orderBy:'level'">
+                        <div class="row">
+                          <div class="col-md-6 col-lg-6 col-sm-6">
+                            {{obj.fullname ? obj.fullname : obj.name}}</div>
+                          <div class="col-md-3 col-lg-3 col-sm-3">{{obj.level}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <a (click)="showList = element.bid_id" *ngIf="!showList"><span class="caret"></span></a>
+                <a (click)="showList = false" *ngIf="showList"><span class="caret"></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Pagination for Bid showing  -->
+      <pagination-controls auto-hide="true" style="margin-top:25px" *ngIf="bids && bids.length > 0 && bidsPerMonth >8"
+        (pageChange)="loadNextPage($event)" class="align-center">
+      </pagination-controls>
+    </div>
+  </div>
+  <div class="bid-container message-warning align-center" id="noBid" *ngIf="bids?.length == 0">
+    No bids found
+  </div>
+</div><!-- Panel Content -->
+<!-- <div *ngIf = "!access">
+  <img src="../../../../assets/images/404.png" style="background-size:cover;height:100%;width:100%" alt="">
+</div> -->
+<div class="modal" id="cloneBid">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="title">Clone Bid</h4>
+        <button type="button" class="close" data-dismiss="modal" style=" margin-top: -23px;">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body" style="padding: 18px;position: static;">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 margin-top-12">
+            <label class="margin-bottom">Bid Name&nbsp;<span class="required_field">*</span></label>
+            <input
+              [ngStyle]="{'box-shadow': submitCloneData && !cloneData?.name ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+              class="form-control input-border input-bar" type="text" maxlength="35" placeholder="Bid Name"
+              required="required" [(ngModel)]="cloneData.name">
+          </div>
+          <!-- <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 margin-top-12">
+            <label class="margin-bottom">Bid Number&nbsp;<span class="required_field">*</span></label>
+            <input
+              [ngStyle]="{'box-shadow': submitCloneData &&  !cloneData?.bid_number ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+              class="form-control input-border input-bar" type="text" maxlength="20" [(ngModel)]="cloneData.bid_number"
+              placeholder="Bid Number" required="required">
+          </div> -->
+        </div>
+        <div class="row" style="margin-top:-21px">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6 align-right">
+            <button id="saveBtn" type="button" class="btn save-button" (click)="setCloneData(cloneData)">Create</button>
+            <button id="cancelBtn" type="button" class="btn cancel-button" (click)="cancelClone()"
+              data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <!-- Modal body closed -->
+    </div>
+  </div>
+</div>
+<div class="modal" id="viewRevisionBid">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="title">Earlier Versions</h4>
+        <button type="button" class="close" data-dismiss="modal" style=" margin-top: -23px;">&times;</button>
+      </div>
+      <!-- Modal body ------ Revised Bid  -->
+      <div class="modal-body" style="padding: 18px;position: static;">
+        <div class="row">
+          <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+            <div class="main-content-area margin-top-12">
+              <div class="row" *ngIf="revisedBids && revisedBids.length > 0">
+                <div class="col-xs-6 col-lg-4 col-sm-6 col-md-4 margin-top-12 " *ngFor="let item of revisedBids">
+                  <div class="col-xs-11 col-md-11 col-lg-11 col-sm-11">
+                    <div class="bid-block color-gray"
+                      [ngClass]="item?.bidFinalStatus == 'DROPPED' ? 'headerGrayDrop' : 'headerGrayNoDrop'">
+                      <div class="row">
+                        <!-- BId no -->
+                        <div class="col-xs-10 col-lg-10 col-sm-10 col-md-10 margin-top-12 BidNumber">
+                          <a style="color:grey;padding:7px;cursor: pointer;"
+                            (click)="hideModal('bid-development', item.bid_id)">
+                            Bid No: <span> <b title="{{item?.bid_number}}">{{item?.bid_number}}</b></span>
+                          </a>
+                        </div>
+                        <!-- Action icon such as Approved , Reject and Conditionally Approved -->
+                        <div class="col-md-2 margin-top-12">
+                          <span title="Approved" *ngIf="item.poc_docs && item.bidApprovalStatus =='APPROVED'">
+                            <i style="font-size: 12px; color: limegreen; margin-left: -22px;" class="fa fa-check-circle"
+                              aria-hidden="true"></i>
+                          </span>
+                          <span title="Conditionally Approved"
+                            *ngIf="item.poc_docs && item.bidApprovalStatus=='CONDITIONALLY_APPROVED'"><i style="font-size:
+											 12px; color: orange; margin-left: -22px;" class="fa fa-check-circle" aria-hidden="true"></i></span>
+                          <span title="Rejected" *ngIf="item.poc_docs && item.bidApprovalStatus=='REJECTED'"><i style="font-size: 12px; color:
+											 red; margin-left: -22px;" class="fa fa-times-circle" aria-hidden="true"></i></span>
+                        </div>
+                      </div>
+                      <!-- Account NAME  -->
+                      <div class="row">
+                        <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 AccountName">
+                          <a style="color:grey;padding:7px;text-decoration:none;">Acc
+                            Name: <span title="{{item?.account_name}}"> <b>{{item?.account_name}}</b></span>
+                          </a>
+                        </div>
+                      </div>
+                      <!-- Bid Name -->
+                      <div class="row">
+                        <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12 bidName">
+                          <span style="color: #17b495;padding:7px;text-decoration:none;">
+                            <span title="{{item?.name}}"> <b>{{item?.name}}</b></span>
+                          </span>
+                        </div>
+                      </div>
+                      <hr class="hr-style">
+                      <div class="row" id="numberCircle" style="padding:0px 5px;">
+                        <!-- Estimated Deal Value (Mn)  -->
+                        <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                          <div class="text-truncate first-circle-color" title="Annual Contract Value (Mn)"><span
+                              class="bid-number-center">
+                              {{dealValueLength(item.estimatedValue)}} </span></div>
+                          <div style="font-size:10px; margin-left:11px">₹</div>
+                        </div>
+                        <!-- Bid Submission -->
+                        <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                          <div class="text-truncate second-circle-color" title="Submission Date"><span
+                              class="bid-number-center">
+                              {{getSubmissionDate(item.date_submission)}}</span></div>
+                          <div style="margin-left:7px">
+                            {{getSubmissionMonth(item.date_submission)}}</div>
+                        </div>
+                        <!-- Bid Staging -->
+                        <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                          <div class="text-truncate third-circle-color" title="{{item?.staging}}"><span
+                              class="bid-number-center">{{item.bid_stage.total ? item.bid_stage.total : 1}}</span>
+                          </div>
+                          <div>Stage</div>
+                        </div>
+                        <!-- Bid Percentage  -->
+                        <!-- <div class="col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                          <div class="text-truncate fourth-circle-color " title="Bid Completed"><span
+                              class="bid-number-center">{{item.bid_stage.percentage ? item.bid_stage.percentage : 5}}</span>
+                          </div>
+                          <div style="margin-left:11px">%</div>
+                        </div> -->
+                        <!-- Bid Created -->
+                        <div class=" col-xs-2 col-lg-2 col-sm-2 col-md-2 div-detail">
+                          <div class="text-truncate second-circle-color" title="Creation Date">
+                            <span class="bid-number-center">
+                              {{item.date_created|date:'dd'}}</span></div>
+                          <div style="margin-left:7px">{{getBidCreatedMonth(item.date_created)}}</div>
+                        </div>
+                      </div>
+
+                      <hr class="hr-style">
+                      <!-- Partcicpant List in the bid -->
+                      <div class="row" id="contributorCircle" *ngIf="item.nonApprovers"
+                        style="max-height: 30px; overflow-y: auto; overflow-x: hidden;">
+                        <span class="col-md-2 col-lg-2 col-sm-2 col-xs-2" style="margin-left: 1px;"
+                          *ngFor="let item of item.nonApprovers">
+                          <span class="text-truncate second1-circle-color circleThree"
+                            [ngClass]=" item?.userTypes && item?.userTypes[0]?.user_type === 'BID_OWNER' ? 'bidManager' : 'nobidManager'"
+                            *ngIf="item.user_type"><span class="bid-text-center"
+                              title="{{item.fullname}} - {{ item?.userTypes && item?.userTypes[0]?.user_subtype}} {{ item?.userTypes && item?.userTypes[0]?.user_type }}">{{getSignatures(item?.firstName,item?.lastName)}}</span>
+                          </span>
+                        </span>
+                      </div>
+                      <div class="actionicons" style="height: 100%;">
+                        <!-- Project Scope -->
+                        <span style="cursor: pointer;" title="Project Summary"><a
+                            (click)="hideModal('/projectscope', item.bid_id)"><i class="fa fa-envelope"
+                              aria-hidden="true"></i></a></span>
+                        <!-- Go No Go -->
+                        <!-- <span class="action" title="Go : No-Go"><a> <i class="fa fa-thumbs-o-up"
+                              aria-hidden="true"></i><i class="fa fa-thumbs-o-up" aria-hidden="true"
+                              style="transform: rotate(180deg);"></i></a></span> -->
+                        <span class="action" title="Win-Loss Summary"><a
+                            (click)="hideModalBidSummary('bid-summary', item)"> <i class="fa fa-list-alt"
+                              [ngStyle]="{'color': WinLossSubmitStatus(item , 'Win-Loss-Summary') ? '#17b495' : 'darkgray' }"
+                              aria-hidden="true"></i></a></span>
+                        <div class="dropdown">
+                          <!-- Approval Chain List -->
+                          <span class="action" title="Approval Chain"><a><i class="fa fa-sitemap"
+                                aria-hidden="true"></i></a></span>
+                          <div class="dropdown-content ">
+                            <div class="row">
+                              <div class="col-xs-7 col-md-7 col-lg-7 col-sm-7 approvalChain align-center">Name</div>
+                              <div class="col-xs-5 col-md-5 col-lg-5 col-sm-5 approvalChain">Level</div>
+                            </div>
+                            <div *ngFor="let item of item.approvalChainUsers | orderBy:'level'">
+                              <div class="row">
+                                <div class="col-xs-7 col-md-7 col-lg-7 col-sm-7 align-center">
+                                  {{item.fullname ? item.fullname : item.name}}
+                                </div>
+                                <div class="col-xs-5 col-md-5 col-lg-5 col-sm-5 align-center">{{item.level}}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Timeline for the BId -->
+                        <span class="action" title="Bid Timeline" (click)="onBidTimeline(item , 'hideModal')"><a>T</a></span>
+                        <!-- Approval Dashboard -->
+                        <span class="action" title="Approval Dashboard">
+                          <a (click)="item.poc_docs.length>0 ? hideModal('approvalDashboard', item.bid_id): ''"><i
+                              class="fa fa-desktop"
+                              [ngStyle]="{'color': item.poc_docs.length>0 ? '#17b495' : 'darkgray' }"
+                              aria-hidden="true"></i></a></span>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                  </div>
+                  <!-- Three dot Menu Icon Using in the Revised Bid at the right side of the Bid No  -->
+                  <div class="col-xs-1 col-md-1 col-lg-1 col-sm-1" style="margin-right: -6px;
+						margin-left: -26px;
+						margin-top: 19px;">
+                    <span class="fa fa-ellipsis-v dropdown-toggle dropdown-toggle-split"
+                      style="color:#17b495;font-size: 20px;cursor: pointer;" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false" (click)="userRoleBasedButtonAccessControl(item.bid_id)"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                    <div class="dropdown-menu" *ngIf="accessBtn">
+                      <!-- Bid Documents -->
+                      <span class="dropdown-item"><img src="assets/images/DOCUMENT.png" id="book" title="Documents"
+                          (click)="hideModal('bid-documents',item.bid_id)"></span>
+                      <!-- Edit Bid -->
+                      <span class="dropdown-item" *ngIf="accessBtn?.bidEditAccess"><img src="assets/images/edit1.png"
+                          id="pencil" title="Edit" (click)="hideModal('bid', item.bid_id)"></span>
+                      <!-- View Bid for all user users except Bid Manager -->
+                      <span class="dropdown-item" *ngIf="accessBtn?.bidViewAccess"><img src="assets/images/edit1.png"
+                          id="pencil" title="View Bid Details" [routerLink]="['/bid/viewbid',item.bid_id]"></span>
+                      <!-- Delete Bid   && !item.disableDelete -->
+                      <span class="dropdown-item" *ngIf="accessBtn?.bidDeleteAccess"><img
+                          src="assets/images/rubbish-bin.png" *ngIf="accessBtn?.bidDeleteAccess" id="delete"
+                          title="Delete" (click)="deactivate(item.bid_id)"></span>
+                      <span class="dropdown-item" *ngIf="accessBtn?.tenderFeeEditAcess"><i class="fa fa-money"
+                          title="Tender Fee" (click)="hideModalPBGEMDForm('EOI', item)" aria-hidden="true" id="form"></i>
+                      </span>
+                      <span *ngIf="accessBtn?.emdPBGEditAccess" class="dropdown-item"><i class="fa fa-credit-card"
+                        (click)="hideModalPBGEMDForm('EMD', item)"  title="EMD" aria-hidden="true" title="EMD" id="form"></i>
+                      </span>
+                      <span class="dropdown-item" *ngIf="accessBtn?.emdPBGEditAccess && item.poc_docs && (item.approvedStatus == 'approved' || item.approvedStatus ==  'condition')
+                            && WinLossSubmitStatus(item , 'PBG') "><i class="fa fa-university"
+                            (click)="hideModalPBGEMDForm('PBG', item)" title="PBG" aria-hidden="true" id="form"></i>
+                      </span>
+                      <span *ngIf="accessBtn?.sofEditAccess && item.poc_docs && (item.approvedStatus == 'approved' || item.approvedStatus ==  'condition')
+                            && WinLossSubmitStatus(item , 'SOF')" class="dropdown-item"><i class="fa fa-wpforms"
+                            (click)="hideModalPBGEMDForm('salesOrderForm', item)"  aria-hidden="true" id="form" title="SOF"></i>
+                      </span>
+                      <!-- Timeline for the Bid -->
+                      <!-- <span class="dropdown-item" (click)="hideModal('timeline',item.bid_id)" id="timeline"
+                        title="Bid Timeline">
+                        T</span> -->
+                      <!-- Competitor Icon -->
+                      <!-- <span class="dropdown-item fa fa-list-alt" id="bidSummary" title="Win-Loss Summary"
+                        *ngIf="accessBtn?.bidWinLossSummaryAccess && item.poc_docs &&
+                      (item.bidApprovalStatus =='APPROVED' || item.bidApprovalStatus=='CONDITIONALLY_APPROVED'	|| item.bidApprovalStatus=='REJECTED')" (click)="hideModal('bid-summary',item.bid_id)">
+                      </span> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="!revisedBids || revisedBids.length == 0">
+                No Data Found
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Loader  Section for Bid -->
+<div class="overlay" *ngIf=!bids>
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

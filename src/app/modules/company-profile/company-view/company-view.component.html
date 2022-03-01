@@ -1,0 +1,89 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="row">
+    <div class="mainadduserSection col-sm-2 col-md-2">
+    </div>
+    <div class="mainadduserSection col-sm-8 col-md-8">
+      <div class="card mainuserSection">
+        <!-- Breadcrumb Section -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item active" aria-current="page">Company Profile</li>
+          </ol>
+        </nav>
+        <div id="formBackground">
+          <!-- Page Heading  -->
+          <div class=" row text-center form-group">
+            <h4 class="formHeading">Company Profile</h4>
+          </div>
+          <div class="formLogin">
+            <!-- Company Details Information -->
+            <form [formGroup]="companyForm">
+              <fieldset disabled>
+                <div class="row  margin-left ">
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom "> Name : &nbsp;</label>
+                    <span>{{company.company_name}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12 ">
+                    <label class="margin-bottom"> Website :&nbsp;</label>
+                    <span>{{company.company_website}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom"> Contact Number : &nbsp;</label>
+                    <span>{{company.company_phone}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom"> Address : &nbsp;</label>
+                    <span>{{company.company_address}}</span>
+                  </div>
+                </div>
+                <br>
+                <hr>
+                <div class="row margin-left">
+                  <div class="col-md-6 margin-top-12 ">
+                    <label class="margin-bottom"> Primary Contact Name : &nbsp;</label>
+                    <span>{{company.contact_name_primary}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom">Primary Contact Email : &nbsp;</label>
+                    <span>{{company.contact_email_primary}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom">Primary Contact Phone : &nbsp;</label>
+                    <span>{{company.contact_phone_primary}}</span>
+                  </div>
+                </div>
+                <br>
+                <hr>
+                <div class="row margin-left">
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom"> Secondary Contact Name : &nbsp;</label>
+                    <span>{{company.contact_name_secondary}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom">Secondary Contact Email : &nbsp;</label>
+                    <span>{{company.contact_email_secondary}}</span>
+                  </div>
+                  <div class="col-md-6 margin-top-12">
+                    <label class="margin-bottom">Secondary Contact Phone : &nbsp;</label>
+                    <span>{{company.contact_phone_secondary}}</span>
+                  </div>
+                </div>
+                <br>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-2 col-md-2">
+    </div>
+  </div>
+</div>
+<!-- Loader Section of the Company View -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

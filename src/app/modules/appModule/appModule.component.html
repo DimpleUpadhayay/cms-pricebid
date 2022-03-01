@@ -1,0 +1,51 @@
+<!-- <app-header></app-header> -->
+<div class="container">
+
+  <div class="row">
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+    <div class="mainadduserSection col-sm-6 col-md-6">
+      <!-- Breadcrumb Section -->
+      <div class="card mainuserSection">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <!-- <li class="breadcrumb-item" (click)="changeState()">Menu</li> -->
+            <li class="breadcrumb-item" routerLink='/list_module' aria-current="page">Modules</li>
+            <li class="breadcrumb-item active" aria-current="page">Create</li>
+          </ol>
+        </nav>
+        <!-- Page Heading  -->
+        <div class="row text-center form-group">
+          <h4 class="formHeading">Create New Module</h4>
+        </div>
+        <div class="formLogin">
+
+          <div class="row">
+            <div class="col-md-12 margin-bottom">
+              <label class="margin-bottom"> Name&nbsp;<span class="required_field">*</span></label>
+              <input class="form-control input-border input-bar" type="text" maxlength="50" placeholder="Module Name"
+                required="required" [(ngModel)]="appModule.module_name">
+            </div>
+            <div class="col-md-12 margin-bottom">
+              <label class="margin-bottom">Parent Module&nbsp;<span class="required_field">*</span></label>
+              <ng-select [items]="mainModule" bindLabel="module_name" bindValue="_id" placeholder="Select Parent Module"
+                [(ngModel)]="appModule.parent_module_name">
+              </ng-select>
+            </div>
+          </div>
+          <br>
+          <!-- Action Button Update Create -->
+          <div class="row">
+            <div class="col-md-12 margin-bottom align-center">
+              <div class="text-center">
+                <button type="submit" id="btnSubmit" (click)="createModule()" class="btn save-button">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mainadduserSection col-sm-3 col-md-3">
+    </div>
+  </div>
+</div>

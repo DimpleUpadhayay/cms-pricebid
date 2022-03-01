@@ -1,0 +1,46 @@
+.navbar-inverse {
+    background-color: #364453;
+    border-color: #364453;
+    height: 0px;
+}
+#cancel{
+    width: 20px;
+    float: right;
+    margin-top: 18px;
+    margin-right: 20px;
+}
+#file{
+    margin-top: 6px;
+    width: 95%;
+    margin-left:-27px
+}
+#description{
+    width: 158%;
+    margin-left: -50px;
+}
+#cell{
+  width: 124%;
+  margin-left: -50px;
+}
+#nos{
+    margin-top: 8px;
+    margin-left: -16px;
+    color: #17b495;
+}
+#uploadBtn{
+  margin-left: -6px;
+  margin-top: -6px;
+}
+#removeBtn{
+    margin-left: 10px;
+    margin-top: -6px;
+}
+#addBtn{
+    margin-left: 11px;
+    margin-top: -6px;
+
+}
+#closeBtn{
+    margin-left:334px !important;
+    margin-top: 21px;
+}

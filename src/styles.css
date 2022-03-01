@@ -1,0 +1,1199 @@
+/* @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';*/
+
+@import "../src/assets/css/custom.css";
+/* @import "../src/assets/css/main.css"; */
+
+@import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
+/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
+
+/* @import "../node_modules/syncfusion-javascript/Content/ej/web/material/ej.web.all.min.css"; */
+@import "../node_modules/@ng-select/ng-select/themes/default.theme.css";
+@import '../node_modules/ng2-dnd/bundles/style.css';
+@import "../node_modules/ng-pick-datetime/assets/style/picker.min.css";
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+/* @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css'; */
+
+/* You can add global styles to this file, and also import other style files */
+
+/* .addAdvertiser-btn{
+font-size: 1.4em !important;
+padding: 10px 26px !important;
+border-radius: 0px !important;
+} */
+
+/* .submitRow{
+margin:2em 0;
+} */
+
+/* aligin-styliing */
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-left {
+  text-align: left;
+}
+
+/* New Styling >>>>>>>>>>>>>> */
+
+/* Table styling */
+
+.table thead tr th {
+  color: white;
+  border: 0;
+  /* border-left:1px solid #17b495 !important; */
+  background: #364453;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* //////// */
+
+/* Input textarea, select, 3rd-party element styling */
+
+ng-select .form-control {
+  box-shadow: 0 0 .5px .5px #17b495;
+}
+
+.width-25 {
+  width: 25px;
+}
+
+/* input{
+border-left: 5px solid #17b495 !important;
+} */
+
+.input-bar {
+  border-left: 5px solid #17b495 !important;
+}
+
+/* Select input left border */
+
+.select-border {
+  border-left: 5px solid #17b495 !important;
+}
+
+.selectBorder {
+  border-left: 5px solid #17b495;
+  border-radius: 5px;
+}
+
+select {
+  border-left: 5px solid #17b495;
+}
+
+/* ////// */
+
+/* Material external stylng */
+
+.mat-dialog-container {
+  background-color: white !important;
+  border: 2px solid #17b495;
+}
+
+/* ////////// */
+
+/* Validation styling */
+
+/* .ng-valid[required],
+.ng-valid.required {
+border-left: 5px solid #42A948;
+}  */
+
+/* .ng-invalid:not(form) {
+border-left: 5px solid #a94442;
+} */
+
+/* ////// */
+
+/* Alerts styling  */
+
+.message-warning {
+  background: #F6DDDD;
+  color: #D07D7D;
+  padding: 4px;
+  margin-bottom: 3px;
+}
+
+/* /////// */
+
+/* Button Styling in Application  */
+
+.btn {
+  cursor: pointer;
+  text-align: center;
+  font-size: 1em;
+  outline: none;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  padding: .5rem 2rem;
+  margin: 7px 0;
+  border-radius: 5px !important;
+}
+
+.cancel-button {
+  color: black;
+  border: 1px solid darkgrey !important;
+  background-color: white;
+}
+
+.save-button {
+  background-color: #ec9138;
+  border: 1px solid#ec9138;
+}
+
+.ps-button {
+  background-color: #17b495;
+  border: 1px solid #17b495;
+}
+
+.draft-button {
+  border-color: #17b495;
+  background-color: #17b495;
+  border: 1px solid #17b495;
+}
+
+.create-button {
+  background-color: #f1a458;
+  color: #fff;
+}
+
+/* ------Approval Dashboard Approved, RFI, Reject Button------ */
+
+.approved-button {
+  background: #4FB596;
+  color: white;
+  border: 3px solid #364453;
+}
+
+.reject-button {
+  background: #f76c6c;
+  color: white;
+  border: 3px solid #364453;
+}
+
+.conditionally-button {
+  background: #f1a458;
+  color: white;
+  border: 3px solid #364453;
+}
+
+.information-button {
+  background: #17b495;
+  color: white;
+  border: 3px solid #364453;
+}
+
+.button-review {
+  background-color: #ec9138;
+}
+
+.button-proposal {
+  background: #ec9138;
+}
+
+.button-revision {
+  background-color: #364453;
+}
+
+.button-solution {
+  background-color: #ec9138;
+}
+
+.button-approval {
+  background-color: #17b495;
+}
+
+/* ------------In Project Scope Criterion Tab---------- */
+
+.category-button {
+  background-color: #17b495;
+  border: 1px solid #17b495;
+  color: white;
+}
+
+.nain-content {
+  font-size: 1.25em;
+}
+
+/* //////// */
+
+/* Margins, paddings */
+
+.margin-top-12 {
+  margin-top: 12px;
+}
+
+.padding-default {
+  padding: 4px;
+}
+
+.padding-top-100 {
+  padding-top: 60px;
+}
+
+.padding-top-60 {
+  padding-top: 50px;
+}
+
+/* /////// */
+
+/* HEader, captions, footer, sub-header styling */
+
+.caption {
+  /* height: 35px; */
+  width: 100%;
+  background: #364453;
+  color: white;
+  padding: 1px;
+  padding: 9px;
+  font-size: 16px;
+}
+
+.header {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  z-index: 10001;
+}
+
+.header>.top-bar {
+  background: #364453 none repeat;
+  height: 44px;
+  padding-top: 12px;
+  padding: 4px;
+}
+
+.header .sub-bar {
+  background: #eee;
+  height: 20px;
+}
+
+.header .header-search {
+  border: 1px solid grey;
+  /* margin-top: 12px; */
+  width: 16%;
+  /* padding: 4px; */
+  margin-left: 17%;
+}
+
+/* ----------Side Menu bar in Company Login , Supoort Login----------- */
+
+.side-menu {
+  background: #364453 none repeat scroll 0 0;
+  height: 100%;
+  left: 0px;
+  z-index: 3;
+  position: fixed;
+padding-left: 1.5rem;  
+  transition: 0.5s !important;
+  margin-left: -40px !important;
+}
+
+.side-menus {
+  float: left;
+  margin-bottom: 60px;
+  width: 100%;
+}
+
+.side-menus>span {
+  color: #a6a8b0;
+  float: left;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  margin-bottom: 20px;
+  padding: 0 27px;
+  width: 100%;
+}
+
+.side-menus nav ul li a {
+  float: left;
+  width: 100%;
+}
+
+.side-menus nav>ul {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+}
+
+.side-menus nav>ul>li {
+  position: relative;
+}
+
+.side-menus nav>ul>li>a {
+  color: #dadada;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 8px 27px;
+}
+
+.side-menus nav>ul>li>a>i {
+  color: #c5c5c5;
+  float: left;
+  font-size: 13px;
+  line-height: 24px;
+  margin-right: 4px;
+  width: 20px;
+}
+
+.side-menus nav>ul>li>a>span {
+  display: block;
+  width: 100%;
+}
+
+.side-menus ul li a span i.badge, .side-menus ul li a i.badge {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  float: right;
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.side-menus nav>ul>li.menu-item-has-children>ul {
+  background: #3b3f51 none repeat scroll 0 0;
+  display: none;
+  float: left;
+  list-style: outside none none;
+  margin: 0;
+  padding: 13px 0;
+  width: 100%;
+}
+
+.side-menus nav>ul>li.menu-item-has-children>ul>li {
+  float: left;
+  width: 100%;
+}
+
+.side-menus nav>ul>li.menu-item-has-children>ul>li>a {
+  color: #bababa;
+  float: left;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 3px 30px 3px 50px;
+  position: relative;
+  width: 100%;
+}
+
+.side-menus nav>ul>li.menu-item-has-children>ul>li>a::before {
+  background: #686d86 none repeat scroll 0 0;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  content: "";
+  height: 5px;
+  left: 33px;
+  position: absolute;
+  top: 12px;
+  width: 5px;
+}
+
+.side-menus nav>ul>li:hover>a {
+  background: #3b3f51 none repeat scroll 0 0;
+}
+
+.side-menus nav>ul>li.menu-item-has-children.active>a {
+  background: #3b3f51 none repeat scroll 0 0;
+  padding-bottom: 0;
+  padding-top: 14px;
+}
+
+.side-menus nav>ul>li.active>a {
+  background: #3b3f51 none repeat scroll 0 0;
+}
+
+.side-menus>span.footer-line {
+  margin-bottom: 60px;
+  margin-top: 30px;
+}
+
+.side-menus>span.footer-line a {
+  color: #dfdfdf;
+}
+
+.side-menu-sec.slide-out {
+  left: -266px;
+}
+
+body {
+  background-color: white;
+  font-size: 1.25em;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer {
+  position: fixed;
+  background-color: #364453;
+  color: #fff;
+  padding: 4px;
+  height: 30px;
+  bottom: 0px;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ////// */
+
+/* Font styling (color, size, decoration, family etc) */
+
+.textBlue {
+  color: #17b495;
+}
+
+h1, h2, h3, h4 {
+  text-transform: uppercase;
+  color: #3f3f3f;
+  font-family: 'Poppins', sans-serif;
+  font-weight: normal;
+}
+
+h2 {
+  font-size: 25px !important;
+}
+
+/* /////// */
+
+/* Icons styling */
+
+.icon-size {
+  width: 17px;
+  cursor: pointer;
+}
+
+.icons-two {
+  font-size: 12px;
+}
+
+.attachIcon1 {
+  margin-left: -7px;
+  margin-top: -9px;
+}
+
+.f_parent {
+  color: black;
+  font-weight: bold;
+}
+
+.d_fa {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* .fa{
+font-weight: bold;
+font-size: 14px;
+padding-bottom:2px;
+} */
+
+.fa fa-reorder {
+  padding: 2px;
+  color: #17b495;
+}
+
+.fa fa-inr {
+  padding: 2px;
+  color: #17b495;
+}
+
+.fa fa-eye {
+  padding: 2px;
+  color: #17b495;
+}
+
+.fa-home {
+  font-size: 22px !important;
+  color: white;
+}
+
+/* ////// */
+
+.caret {
+  float: right !important;
+  margin-top: 6px;
+}
+
+.hr-style {
+  margin: 8px 0px;
+  background-color: #ddd;
+}
+
+.bs-datepicker {
+  height: 350px;
+  width: 300px;
+  z-index: 2334;
+}
+
+/* breadcrumb */
+
+.breadcrumb {
+  padding: 0 !important ;
+  margin-bottom: 5px !important;
+  list-style: none;
+  background-color: white !important;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 5px;
+}
+
+.breadcrumb>.active {
+  color: #17b495 !important;
+}
+
+/* Teritory-view */
+
+.margin-left {
+  margin-left: 10px !important;
+}
+
+.breadcrumb>li {
+  cursor: pointer;
+}
+
+/* --------Bid-development Icon/Images in Table ------- */
+
+.allIcon {
+  margin-top: -5px;
+  margin-right: 3px;
+  cursor: pointer;
+}
+
+/* ---------------Search Bar and Search Icon in table  Company Login----  */
+
+#searchIcon {
+  margin-left: 98% !important;
+  margin-top: -53px;
+}
+
+.searchBox {
+  padding: 5px;
+  width: 100%;
+  margin-left: 22px;
+  margin-top: 18px;
+}
+
+/* timeline graph */
+
+/* .vis-timeline {
+  border: 2px solid #17b495 !important;
+  ;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12pt;
+  background: white;
+}
+
+.vis-item {
+  border-color: #F991A3;
+  background-color: pink;
+  font-size: 12pt;
+  color: purple;
+  box-shadow: 5px 5px 20px rgba(128, 128, 128, 0.5);
+}
+
+.vis-item, .vis-item.vis-line {
+  border-width: 3px;
+}
+
+.vis-item.vis-dot {
+  border-width: 10px;
+  border-radius: 10px;
+}
+
+.vis-item.vis-selected {
+  border-color: green;
+  background-color: lightgreen;
+}
+
+.vis-time-axis .vis-text {
+  color: purple;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.vis-time-axis .vis-text.vis-major {
+  font-weight: bold;
+}
+
+.vis-time-axis .vis-grid.vis-minor {
+  border-width: 2px;
+  border-color: pink;
+}
+
+.vis-time-axis .vis-grid.vis-major {
+  border-width: 2px;
+  border-color: #F991A3;
+}
+
+.vis-item .vis-item-content {
+  white-space: nowrap;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: #17b495;
+  color: white;
+} */
+
+/* ---------- Project scope tabs & Bid Development Tab---------- */
+
+.nav-tabs>li.active>a {
+  color: #17b495 !important;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+  border-top: 5px solid #17b495 !important;
+}
+
+.required_field {
+  color: red;
+}
+.noCategory{
+  color: white;
+  text-align: center;
+}
+
+/* Sr Number */
+
+.srno {
+  color: rgba(255, 255, 255, 0.863);
+}
+
+/* .fa-download {
+  color: white;
+  margin-right: 9px;
+  margin-top: -1px;
+} */
+
+/* -----------------Bid-Development table -------------*/
+
+.bid_head {
+  color: #70D8C4;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.bid_div {
+  background-color: #364453;
+  border-radius: 7px;
+  padding: 5px 0;
+  border-radius: 5px !important;
+}
+
+/* Solution Review & Rfi Button -------  */
+
+#btnDynamic {
+  border-radius: 5px !important;
+  border-color: #17b495;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background-color: #17b495;
+  font-size: 14px;
+  margin: 4px 0 4px 0;
+}
+
+/* -----BI Reports ---- */
+
+#myChart-top {
+  white-space: nowrap !important;
+  width: 1140px;
+  height: 480px !important;
+  position: inherit !important;
+  overflow: hidden !important;
+}
+
+/* --------- Dropdown in Bi and Similar5 and Recent5 ------------ */
+
+.multiselect-dropdown[_ngcontent-c5] .dropdown-btn[_ngcontent-c5] {
+  border-left: 5px solid #17b495 !important;
+  border-radius: 5px !important;
+  height: 35px !important;
+  box-shadow: 0 0 .5px .5px #17b495 !important;
+}
+
+.multiselect-dropdown[_ngcontent-c5] .dropdown-btn[_ngcontent-c5] .selected-item[_ngcontent-c5] {
+  background-color: #f5faff !important;
+  color: Black !important;
+  border: 1px solid grey !important;
+}
+
+.multiselect-dropdown[_ngcontent-c5] .dropdown-btn[_ngcontent-c5] .selected-item[_ngcontent-c5] a[_ngcontent-c5] {
+  color: black !important;
+}
+
+.multiselect-dropdown[_ngcontent-c5] .red[_ngcontent-c5] {
+  box-shadow: 0 0 .5px .5px red !important;
+}
+
+.ngx-pagination {
+  margin-top: 2% !important;
+}
+
+.btn-value {
+  background-color: #17b495 !important;
+}
+
+.btn-clear {
+  color: black !important;
+  border: 1px solid darkgrey !important;
+  background-color: white !important;
+}
+
+.swal-modal {
+  border: 2px solid #17b495;
+}
+
+.swal-text {
+  text-align: center;
+}
+
+.fa-download {
+  cursor: pointer;
+}
+
+/* -----------Timeline Report --------- */
+
+.vis-item.c1 {
+  background-color: #17b495
+}
+
+/* create a custom sized dot at the bottom of the red item */
+
+.vis-item.red {
+  background-color: red;
+}
+
+/* .vis-item.greencl {
+  background-color:  #529de2;
+} */
+
+.vis-item.c2 {
+  background-color: #ec9138;
+}
+
+/* 53C2F2 */
+
+.vis-item.c3 {
+  background-color: #17b495
+}
+
+.vis-item.c4 {
+  background-color: #ec9138;
+}
+
+.vis-item.blue {
+  background-color: #17b495
+}
+
+.brown {
+  background-color: #ec9138;
+}
+
+.vis-item.azure {
+  background-color: #17b495
+}
+
+.vis-item.purple {
+  background-color: #ec9138;
+}
+
+.vis-item.gray {
+  background-color: #17b495
+}
+
+.vis-item.blue {
+  background-color: #ec9138;
+}
+
+.vis-item.orange {
+  background-color: #17b495
+}
+
+.vis-item.maroon {
+  background-color: #ec9138;
+}
+
+.vis-item.ivory {
+  background-color: #17b495
+}
+
+.vis-item.brown {
+  background-color: #ec9138;
+}
+
+.vis-item.vis-dot.red {
+  border-radius: 10px;
+  border-width: 10px;
+}
+
+.vis-item.vis-line.red {
+  border-width: 5px;
+}
+
+.vis-item.orange {
+  background-color: gold;
+  border-color: orange;
+}
+
+.vis-item.magenta {
+  background-color: magenta;
+  border-color: purple;
+  color: white;
+}
+
+.vis-item.c33 {
+  background-color: #7793b3;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* our custom classes overrule the styles for selected events,
+   so lets define a new style for the selected events */
+
+/* .vis-item.vis-selected {
+  background-color: white;
+  border-color: black;
+  color: black;
+  box-shadow: 0 0 10px gray;
+} */
+
+#container {
+  display: block;
+}
+
+.progress-wrapper {
+  background: white;
+  /* width: 100%; */
+  height: 18px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  text-align: center;
+  /* width: 60%; */
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background: #63ed63;
+}
+
+.progress-label {
+  text-align: center;
+  position: absolute;
+  z-index: 1;
+}
+
+/* ================Responsive Mobile View =================  */
+
+/* --------ProjectScope Tab , Bid Development and Approval Dashboard Tab for Mobile View  -------- */
+
+@media only screen and (max-width:600px) and (min-width:320px) {
+  .nav-tabs>li.active>a {
+    border-top: 1px solid #17b495 !important;
+    border-right: 1px solid #17b495 !important;
+    border-left: 1px solid #17b495 !important;
+  }
+}
+
+@media only screen and (max-width:900px) and (min-width:601px) {
+  .nav-tabs>li.active>a {
+    border-top: 1px solid #17b495 !important;
+    border-right: 1px solid #17b495 !important;
+    border-left: 1px solid #17b495 !important;
+  }
+}
+
+/* TimeLine */
+
+#ch {
+  /* background: #17b495; */
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#ch1 {
+  /* width: 20%; */
+  float: left;
+  /* background: white; */
+}
+
+.vis-item .vis-box {
+  background: white;
+}
+
+#ch>#ch1>.fa-lightbulb-o {
+  color: white;
+  font-size: 20px;
+  padding: 5px;
+}
+
+#ch>#ch1>.fa-file-powerpoint-o {
+  color: White;
+  font-size: 20px;
+  padding: 5px;
+}
+
+#ch>#ch1>.fa-dollar {
+  color: white;
+  font-size: 20px;
+  padding: 5px;
+}
+
+#ch2 {
+  /* width: 80%; */
+  float: right;
+}
+
+#ch3 {
+  /* background: #17b495; */
+  padding: 5px;
+}
+
+#ch4 {
+  background: white;
+  padding: 3px;
+  /* margin-bottom: 5px; */
+}
+
+#approved {
+  margin: 5px;
+  /* background-color: #e0e7dc !important; */
+  /* color:white !important; */
+}
+
+#reject {
+  background: #f76c6c !important;
+  /* color: white; */
+}
+
+#conditionally {
+  background: #d8b90a !important;
+  /* color: white !important; */
+}
+
+#versionBox {
+  padding: 5px !important;
+  margin: 5px !important;
+}
+
+.Legend {
+  color: white;
+  float: right;
+  margin-bottom: 10px;
+}
+
+#rfi {
+  background: #17b495 !important;
+  /* color: white !important; */
+}
+
+.c1 {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* create a custom sized dot at the bottom of the red item */
+
+.red {
+  background-color: red;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* .vis-item.greencl {
+  background-color:  #529de2;
+} */
+
+.c2 {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* 53C2F2 */
+
+.c3 {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+.c4 {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+.c33 {
+  background-color: #7793b3;
+  padding: 5px;
+  margin: 5px;
+}
+
+.blue {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+.brown {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+.azure {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+.purple {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+.gray {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+.blue {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+.orange {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+.maroon {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+.ivory {
+  background-color: #17b495;
+  padding: 5px;
+  margin: 5px;
+}
+
+.brown {
+  background-color: #ec9138;
+  padding: 5px;
+  margin: 5px;
+}
+
+/* Loader Styling Css In Whole Application Global */
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10002;
+}
+
+#logoLoader {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 10%;
+  animation: rotation 3s infinite linear;
+  -webkit-animation: rotation 3s infinite linear;
+  animation: rotation 3s infinite linear;
+}
+
+@keyframes rotation {
+  50% {
+    -webkit-transform: rotate(360deg) scale(0.4);
+    -ms-transform: rotate(360deg) scale(0.2);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: scale(.8);
+  }
+}
+
+@keyframes rotation {
+  50% {
+    -webkit-transform: rotate(360deg) scale(0.4);
+    -ms-transform: rotate(360deg) scale(0.2);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: scale(.8);
+  }
+}
+
+@keyframes rotation {
+  50% {
+    -webkit-transform: rotate(360deg) scale(0.4);
+    -ms-transform: rotate(360deg) scale(0.2);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: scale(.8);
+  }
+}
+
+@-webkit-keyframes rotation {
+  50% {
+    -webkit-transform: rotate(360deg) scale(0.4);
+    -ms-transform: rotate(360deg) scale(0.2);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: scale(.8);
+  }
+}
+
+zg-cell {
+  text-align: center;
+}
+
+.align-right-zing {
+  text-align: right;
+}
+
+.align-left-zing {
+  text-align: left;
+}
+
+.pending-tasks {
+  width: 250px;
+}

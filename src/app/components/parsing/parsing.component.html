@@ -1,0 +1,402 @@
+<!-- <app-header></app-header> -->
+<app-alert></app-alert>
+<div class="container">
+  <div class="content padding-top-100">
+
+
+    <div class="col-sm-2 col-md-2">
+    </div>
+    <div class="col-sm-8 col-md-8">
+      <nav aria-label="breadcrumb" style="margin-top: 50px;">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" (click)="changeState()">Home</li>
+          <li class="breadcrumb-item active" aria-current="page">RPF Information</li>
+        </ol>
+      </nav>
+      <div class="heading-profile">
+        <h2>RPF information</h2>
+      </div>
+      <div class=col-md-12>
+        <div class="bid_div">
+          <div class="bid_head">
+            <div class="row">
+              <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+              </div>
+              <div class="col-md-5">
+                Sections
+              </div>
+              <div class="col-md-2">
+                From Page
+              </div>
+              <div class="col-md-2">
+                To Page
+              </div>
+              <div class="col-md-2" style="margin-left:19px;">
+                <!-- <i class="fa fa-gear"></i> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Scope -->
+          <div class="row" *ngIf="data[0].scope_summary">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Scope" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].scope_summary.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].scope_summary.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div class="row" *ngIf="data[0].timeline">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Timeline" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].timeline.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].timeline.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+          <!-- Eligibility Criterion -->
+          <div class="row" *ngIf="data[0].eligibility">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Eligibility Criterion" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].eligibility.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].eligibility.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+          <!-- Evalution Criterion -->
+          <div class="row" *ngIf="data[0].evaluation">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Evalution Criterion" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].evaluation.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].evaluation.start_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+          <!-- Financial T & Cs -->
+          <div class="row" *ngIf="data[0].finterm">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-9">
+              <span class="item">Financial T & Cs</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.emd">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="EMD" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.emd.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.emd.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.bg">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="BG" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.bg.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.bg.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.payment">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Payment" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.payment.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.payment.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.ld">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="LD" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.ld.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.ld.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.penalty">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Penalty" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.penalty.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.penalty.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.psd">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="PSD" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.psd.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.psd.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].finterm && data[0].finterm.sla">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="SLA" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.sla.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].finterm.sla.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+
+
+          <!-- Delivery T & Cs -->
+          <div class="row" *ngIf="data[0].deliverytc">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-9">
+              <span class="item">Delivery T & Cs</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].deliverytc && data[0].deliverytc.Deliverable">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Deliverable" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.Deliverable.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.Deliverable.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].deliverytc && data[0].deliverytc.delivery">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="delivery" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.delivery.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.delivery.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].deliverytc && data[0].deliverytc.milestones">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Milestones" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.milestones.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.milestones.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].deliverytc && data[0].deliverytc.pt">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="PT" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.pt.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].deliverytc.pt.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+
+
+          <!-- Support T & Cs -->
+          <div class="row" *ngIf="data[0].supporttc">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-9">
+              <span class="item">Support T & Cs</span>
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].supporttc && data[0].supporttc.Warranty">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Warranty" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].supporttc.Warranty.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].supporttc.Warranty.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+          <div class="row" *ngIf="data[0].supporttc && data[0].supporttc.Support">
+            <div class="col-md-1 subItem fa fa-circle-o" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Support" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].supporttc.Support.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].supporttc.Support.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+
+          <!-- Docs Required -->
+          <div class="row" *ngIf="data[0].docReq">
+            <!-- *ngIf="data[0].docReq" -->
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Docs Required" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div>
+
+          <!-- Annexures -->
+          <!-- <div class="row" *ngIf="data[0].annex">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Annexures" readonly class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].annex.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="data[0].annex.end_page">
+            </div>
+            <div class="col-md-2">
+            </div>
+          </div> -->
+
+          <!-- Other -->
+          <!-- <div class="row">
+            <div class="col-md-1 align-center" style="color:rgba(255, 255, 255, 0.863)">
+            </div>
+            <div class="col-md-5">
+              <input type="text" value="Others" class="form-control input-bar">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="other.start_page">
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control input-bar" [(ngModel)]="other.start_page">
+            </div>
+            <div class="col-md-2" style="margin-top:10px">
+              <img src="assets/images/rubbish-bin.png" class="allIcon" title="Delete">&nbsp;&nbsp;&nbsp;&nbsp;
+              <img src="assets/images/add-orange.png" class="allIcon" title="add">
+            </div>
+          </div> -->
+
+        </div>
+        <div class="col-sm-2 col-md-2">
+        </div>
+      </div>
+      <div class="col-md-12 align-center">
+        <button id="btnSubmit" class="btn draft-button" (click)="submit()">Submit</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

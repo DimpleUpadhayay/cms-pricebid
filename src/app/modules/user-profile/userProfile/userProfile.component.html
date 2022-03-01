@@ -1,0 +1,162 @@
+<!-- <app-header></app-header> -->
+<div class="container">
+  <app-alert></app-alert>
+  <div class="content padding-top-100">
+    <div class="row">
+      <div class="col-md-offset-2 col-md-12 col-md-8 col-lg-offset-2 col-lg-8">
+        <div class="well profile">
+          <div class="col-sm-12">
+            <div class="col-md-12 col-lg-12 col-xs-12 col-sm-8">
+              <div class="col-md-11">
+                <!-- User Login Information Details -->
+                <h2 class="align-center">{{userDetails?.fullname}}</h2>
+              </div>
+              <div class="col-md-1" (click)="changePasswordModal()"
+                style="margin-top:26px;cursor:pointer;font-weight: bold">
+                <!-- <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"> -->
+                <i class="fa fa-key" title="Change Password"></i>
+                <!-- <i class="fa fa-address-card-o" title="Profile" id="icon" aria-hidden="true"></i> -->
+                <!-- </div> -->
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Company Name:</strong> {{company_name}} </p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>User Name:</strong> {{userDetails?.username}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Full Name:</strong> {{userDetails?.fullname}}</p>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Department:</strong> {{userDetails?.title ? userDetails?.title : 'NA'}}</p>
+                </div>
+
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Email:</strong> {{userDetails?.email}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Phone no :</strong> {{userDetails?.phone}}</p>
+                </div>
+              </div>
+              <div class="row" *ngIf="userDetails?.user_role != 'COMPANY_ADMIN'">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <span><strong>Business Unit : </strong></span>
+                  <span class="Business unit" *ngFor="let bUnit of bUnits; let isLast=last">
+                    <span> {{bUnit}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <strong>Territory : </strong>
+                  <span class="territory" *ngFor="let  territory of  territories; let isLast=last">
+                    <span> {{territory}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="userDetails?.user_role != 'COMPANY_ADMIN'">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <span><strong>Business Unit Head : </strong></span>
+                  <span class="Business Head" *ngFor="let busHead of buHead; let isLast=last">
+                    <span> {{busHead ? busHead : "NA"}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                  <span *ngIf="buHead.length == 0">
+                    <span> NA </span>
+                  </span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <strong>Territory Head: </strong>
+                  <span class="territory Head" *ngFor="let  terrHead of  territoryHead; let isLast=last">
+                    <span> {{terrHead ? terrHead : "NA"}} {{isLast ? ' . ' : ',' }}</span>
+                  </span>
+                  <span *ngIf="territoryHead?.length == 0">
+                    <span> NA </span>
+                  </span>
+                </div>
+              </div>
+              <div class="row" *ngIf="userDetails?.user_role != 'COMPANY_ADMIN'">
+                <div class=" col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Manager Name: </strong> {{userDetails?.manager_name}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Manager Email: </strong> {{userDetails?.manager_email}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Manager Phone: </strong> {{userDetails?.manager_phone}}</p>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12">
+                  <p><strong>Manager Employee Id: </strong> {{userDetails?.manager_emp_id}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6 margin-top-12"
+                  *ngFor="let user of userRole ; let i = index">
+                  <p><strong>Role {{i+1}} User Type :</strong> {{user?.user_type ? user?.user_type : "NA" }}</p>
+                  <p><strong>Role {{i+1}} User SubType :</strong> {{user?.user_subtype ? user?.user_subtype : "NA"  }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="changePassword" *ngIf="userNewData">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="title">Change Password</h4>
+          <button type="button" class="close" data-dismiss="modal" style=" margin-top: -23px;">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body" style="padding: 18px;position: static;">
+          <span style="color:#364453">
+            {{message}}
+          </span>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table_div">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 margin-top-12">
+                    <label class="margin-bottom">Current Password&nbsp;<span class="required_field">*</span></label>
+                    <input
+                      [ngStyle]="{'box-shadow': userFormSubmitted && !userNewData?.currentPassword ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      class="form-control input-border input-bar" type="password" placeholder="Current Password"
+                      required="required" [(ngModel)]="userNewData.currentPassword">
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                    <label class="margin-bottom">New Password&nbsp;<span class="required_field">*</span></label>
+                    <input
+                      [ngStyle]="{'box-shadow': userFormSubmitted && !userNewData?.newPassword ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      class="form-control input-border input-bar" type="password" [(ngModel)]="userNewData.newPassword"
+                      placeholder="New Password" required="required">
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-lg-6 col-md-6 margin-top-12">
+                    <label class="margin-bottom">Confirm Password&nbsp;<span class="required_field">*</span></label>
+                    <input
+                      [ngStyle]="{'box-shadow': userFormSubmitted && !userNewData?.confirmPassword ? '0 0 .5px .5px red' : '0 0 .5px .5px #17b495' }"
+                      class="form-control input-border input-bar" type="password"
+                      [(ngModel)]="userNewData.confirmPassword" placeholder="Confirm Password" required="required">
+                  </div>
+                </div>
+              </div>
+              <div class="align-right" style="margin-top:5px;">
+                <button id="saveBtn" type="button" class="btn save-button"
+                  (click)="changePassword(userNewData)">Submit</button>
+                <button id="cancelBtn" type="button" class="btn cancel-button" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+            <!-- Modal body closed -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Loader Section -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

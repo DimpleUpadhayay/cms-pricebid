@@ -1,0 +1,20 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Submission Date
+    </p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div>
+  <label class="margin-bottom">Submission Date&nbsp;</label>
+  <input id="name" name="name" [owlDateTime]="dt1" [max]="minDate" class="form-control input-border input-bar"
+    [readOnly]="true" [(ngModel)]="submissionDate" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+  <owl-date-time #dt1></owl-date-time>
+</div>
+<div style="text-align: center;margin-top: 20px;">
+  <button type="button" class="btn btn-success" style="margin-right:5px;" title="Submit" (click)="onSubmit()">Submit
+  </button>
+</div>

@@ -1,0 +1,14 @@
+.fit {
+  word-break: break-all !important;
+}
+
+.icon-size-detail{
+  width: 14px;
+  margin-right: 4px;
+  cursor: pointer;
+}
+
+.fa-trash-o{
+  font-size: 17px;
+  cursor: pointer;
+}

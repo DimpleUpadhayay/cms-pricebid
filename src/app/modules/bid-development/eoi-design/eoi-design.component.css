@@ -1,0 +1,294 @@
+label {
+  font-weight: normal !important;
+  font-size: 14px;
+}
+
+#btnDelete {
+  background-color: #d43f3a;
+}
+
+#AddCategory {
+  height: 16px;
+  margin-top: 25px;
+  margin-left: -20px;
+  cursor: pointer;
+}
+
+.options {
+  display: flex;
+  margin-left: 75rem;
+}
+
+#selectMultiple {
+  width: 25rem !important;
+  margin-top: 23px;
+  border-left: 1px solid #17b495 !important;
+  border: 1px solid #17b495;
+  margin-left: 3em;
+  border-left: 7px solid #17b495!important;
+}
+
+.col {
+  margin-right: 3.6rem;
+}
+
+.container {
+  font-size: 14px;
+}
+
+#containerRow {
+  display: flex;
+}
+
+p {
+  font-size: 16px;
+}
+
+#main-container {
+  background-color: rgb(234 247 220) !important;
+}
+
+#three {
+  width: 15rem !important;
+  height: 34px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#hideInputfield {
+  width: 22rem !important;
+  margin-right: 2rem;
+  height: 34px;
+  background-color: #eee;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #495057;
+}
+
+#hideInputfield1 {
+  width: 22rem !important;
+  margin-right: 2rem;
+  height: 34px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #495057;
+}
+
+p {
+  font-size: 16px;
+}
+
+#inputfield {
+  width: 22rem !important;
+  height: 34px;
+  display: block;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: #495057;
+  /* background-color: #fff; */
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border-left: 7px solid #17b495!important;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#downloadBtn {
+  background-color: #ec9138;
+  border: none;
+}
+
+#uploadBtn {
+  background-color: #5cb85c;
+  border: none;
+}
+
+/* --------------- */
+
+.fa-plus-circle {
+  color: #ec9138;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.fa-trash {
+  color: #d43f3a;
+  font-size: 21px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.fa-upload {
+  color: #17b495;
+  font-size: 21px;
+  cursor: pointer;
+  margin-left: -12rem;
+}
+
+#finaldownload {
+  color: #F4A460;
+  margin-left: 1rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.ps_div1 {
+  background-color: white;
+  padding: 25px 10px;
+  margin-bottom: 4px;
+  padding: 2px 0;
+  border: 1px solid lightgrey;
+  padding: 10px;
+  box-shadow: 5px 10px 8px #D3D3D3;
+  font-weight: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+#download {
+  color: #F4A460;
+  margin-left: -18rem;
+  margin-top: 2rem;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.remark-title {
+  margin-left: 5.5rem;
+}
+
+.Attchfile {
+  margin-left: 7rem;
+  font-size: 16px;
+}
+
+.Description {
+  margin-left: 16rem;
+  font-size: 16px;
+}
+
+.cancel-button {
+  color: black;
+  border: 1px solid darkgrey !important;
+  background-color: white;
+}
+
+.save-button {
+  background-color: #ec9138;
+  border: 1px solid#ec9138;
+}
+
+#btn {
+  background-color: rgb(23 180 149);
+}
+
+#false {
+  background-color: #17b495;
+  ;
+}
+
+#btn {
+  background-color: rgb(23 180 149);
+}
+
+.Referance {
+  margin-left: 20rem;
+  font-size: 16px;
+}
+
+/* .Attchments {
+  margin-left: 24.5rem;
+  font-size: 16px;
+} */
+
+/* ///////////////////////////////////////////////////////////////// */
+
+.scrollContainer {
+  height: 31rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.scrollContainer::-webkit-scrollbar, .scrollContainer::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 13px;
+  color: #17b495;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px;
+}
+
+.Attchments {
+  margin-left: 25rem;
+  font-size: 16px;
+}
+
+.ApproverName {
+  margin-left: 4rem;
+  font-size: 15px;
+}
+
+.actionApproval {
+  margin-left: 20.5rem;
+  font-size: 15px;
+}
+
+.dateOfAction {
+  margin-left: 21rem;
+  font-size: 15px;
+}
+
+.comment {
+  margin-left: 16rem;
+  font-size: 15px;
+}
+
+.fa-info-circle {
+  position: relative;
+  display: inline-block;
+  margin-top: 3rem;
+  margin-left: 5rem;
+  margin-left: 13.5rem;
+}
+
+.fa-info-circle .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-family: 'Poppins', sans-serif;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.fa-info-circle:hover .tooltiptext {
+  visibility: visible;
+}

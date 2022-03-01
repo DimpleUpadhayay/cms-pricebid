@@ -1,0 +1,38 @@
+body {
+  font-family: 'Lato', 'sans-serif';
+}
+
+.profile {
+  display: inline-block;
+}
+
+.divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.emphasis {
+  border-top: 4px solid transparent;
+}
+
+.emphasis:hover {
+  border-top: 4px solid #1abc9c;
+}
+
+.emphasis h2 {
+  margin-bottom: 0;
+}
+
+.modal-content {
+  border: 3px solid #70D8C4 !important;
+  margin-top: 173px !important;
+}
+
+.modal-title {
+  text-align: center !important;
+}
+
+.download {
+  color: #17b495;
+  font-size: 20px;
+  margin-left: 5px;
+}

@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="content padding-top-100">
+    <!-- Filter Starts Here -->
+    <div class="fa fa-filter" title="Filter" style="float:right;font-size:20px;cursor: pointer;margin-top: -50px;"
+      data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+      *ngIf="isViewer">
+    </div>
+    <span class="fa fa-refresh" title="Refresh" *ngIf="isViewer" (click)="onClear()"></span>
+    <div class="collapse" id="collapseExample">
+      <div class="col-md-12 filterBox">
+        <div class="col-md-1 margin-left">
+          <input type="radio" name="BU" value="only" [(ngModel)]="obj.multiflagBu"> Only<br>
+          <input type="radio" name="BU" value="All" [(ngModel)]="obj.multiflagBu"> All<br>
+        </div>
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown [placeholder]="'Business Unit'" [data]="business_units"
+            [settings]="dropdownBUSettings" [(ngModel)]="selectedBUs" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event,'BU')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-1">
+          <input type="radio" name="territory" value="only" [(ngModel)]="obj.multiflagTerritory"> Only<br>
+          <input type="radio" name="territory" value="All" [(ngModel)]="obj.multiflagTerritory"> All<br>
+        </div>
+        <div class="col-md-2 margin-left">
+          <ng-multiselect-dropdown [placeholder]="'Territory'" [data]="territories"
+            [settings]="dropdownTerritorySettings" [(ngModel)]="selectedTerritories" (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+            (onDeSelectAll)="onDeSelectAll($event,'Territory')">
+          </ng-multiselect-dropdown>
+        </div>
+        <div class="col-md-2">
+          <input type="search" name="sales_person" id="sales_person" class="form-control input-border input-bar"
+            type="text" maxlength="35" placeholder="User Name" [(ngModel)]="searchUser">
+          <span id="showResults" style="position:absolute;display: none;z-index:900;color:black;">
+            <ul class="list-group list-group-flush" *ngIf="searchDataArray">
+              <li class="list-group-item" *ngFor="let item of searchDataArray;let i = index" style="cursor:pointer;"
+                (click)="setData(item?.user_id, item?.fullname)">
+                {{item?.fullname}}
+              </li>
+            </ul>
+          </span>
+          <div class="message-warning accountMessage" *ngIf="searchDataArray2.length == 0">
+            No record found
+          </div>
+        </div>
+        <div class="col-md-2">
+          <input type="search" name="bid_name" id="bid_name" class="form-control input-border input-bar"
+            type="text" maxlength="35" placeholder="Bid Number" [(ngModel)]="searchBid">
+        </div>
+        <button class="btn btn-submit" style="margin-top: 0px; margin-left: 90px;" (click)="getResult()">Search</button>
+        <div class="col-md-1" style="margin-top:-7px;float:right;">
+          <button class="btn btn-clear" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </div>
+    <!-- Filter ends Here -->
+  </div>
+
+  <!-- Bi Section -->
+  <zing-grid pager page-size="10" sort>
+    <zg-caption>
+      <span class="heading-caption">Pending Task Report</span>
+      <span class="heading"><i class="fa fa-file-excel-o" style="cursor: pointer;" (click)="getData()"
+          title="Export to Excel"></i></span>
+    </zg-caption>
+    <zg-data [data]='data' *ngIf="data && data.length > 0"></zg-data>
+    <zg-colgroup>
+      <zg-column type="text" index="Sr no"></zg-column>
+      <zg-column type="text" index="User Name"></zg-column>
+      <zg-column type="text" index="Tasks Not Assigned"></zg-column>
+      <zg-column type="text" index="Tasks Not Completed"></zg-column>
+      <zg-column type="text" index="EMD"></zg-column>
+      <zg-column type="text" index="PBG"></zg-column>
+      <!-- <zg-column type="text" index="Pending to Submit for Pricing Review"></zg-column> -->
+      <zg-column type="text" index="Review Pending"></zg-column>
+      <zg-column type="text" index="Pending to Submit for Approval"></zg-column>
+      <zg-column type="text" index="Approval Pending"></zg-column>
+      <zg-column type="text" index="Total"></zg-column>
+      <!-- <zg-column type="text" index="Approval Completed"></zg-column> -->
+      <!-- <zg-column type="text" index="Bid Number"></zg-column> -->
+    </zg-colgroup>
+  </zing-grid>
+</div>
+
+<!-- Loader Section for the Pending tasks -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

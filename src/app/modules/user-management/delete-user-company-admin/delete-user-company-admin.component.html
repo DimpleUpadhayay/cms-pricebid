@@ -1,0 +1,115 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand" style="color: white;"> <b style="font-size:17px;">{{fullname}}</b> has pending tasks in the
+      following bids</p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+
+
+<div class="col-xs-12 col-sm-12 col-lg-12 col-md-12"
+  style="background: #eaf7dc;border: 2px solid #eaf7dc;border-radius: 10px;">
+  <div id="bid_head">
+    <div class="row">
+      <div class="col-xs-7">
+        <div class="row">
+          <div class="col-xs-1">
+            <b>#</b>
+          </div>
+          <div class="col-xs-4">
+            <strong>Bid Number</strong>
+          </div>
+          <div class="col-xs-4">
+            <strong>Bid Name</strong>
+          </div>
+          <div class="col-xs-3">
+            <strong>Account Name</strong>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-5">
+        <div class="row">
+          <div class="col-xs-2" >
+            <strong>ACV(Mn)</strong>
+          </div>
+          <div class="col-xs-2">
+            <strong>Type</strong>
+          </div>
+          <div class="col-xs-3">
+            <strong>Co-Owner</strong>
+          </div>
+          <div class="col-xs-4">
+            <strong>Sales Manager</strong>
+          </div>
+          <div class="col-xs-1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- {{userInfo | json}} -->
+ 
+  <div style="overflow-x:hidden;height: 210px;width: 101.5%;">
+    <ng-container *ngFor="let item of userInfo;let i = index; last as isLast">
+      <div class="row indexRow">
+        <div class="col-xs-7"> 
+          <div class="row">
+            <div class="col-xs-1">
+              <b>{{i+1}}</b> 
+            </div>
+            <div class="col-xs-4">
+              <span>{{item?.bid_number}}</span>
+            </div>
+            <div class="col-xs-4">
+              <span>{{item?.bidname}}</span>
+            </div>
+            <div class="col-xs-3">
+              <span>{{item?.account_name}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-5">
+          <div class="row">
+            <div class="col-xs-2" style="text-align: right;">
+              <span>{{item?.acvValue}} </span>
+            </div>
+            <div class="col-xs-2">
+              <span *ngIf="item?.type == 'BidReview'">{{item?.type == 'BidReview' ? 'Bid Review' : 'Bid Review'}}</span>
+              <span *ngIf="item?.type == 'BidReponse'">{{item?.type == 'BidReponse' ? 'Bid Response' : 'Bid Response'}}</span>
+              <span *ngIf="item?.type == 'BidCreated'">{{item?.type == 'BidCreated' ? 'Bid Created' : 'Bid Created'}}</span>
+            </div>
+            <div class="col-xs-3">
+              <span>{{item?.preSalesUserName}}</span>
+            </div>
+            <div class="col-xs-4">
+              <span>{{item?.salesUserName}}</span>
+            </div>
+            <div class="col-xs-1">
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="pendingTask"  *ngIf="userInfo && userInfo.length == 0" >
+    No Pending Tasks. This user will be immediately deleted!
+  </div>
+
+  <!-- Action Button Save,Submit,Reset -->
+  <div class="align-center submitBtn">
+    <button id="saveBtn" *ngIf="userInfo && userInfo.length > 0" title="Send notification to Co-owner/Sales Manager 
+    for Re-assignment of tasks" class="btn save-button" type="button" [disabled]="submitButton"
+       (click)="onSubmit()">Send Notifications</button>
+    <button id="saveBtn" class="btn save-button" type="button" *ngIf="userInfo && userInfo.length == 0"
+      (click)="deleteUser()">Delete</button>
+    <button id="cancelBtn" type="button" class="btn cancel-button" (click)="onClose()">Cancel</button>
+  </div>
+</div> 
+<!-- Loader Section-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

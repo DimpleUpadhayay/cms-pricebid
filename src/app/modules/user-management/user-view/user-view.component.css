@@ -1,0 +1,23 @@
+body {
+  font-family: 'Lato', 'sans-serif';
+}
+
+.profile {
+  display: inline-block;
+}
+
+.divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.emphasis {
+  border-top: 4px solid transparent;
+}
+
+.emphasis:hover {
+  border-top: 4px solid #1abc9c;
+}
+
+.padding-top-100 {
+  padding-top: 108px;
+}

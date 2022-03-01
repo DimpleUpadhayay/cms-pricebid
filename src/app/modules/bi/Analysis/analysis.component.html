@@ -1,0 +1,113 @@
+<!-- <app-header></app-header> -->
+<div>
+
+  <div class="container">
+    <div *ngIf="!role" class="content padding-top-100">
+      <!-- BI Tab -->
+      <ul class="nav nav-tabs align-right" id="mytab" style="float: left;">
+        <!-- Bid Funnel Report -->
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="funnel" title="Bid Funnel Report" routerLinkActive="active"><i
+              class="fa fa-filter" style="color:#364453;font-size: 25px;"></i></a>
+        </li>
+        <!-- Bid Volume & Volume Analysis -->
+        <!-- <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="bidVolumeAnalysis" title="Bid Volume & Volume Analysis"
+            routerLinkActive="active"><i class="fa fa-bar-chart" style="color:#364453;font-size: 25px;"></i></a>
+        </li> -->
+        <!-- Bids by Stage Report -->
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="bidsByStage" routerLinkActive="active" title="Bids by Stage"><i
+              class="fa fa-sliders" style="color:#364453;font-size: 25px;"></i></a>
+        </li>
+        <!-- Won-Loss Report -->
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="wonlossreport" routerLinkActive="active" title="Win-Loss Report"><i
+              class="fa fa-trophy" style="color:#364453;font-size: 25px;"></i></a>
+        </li>
+        <!-- Productivity Report -->
+        <li class="nav-item" *ngIf="access">
+          <a class="nav-link" routerLink="productivity" routerLinkActive="active" title="Productivity Report"><i
+              class="fa fa-industry" style="color:#364453;font-size: 25px;"></i></a>
+        </li>
+        <!-- Pending Task Reports -->
+        <li class="nav-item" *ngIf="access">
+          <a class="nav-link" routerLink="pending-task-report" routerLinkActive="active" title="Pending Task Report">
+            <i class="fa fa-users" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <!-- Territory wise Report -->
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="region" routerLinkActive="active" title="Opportunity Analysis">
+            <i class="fa fa-globe" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="types" routerLinkActive="active" title="Deals by Type">
+            <i class="fa fa-tasks" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="categories" routerLinkActive="active" title="Deals by Category">
+            <i class="fa fa-th-large" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="presales-productivity" routerLinkActive="active"
+            title="Pre-sales Productivity">
+            <i class="fa fa-product-hunt" style="color:#364453;font-size: 25px;"></i>
+            <!-- <span style="color:#364453;font-size: 25px;">P</span> -->
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="pbg-historyData" routerLinkActive="active" title="EMD/PBG Data">
+            <i class="fa fa-university" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="filterSOF" routerLinkActive="active" title="SOF Data">
+            <i class="fa fa-wpforms" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess">
+          <a class="nav-link" routerLink="filterEOI" routerLinkActive="active" title="Tender Fee Data">
+            <i class="fa fa-money" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" routerLink="opportunity" routerLinkActive="active" title="Opportunity Report"><i
+              class="fa fa-trophy" style="color:#364453;font-size: 25px;"></i></a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" title="Competition"><i class="fas fa-chess-knight"></i><i class="fas fa-chess-knight"></i></a>
+        </li> -->
+      </ul>
+
+      <!-- BI Tab Ends-->
+      <router-outlet></router-outlet>
+    </div>
+
+    <div *ngIf="role" class="content padding-top-100">
+      <ul class="nav nav-tabs align-right" id="mytab" style="float: left;">
+        <li class="nav-item" *ngIf="access?.viewGraphAccess && viewPBGReport">
+          <a class="nav-link" routerLink="pbg-historyData" routerLinkActive="active" title="EMD/PBG Data">
+            <i class="fa fa-history" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess && viewSOFReport">
+          <a class="nav-link" routerLink="filterSOF" routerLinkActive="active" title="SOF Data">
+            <i class="fa fa-wpforms" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="access?.viewGraphAccess && viewTenderFeeReport">
+          <a class="nav-link" routerLink="filterEOI" routerLinkActive="active" title="Tender Fee Data">
+            <i class="fa fa-money" style="color:#364453;font-size: 25px;"></i>
+          </a>
+        </li>
+      </ul>
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </div>
+</div>

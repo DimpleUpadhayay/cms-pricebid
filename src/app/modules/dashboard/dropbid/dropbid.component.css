@@ -1,0 +1,64 @@
+#categoryInput {
+    margin-left: 15px!important;
+  }
+  
+  #createBtn {
+    margin-left: 24px;
+    margin-top: 0px;
+  }
+  
+  #closeBtn {
+    margin-top: 32px;
+    margin-left: 140px;
+  }
+  
+  .navbar-inverse {
+    background-color: #364453;
+    border-color: #364453;
+    height: 0px;
+  }
+  
+  #cancel {
+    width: 26px;
+    float: right;
+    margin-top: 14px;
+    margin-right: 18px;
+  }
+  
+  #submitBtn {
+    margin-left: 10px !important;
+  }
+  
+  .text-line {
+    background-color: #eee;
+    outline: none;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #E8E8E8 1px;
+    font-weight: 100;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+  }
+  
+  .box {
+    border: 1px solid #e3e3e3;
+    background-color: #fbfbfb;
+    padding: 5px;
+  }
+  
+  .boxBorderRight {
+    border-right: 1px solid #e3e3e3;
+    max-height: 200px;
+    overflow: auto;
+  }
+  
+  /* ================Responsive Mobile View =================  */
+  
+  @media only screen and (max-width: 800px) {
+    #cancel {
+      margin-top: -55px;
+    }
+  }
+  

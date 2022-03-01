@@ -1,0 +1,105 @@
+.row {
+  margin-bottom: 7px;
+}
+
+.bid_div {
+  margin-top: 5px !important;
+  background-color: #364453 !important;
+  padding: 5px 0;
+  border-radius: 5px;
+}
+
+#approve {
+  background: #364453 !important;
+  color: white !important;
+}
+
+.bid_head {
+  color: #70D8C4;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.color-white {
+  color: white;
+  text-align: center;
+}
+
+img {
+  width: 17px;
+  cursor: pointer;
+}
+
+textarea {
+  resize: vertical;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 34px;
+}
+
+.fa-ellipsis-v {
+  margin-top: 9px;
+  color: #17b495;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 5px !important;
+}
+
+.fa-plus-circle {
+  color: #EA8F38;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+input:read-only {
+  background: white
+}
+
+input:disabled {
+  background: #eee !important;
+}
+
+.actionList {
+  background-color: #364453;
+  border: 1px solid #17b495;
+  padding: 5px;
+}
+
+.faIcon {
+  padding: 4px;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 0;
+}
+
+.selected {
+  background: #364453 !important;
+  border-top: 3px solid #EC9138 !important;
+}
+
+/* ================Responsive Mobile View =================  */
+
+@media only screen and (max-width: 700px) {
+  .respIcon {
+    margin-left: -19px;
+    margin-top: -6px;
+    margin-right: -9px;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  img {
+    width: 14px;
+  }
+}
+
+@media only screen and (max-width: 900px) and (min-width:651px) {
+  img {
+    width: 16px;
+  }
+}

@@ -1,0 +1,64 @@
+<app-alert></app-alert>
+<!-- Technical Solution starts here -->
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+    <div class="panel-body">
+      <span><b>Reassign Approver- {{oldApprovalName}}  </b></span>
+      <span>
+        <img src="assets/images/cancel.png" (click)="onClose()" id="cancel">
+      </span>
+    </div>
+  </div>
+</div>
+<div style="overflow-x:hidden;height: 110px;width: 100%;">
+  <form autocomplete="off">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+        <div class="bid_div">
+          <div class="bid_head">
+            <div class="row">
+              <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3">
+                  Approver Level
+                </div>
+                <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                  Old Approver 
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                  Re-assign New Approver
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-lg-12 col-sm-12 col-md-12" *ngFor="let item of approverArray; let i = index;">
+                <div class="col-xs-3 col-sm-3 col-lg-3 col-md-3 align-center">
+                  <input type="text" class="form-control input-bar" value="{{oldApproverlevel}}" [disabled]="true">
+                </div>
+                <div class="col-xs-5 col-sm-5 col-lg-5 col-md-5">
+                  <input type="text" class="form-control input-bar" value="{{oldApprovalName}}" [disabled]="true">
+                </div>
+                <div class="col-xs-4 col-sm-4 col-lg-4 col-md-4">
+                  <select class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="item.newApproverUserId" name="item.newApproverUserId">
+                    <option value="" disabled selected> Select Approvers </option>
+                    <option *ngFor="let list of approverList" [value]="list?.user_id">{{list?.fullname}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</div>
+<!-- Action Button Save,Submit,Reset -->
+<div class="text-center">
+  <button class="btn save-button" (click)="onReassign()">Re-assign</button>
+  <button class="btn cancel-button" (click)="onClose()">Cancel</button>
+</div>
+<!-- Loader Section for the Review tab -->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="row">
+    <!-- [ngClass]="response?.comments.length >= 1 ? 'panel-heading' : 'panel-heading1' " -->
+    <div class="panel panel-chat ">
+      <div class="col-xs-12 col-md-12 panel-heading">
+        <div class="row">
+          <div class="col-xs-7 col-md-7" (click)="minimize($event)">
+            <span class="titleHeading">Discussion Board</span>
+          </div>
+          <div class="col-md-3">
+            <i class="fa fa-bell bellRing " title="Notifications"></i>
+            <!-- <span class="discussion">{{badgeCount}}</span> -->
+          </div>
+          <div class="col-xs-2 col-md-2">
+            <div class="dropup">
+              <span class="fa fa-ellipsis-v dropdown-toggle" style="color: #17b495;cursor: pointer;"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></span>
+              <ul class="dropdown-menu dropdown-menu-left" style="margin-left: -157px;">
+                <li><a style="cursor: pointer;color: #17b495;background: #364453;" title="Search" data-toggle="collapse"
+                    data-target="#search" (click)="onSearch()"><i style="margin-right: 5px"
+                      class="fa fa-search"></i>Search</a></li>
+                <!-- <li> <a style="cursor: pointer;color: #17b495;background: #364453;" title="View Participants"
+                    (click)="onViewParticipants()">
+                    <i style="margin-right: 5px" class="fa fa-user"></i>
+                    View Participants</a>
+                </li> -->
+                <li><a style="cursor: pointer;color: #17b495;background: #364453;" title="Filter" data-toggle="collapse"
+                    data-target="#filter" (click)="onFilter()"><i style="margin-right: 5px"
+                      class="fa fa-filter"></i>Filter</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div *ngIf="search">
+            <div class="col-md-3">
+              <input type="text" class="form-control" style="width: 85px;" placeholder="Search" [(ngModel)]="searchKey">
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-1">
+              <i class="fa fa-refresh" aria-hidden="true" (click)="onResetSearch()"></i>
+            </div>
+            <div class="col-md-1">
+              <i class="fa fa-times" aria-hidden="true" (click)="onSearch()"></i>
+            </div>
+          </div>
+          <div *ngIf="viewParticipants">
+            <div class="col-md-12" style="max-height: 30px;overflow: auto;">
+              <div class="col-md-1" *ngFor="let commentor of bidData.participants">
+                <div class="text-truncate" id="circleThreeParticipant">
+                  <span class="bid-text-center"
+                    title="{{commentor.fullname}}">{{getSignatures(commentor.fullname)}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="filter">
+            <div class="col-md-8">
+              <input placeholder="Date Time Range" class="form-control" [(ngModel)]="dateTimeRange"
+                (ngModelChange)="onDateChange()" [selectMode]="'range'" [owlDateTimeTrigger]="dtRange1"
+                [owlDateTime]="dtRange1" style="width:180px" readonly>
+              <owl-date-time #dtRange1></owl-date-time>
+            </div>
+            <div class="col-md-1">
+              <i class="fa fa-refresh" aria-hidden="true" (click)="onResetDate()"></i>
+            </div>
+            <div class="col-md-1">
+              <i class="fa fa-times" aria-hidden="true" (click)="onFilter()"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="panel-body" ngx-auto-scroll lock-y-offset="10" observe-attributes>
+        <div class="mesgs">
+          <div class="msg_history" *ngFor="let comment of response?.comments | seachComment:searchKey:dateTimeRange">
+            <div [ngClass]="comment.commentBy == user.fullname ? 'outgoing_msg' : ''">
+              <div *ngIf="comment.commentBy != user.fullname" class="text-truncate" id="circleThree"><span
+                  class="bid-text-center" title="{{comment.commentBy}}">{{getSignatures(comment.commentBy)}}</span>
+              </div>
+              <div [ngClass]="comment.commentBy != user.fullname ? 'received_msg' : 'incoming_msg'">
+                <div [ngClass]="comment.commentBy == user.fullname ? 'sent_msg' : 'received_withd_msg'">
+                  <p>{{comment.comment}}</p>
+                  <span class="time_date"> {{comment.data_created | date:'h:mm a'}} |
+                    {{comment.data_created | date}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearFix"></div>
+      </div>
+      <div>
+        <div class="input_msg_write">
+          <!-- (keypress)="onTestChange($event.keyCode);"  -->
+          <textarea type="text" id="comment" class="write_msg" (keydown.enter)="onSend()" [(ngModel)]="comment"
+            placeholder="Type a message"></textarea>
+          <button class="msg_send_btn" type="button" (click)="onSend()"><span> <i class="fa fa-paper-plane-o"
+                aria-hidden="true"></i></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

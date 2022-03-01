@@ -1,0 +1,797 @@
+<app-alert></app-alert>
+<!-- This View is only for Mobile View Section -->
+<div id="warning-message">
+  The Project Scope is only viewable in landscape mode
+</div>
+<!-- Tabset Property using ngx Bootstrap Starts Here -->
+<tabset id="wrapper" *ngIf="access">
+  <!--================Scope Tab Starts Here =================-->
+  <tab heading="Account Info" (select)="onSelect($event)">
+    <!-- *ngIf="productType == 'pricing'" -->
+    <div class="row" *ngIf="productType == 'pricing'">
+      <div class="col-xs-12 col-md-12">
+        <div class="ps_div margin-top-12">
+          <div class="row ps_head">
+            <div class="col-xs-1 col-md-1 align-center">
+              #
+            </div>
+            <div class="col-xs-9 col-md-9">
+              Scope
+            </div> 
+            <div class="col-xs-2 col-md-2">
+              <i class="fa fa-gear"></i>
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of ps.scope_summary; let i = index;last as isLast">
+            <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.
+            </div>
+            <div class="col-xs-9 col-md-9">
+              <textarea
+                [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                type="text" [(ngModel)]="ps.scope_summary[i].name" name="{{ps.scope_summary[i].name}}"
+                class="form-control input-bar" style="height:65px !important">
+                                </textarea>
+
+            </div>
+
+            <div class="col-xs-2 col-md-2 action" *ngIf="!access?.writeAccess">
+              <i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                (click)="onDownloadDialog(i,'scope_summary')"></i>
+            </div>
+            <div class="col-xs-2 col-md-2 action" *ngIf="access?.writeAccess">
+              <span><i class="fa fa-download faIcon faIcon" title="Download" aria-hidden="true"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                  (click)="onDownloadDialog(i,'scope_summary')"></i></span>
+              <span><i class="fa fa-paperclip faIcon" (click)="openDialog(i, 'scope_summary')"
+                  title="Attach"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="productType == 'nonpricing'">
+      <div class="col-md-12">
+        <div class="ps_div margin-top-12">
+          <div class="row ps_head">
+            <div class="col-md-1 align-center">
+              #
+            </div>
+            <div class="col-md-4">
+              Strategy Drivers
+            </div>
+            <div class="col-md-5">
+              Response
+            </div>
+            <div class="col-md-2">
+              <i class="fa fa-gear"></i>
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of ps.executive_summary; let i = index; last as isLast">
+            <div class="col-md-1 align-center srno">{{i+1}}.
+            </div>
+            <div class="col-md-4">
+              <textarea
+                [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED' || item.read"
+                type="text" [(ngModel)]="ps.executive_summary[i].name" name="{{ps.executive_summary[i].name}}"
+                class="form-control input-bar"></textarea>
+
+            </div>
+
+            <div class="col-md-5" *ngIf="ps.executive_summary[i]?.type == 'input'">
+              <textarea
+                [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                type="text" name="{{ps.executive_summary[i].value}}" [(ngModel)]="ps.executive_summary[i].value"
+                required class="form-control input-bar">
+              </textarea>
+
+
+            </div>
+            <div class="col-md-5 fan" *ngIf="ps.executive_summary[i]?.type == 'multiInput'">
+              <div class="row margin-top-12">
+                <div class="col-md-2">
+                  <span class="input-group-text">Favour</span>
+                </div>
+                <div class="col-md-10">
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || bidStatus == 'DROPPED' || isCoOwner"
+                    type="text" class="form-control input-bar"
+                    [(ngModel)]="ps.executive_summary[i].value.favour"></textarea>
+                </div>
+              </div>
+              <div class="row margin-top-12">
+                <div class="col-md-2">
+                  <span class="input-group-text">Against</span>
+                </div>
+                <div class="col-md-10">
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    type="text" class="form-control input-bar"
+                    [(ngModel)]="ps.executive_summary[i].value.against"></textarea>
+
+                </div>
+              </div>
+              <div class="row margin-top-12">
+                <div class="col-md-2">
+                  <span class="input-group-text">Neutral</span>
+                </div>
+                <div class="col-md-10">
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    type="text" class="form-control input-bar"
+                    [(ngModel)]="ps.executive_summary[i].value.neutral"> </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5" *ngIf="ps.executive_summary[i]?.type == 'dropdown'">
+              <select class="form-control" name="" [(ngModel)]="ps.executive_summary[i].value"
+                [disabled]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'">
+                <option value="">Choose one</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="col-md-2 action" *ngIf="!access?.writeAccess">
+              <span> <i class="fa fa-download faIcon faIcon"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}" aria-hidden="true"
+                  (click)="onDownloadDialog(i,'executive_summary')"></i></span>
+            </div>
+            <div class="col-md-2 action" *ngIf="access?.writeAccess">
+              <span><i class="fa fa-download faIcon faIcon" aria-hidden="true"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                  (click)="onDownloadDialog(i,'executive_summary')"></i></span>
+              <span><i class="fa fa-paperclip faIcon" (click)="openDialog(i, 'executive_summary')"
+                  title="Attach"></i></span>
+              <span *ngIf="!ps.executive_summary[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                  (click)="deleteItem(i, 'executive_summary')"></i></span>
+              <span [hidden]="!isLast "><i class="fa fa-plus-circle" title="Add" *ngIf="bidStatus != 'DROPPED'"
+                  (click)="addItem('executive_summary')"></i></span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <!--================Scope Tab End Here =================-->
+
+  <!--================Timeline Tab Starts Here =================-->
+  <tab heading="Timeline" (select)="onSelect($event)">
+    <!--Section:timeline part-->
+    <div id="scope_timeline">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="ps_div margin-top-12">
+            <div class="ps_head">
+              <div class="row">
+                <div class="col-xs-1 col-md-1 align-center">#</div>
+                <div class="col-xs-4 col-md-5">Milestone </div>
+
+                <div class="col-xs-4 col-md-4">Date</div>
+                <div class="col-xs-3 col-md-2">
+                  <i class="fa fa-gear"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row" *ngFor="let item of ps.timeline;let i = index; last as isLast">
+                <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.
+                </div>
+                <div class="col-xs-4 col-md-5">
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    type="text" name="{{ps.timeline[i].name}}" [(ngModel)]="ps.timeline[i].name" required
+                    class="form-control input-bar">
+                  </textarea>
+                </div>
+                <div class="col-xs-4 col-md-4">
+                  <input
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    [readonly]="true" [owlDateTime]="dt1" [min]="minDate" class="form-control input-border input-bar"
+                    [(ngModel)]="ps.timeline[i].value" [owlDateTimeTrigger]="dt1" placeholder="Date Time">
+                  <owl-date-time #dt1></owl-date-time>
+
+                </div>
+                <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+                <div class="col-xs-3 col-md-2 action" *ngIf="!access?.writeAccess">
+                  <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i, 'timeline')"></i></span>
+                </div>
+                <div class="col-xs-3 col-md-2 action" *ngIf="access?.writeAccess">
+                  <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i, 'timeline')"></i></span>
+                  <span><i class="fa fa-paperclip faIcon" (click)="openDialog(i, 'timeline')" title="Attach"></i></span>
+                  <span *ngIf="!ps.timeline[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                      (click)="deleteItem(i, 'timeline')"></i></span>
+                  <span [hidden]="!isLast"><i class="fa fa-plus-circle"
+                      *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                      title="Add" (click)="addItem('timeline')"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <!--================Timeline Tab Ends Here =================-->
+
+  <!--================Criterion Tab Starts Here =================-->
+  <tab heading="Criterion" (select)="onSelect($event)">
+    <!--Section:criterion part-->
+    <div id="scope_criterion">
+      <div>
+        <!-- Eligibility And Evaluation Button in Project scope  -->
+        <button class="btn category-button" style="color:white" [class.selected]="eligibility == true"
+          (click)="eligibility = true">Eligibility Criterion</button>
+        <button class="btn ps-button" style="color:white" [class.selected]="eligibility == false"
+          (click)="eligibility = false">Evaluation
+          Criterion</button>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="ps_div margin-top-12" *ngIf="eligibility">
+            <div class="ps_head">
+              <div class="row">
+                <div class="col-xs-1 col-md-1 align-center">#</div>
+                <div class="col-xs-7 col-md-9"> Eligibilty Criterion</div>
+                <div class="col-xs-4 col-md-2">
+                  <i class="fa fa-gear" *ngIf="!submitted || access?.writeAccess"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row" *ngFor="let criterion of ps.criterion.eligibility;let i = index;last as isLast;">
+                <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.
+                </div>
+                <div class="col-xs-7 col-md-9">
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    class="form-control input-bar" type="text" name="{{ps.criterion.eligibility[i].name}}"
+                    [(ngModel)]="ps.criterion.eligibility[i].name">
+                                            </textarea>
+
+                </div>
+                <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+                <div class="col-xs-4 col-md-2 action" *ngIf="!access?.writeAccess">
+                  <span> <i class="fa fa-download faIcon" aria-hidden="true"
+                      [ngStyle]="{'color' : criterion.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i,'criterion','eligibility')"></i></span>
+                </div>
+                <div class="col-xs-4 col-md-2 action action" *ngIf="access?.writeAccess">
+                  <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : criterion.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i,'criterion','eligibility')"></i></span>
+                  <span> <i class="fa fa-paperclip faIcon" *ngIf="access?.writeAccess"
+                      (click)="openDialog(i, 'criterion', 'eligibility')" title="Attach"></i></span>
+                  <span *ngIf="!ps.criterion.eligibility[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                      (click)="deleteItem(i, 'criterion' , 'eligibility')"></i></span>
+                  <span [hidden]="!isLast" *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent"><i
+                      class="fa fa-plus-circle" title="Add"
+                      *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                      (click)="addItem('criterion', 'eligibility')"></i></span>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+          <div class="ps_div margin-top-12" *ngIf="!eligibility">
+            <div class="ps_head">
+              <div class="row">
+                <div class="col-xs-1 col-md-1 align-center">#</div>
+                <div class="col-xs-7 col-md-9"> Evaluation Criterion</div>
+                <div class="col-xs-4 col-md-2">
+                  <i class="fa fa-gear" *ngIf="!submitted || access?.writeAccess"></i>
+                </div>
+              </div>
+              <div>
+                <div class="row" *ngFor="let criterion of ps.criterion.evaluation;let i = index;last as isLast;">
+                  <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.
+                  </div>
+                  <div class="col-xs-7 col-md-9">
+                    <textarea
+                      [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                      class="form-control input-bar" type="text" name="{{ps.criterion.evaluation[i].name}}"
+                      [(ngModel)]="ps.criterion.evaluation[i].name">
+                                            </textarea>
+
+                  </div>
+                  <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+                  <div class="col-xs-4 col-md-2 action" *ngIf="!access?.writeAccess">
+                    <i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : criterion.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i,'criterion','evaluation')"></i>
+                  </div>
+                  <div class="col-xs-4 col-md-2 action" *ngIf="access?.writeAccess">
+                    <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                        [ngStyle]="{'color' : criterion.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                        (click)="onDownloadDialog(i,'criterion','evaluation')"></i></span>
+                    <span *ngIf="access?.writeAccess"><i class="fa fa-paperclip faIcon"
+                        (click)="openDialog(i, 'criterion', 'evaluation')" title="Attach"></i></span>
+                    <span *ngIf="!ps.criterion.evaluation[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                        (click)="deleteItem(i, 'criterion', 'evaluation')"></i></span>
+                    <span [hidden]="!isLast"><i class="fa fa-plus-circle"
+                        *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                        title="Add" (click)="addItem('criterion' ,'evaluation')"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <!--================Criterion Tab Ends Here =================-->
+
+  <!--================Financial T & C Tab Starts Here =================-->
+  <tab heading="Financial T & Cs" (select)="onSelect($event)">
+    <!-- Financial T & cs -->
+    <!-- *ngIf="productType == 'nonpricing'" -->
+    <div id="scope_financial">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="ps_div margin-top-12">
+            <div class="ps_head">
+              <div class="row">
+                <div class="col-xs-1 col-md-1 align-center">#</div>
+                <div class="col-xs-4 col-md-4">Financial T & Cs</div>
+                <div class="col-xs-4 col-md-5">Response</div>
+                <div class="col-xs-3 col-md-2">
+                  <i class="fa fa-gear"></i>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngFor="let item of ps.financial;let i =index;last as isLast;">
+              <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.</div>
+              <div class="col-xs-4 col-md-4">
+                <input
+                  [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED' || item.read"
+                  type="text" name="{{ps.financial[i].name}}" [(ngModel)]="ps.financial[i].name" required
+                  class="form-control input-bar">
+              </div>
+              <div class="col-xs-4 col-md-5" *ngIf="ps.financial[i]?.type == 'input'">
+                <textarea
+                  [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                  type="text" name="{{ps.financial[i].value}}" [(ngModel)]="ps.financial[i].value" required
+                  class="form-control input-bar">
+                  </textarea>
+              </div>
+
+              <div class="col-md-5" *ngIf="ps.financial[i]?.type == 'dropdown'">
+                <select class="form-control" name="" [(ngModel)]="ps.financial[i].value">
+                  <option value="">Choose one</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="quartely">Quartely</option>
+                </select>
+              </div>
+
+              <div class="col-xs-4 col-md-5" *ngIf="ps.financial[i]?.type == 'multiInput'">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+                  [readonly]="pocSubmited || bid?.parent || user_type != 'BID_OWNER' || bidStatus == 'DROPPED'"
+                  type="text" placeholder="&#8377;" name="{{ps.financial[i].value}}" [(ngModel)]="ps.financial[i].value"
+                  required class="form-control input-bar">
+              </div>
+
+              <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+              <div class="col-xs-3 col-md-2 action" *ngIf="!access?.writeAccess">
+                <span> <i class="fa fa-download faIcon" aria-hidden="true"
+                    [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                    (click)="onDownloadDialog(i, 'financial')"></i></span>
+              </div>
+              <div class="col-xs-3 col-md-2 action" *ngIf="access?.writeAccess">
+                <span> <i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                    [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                    (click)="onDownloadDialog(i, 'financial')"></i></span>
+                <span *ngIf="access?.writeAccess"><i class="fa fa-paperclip faIcon" (click)="openDialog(i, 'financial')"
+                    title="Attach"></i></span>
+                <span *ngIf="!ps.financial[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                    (click)="deleteItem(i, 'financial')"></i></span>
+                <span [hidden]="!isLast"><i class="fa fa-plus-circle"
+                    *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                    title="Add" (click)="addItem('financial')"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- *ngIf="productType == 'pricing'" -->
+    <!-- <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            Payment Terms
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse in" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[0].value}}" [(ngModel)]="ps.financial[0].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
+                            style="outline: none;">
+                            Earnest Money Deposit
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[1].value}}" [(ngModel)]="ps.financial[1].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Bank Guarantee
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[2].value}}" [(ngModel)]="ps.financial[2].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Liquidated Damages
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[3].value}}" [(ngModel)]="ps.financial[3].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            Penalties
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[4].value}}" [(ngModel)]="ps.financial[4].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            Service Level Agreement
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[5].value}}" [(ngModel)]="ps.financial[5].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingSeven">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            Performance Security Deposit
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <textarea
+                            [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner"
+                            type="text" name="{{ps.financial[6].value}}" [(ngModel)]="ps.financial[6].value" required
+                            class="form-control input-bar"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+  </tab>
+  <!--================Financial T & C Tab End Here =================-->
+
+  <!--================Delivery T&C Tab Starts Here =================-->
+  <tab heading="Delivery T & Cs" (select)="onSelect($event)">
+    <!-- *ngIf="productType == 'pricing'" -->
+    <div class="row">
+      <div class="col-xs-12 col-md-12">
+        <div class="ps_div margin-top-12">
+          <div class="row ps_head">
+            <div class="col-xs-1 col-md-1 align-center">
+              #
+            </div>
+            <div class="col-xs-7 col-md-9">
+              Delivery T & Cs
+            </div>
+            <div class="col-xs-4 col-md-2">
+              <i class="fa fa-gear"></i>
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of ps.delivery_tc; let i = index;last as isLast">
+            <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}
+            </div>
+            <div class="col-xs-7 col-md-9">
+              <textarea
+                [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                type="text" [(ngModel)]="ps.delivery_tc[i].name" name="{{ps.delivery_tc[i].name}}"
+                class="form-control input-bar">
+                </textarea>
+            </div>
+            <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+            <div class="col-xs-4 col-md-2 action" *ngIf="!access?.writeAccess">
+              <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                  (click)="onDownloadDialog(i, 'delivery_tc')"></i></span>
+            </div>
+            <div class="col-xs-4 col-md-2 action" *ngIf="access?.writeAccess">
+              <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                  [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                  (click)="onDownloadDialog(i, 'delivery_tc')"></i></span>
+              <span *ngIf="access?.writeAccess"><i class="fa fa-paperclip faIcon" (click)="openDialog(i, 'delivery_tc')"
+                  title="Attach"></i></span>
+              <span *ngIf="!ps.delivery_tc[i].mandatory"> <i class="fa fa-trash faIcon" title="Delete"
+                  (click)="deleteItem(i, 'delivery_tc')"></i></span>
+              <span [hidden]="!isLast"> <i class="fa fa-plus-circle"
+                  *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                  title="Add" (click)="addItem('delivery_tc')"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="scope_delivery" *ngIf="productType == 'nonpricing'">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ps_div margin-top-12">
+                        <div class="ps_head">
+                            <div class="row">
+                                <div class="col-md-1 align-center">#</div>
+                                <div class="col-md-4"> Delivery T & Cs</div>
+                                <div class="col-md-5"> Response</div>
+                                <div class="col-md-2 align-left">
+                                    <i class="fa fa-gear"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row" *ngFor="let item of ps.delivery;let i = index;last as isLast">
+                                <div class="col-md-1 align-center srno">{{i+1}}.</div>
+                                <div class="col-md-4">
+                                    <input [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED' || item.read" type="text" name="{{ps.delivery[i].name}}"
+                                        [(ngModel)]="ps.delivery[i].name" required class="form-control input-bar">
+                                </div>
+                                <div class="col-md-5">
+                                    <input [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'" class="form-control input-bar" type="text" name="{{ps.delivery[i].value}}"
+                                        [(ngModel)]="ps.delivery[i].value">
+                                </div>
+                                <div class="col-md-2 action" *ngIf="!access?.writeAccess">
+                                        <i class="fa fa-download faIcon" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>
+                                </div>
+                                <div class="col-md-2 action" *ngIf="!ps.delivery[i].icon && !ps.delivery[i].allIcon && !submitted">
+                                        <i class="fa fa-download faIcon" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>
+                                    <i class="fa fa-paperclip faIcon" *ngIf="access?.writeAccess"
+                                        (click)="openDialog(i, 'delivery')" title="Attach" class="icon-size attachIcon1">
+                                </div>
+                                <div class="col-md-2 action" *ngIf="ps.delivery[i].icon && !submitted">
+                                        <i class="fa fa-download faIcon" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>
+                                    <i class="fa fa-paperclip faIcon" *ngIf="access?.writeAccess"
+                                        (click)="openDialog(i, 'delivery')" title="Attach" >
+                                    <i class="class="fa fa-plus-circle"" *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent"
+                                        [hidden]="!isLast"  (click)="addItem('delivery')">
+                                </div>
+                                <div class="col-md-2 action" *ngIf="ps.delivery[i].allIcon && !submitted">
+                                        <i class="fa fa-download faIcon" aria-hidden="true" (click)="onDownloadDialog(i, 'delivery')"></i>
+                                    <i class="fa fa-paperclip faIcon" *ngIf="access?.writeAccess"
+                                        (click)="openDialog(i, 'delivery')" title="Attach" >
+                                    <i class="fa fa-trash faIcon" title="Delete"
+                                        (click)="deleteItem(i, 'delivery')">
+                                    <i class="class="fa fa-plus-circle"" *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent"
+                                        [hidden]="!isLast"  (click)="addItem('delivery')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+  </tab>
+  <!--================Delivery T&C Tab Ends Here =================-->
+
+  <!--================Support T & Cs Tab Starts Here =================-->
+  <tab heading="Support T & Cs" (select)="onSelect($event)">
+    <!-- SUPPORT -->
+    <div id="scope_support">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="ps_div margin-top-12">
+            <div class="ps_head">
+              <div class="row">
+                <div class="col-xs-1 col-md-1 align-center">#</div>
+                <div class="col-xs-7 col-md-9"> Support T & Cs</div>
+                <div class="col-xs-4 col-md-2">
+                  <i class="fa fa-gear"></i>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="ps && ps.support">
+              <div class="row" *ngFor="let item of ps.support;let i = index;last as isLast">
+                <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.
+                </div>
+                <div class="col-xs-7 col-md-9">
+                  <!-- <textarea [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'" class="form-control input-bar" type="text" name="{{ps.support[i].value}}"
+                                        [(ngModel)]="ps.support[i].value"></textarea> -->
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    class="form-control input-bar" type="text" name="{{ps.support[i].name}}"
+                    [(ngModel)]="ps.support[i].name">
+                    </textarea>
+
+                </div>
+                <!-- Attach Delete Download and Add Section Icon and Images Section  -->
+                <div class="col-xs-4 col-md-2 action" *ngIf="!access?.writeAccess">
+                  <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i, 'support')"></i></span>
+                </div>
+                <div class="col-xs-4 col-md-2 action" *ngIf="access?.writeAccess">
+                  <span> <i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i, 'support')"></i></span>
+                  <span *ngIf="access?.writeAccess"> <i class="fa fa-paperclip faIcon"
+                      (click)="openDialog(i, 'support')" title="Attach"></i></span>
+                  <span *ngIf="!ps.support[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                      (click)="deleteItem(i, 'support')"></i></span>
+                  <span [hidden]="!isLast">
+                    <i class="fa fa-plus-circle"
+                      *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                      title="Add" (click)="addItem('support')"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <!--================Support T & Cs Tab Ends Here =================-->
+  <!--================Account Info Tab Starts Here =================-->
+
+  <tab heading="Scope" (select)="onSelect($event)">
+    <div id="scope_account">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="ps_div margin-top-12">
+            <div class="ps_head">
+              <div class="row">
+                <div class="col-xs-1 col-md-1 align-center">#</div>
+                <div class="col-xs-4 col-md-4">Scope</div>
+                <div class="col-xs-4 col-md-5">Response</div>
+                <div class="col-xs-3 col-md-2">
+                  <i class="fa fa-gear"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row" *ngFor="let item of ps.account;let i = index;last as isLast">
+                <div class="col-xs-1 col-md-1 align-center srno">{{i+1}}.
+                </div>
+                <div class="col-xs-4 col-md-4">
+                  <input
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED' || item.read"
+                    type="text" name="{{ps.account[i].name}}" [(ngModel)]="ps.account[i].name" required
+                    class="form-control input-bar">
+                </div>
+                <div class="col-xs-4 col-md-5">
+                  <textarea
+                    [readonly]="pocSubmited || bid?.parent || !access?.writeAccess || isCoOwner || bidStatus == 'DROPPED'"
+                    type="text" name="{{ps.account[i].value}}" [(ngModel)]="ps.account[i].value" required
+                    class="form-control input-bar">
+                    </textarea>
+                </div>
+                
+                <div class="col-xs-3 col-md-2 action" *ngIf="!access?.writeAccess">
+                  <span><i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i, 'account')"></i></span>
+                </div>
+                <div class="col-xs-3 col-md-2 action" *ngIf="access?.writeAccess">
+                  <span> <i class="fa fa-download faIcon" title="Download" aria-hidden="true"
+                      [ngStyle]="{'color' : item.attachment_data.length > 0 ? '#EC7D1F' : 'white'}"
+                      (click)="onDownloadDialog(i, 'account')"></i></span>
+                  <span *ngIf="access?.writeAccess"> <i class="fa fa-paperclip faIcon"
+                      (click)="openDialog(i, 'account')" title="Attach"></i></span>
+                  <span *ngIf="!ps.account[i].mandatory"><i class="fa fa-trash faIcon" title="Delete"
+                      (click)="deleteItem(i, 'account')"></i></span>
+                  <span [hidden]="!isLast "><i class="fa fa-plus-circle"
+                      *ngIf="access?.writeAccess && reviewFlag && !pocSubmited && !bid?.parent && bidStatus != 'DROPPED'"
+                      title="Add" (click)="addItem('account')"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <!--================Account Info Tab Ends Here =================-->
+  <!-- To check whether bid is under review or not -->
+  <!-- <div class="aling-center bid_div color-white" style="margin-top:18px;padding: 5px;text-align: center"
+    *ngIf="!reviewFlag || !proposalReviewFlag || !solutionReviewFlag">
+    The bid is under Review Process.
+  </div> -->
+  <div class="dropdown" *ngIf="ps.date_modified != null">
+    <div class="dropdown-content">
+      Last Updated {{ ps.date_modified | date: "dd-MM-yyyy , h:mm:ss" }}
+    </div>
+  </div>
+
+  <!-- Action Button Save,Submit & Reset  -->
+  <div class="row">
+    <div class="col-xs-12 col-md-12 align-center margin-top-12">
+      <div class="text-center" *ngIf="access && access?.writeAccess && user_subtype == 'Sales' ">
+        <button type="button"
+          [disabled]="pocSubmited || bid?.parent || bidStatus == 'DROPPED' || !reviewFlag || !proposalReviewFlag || !solutionReviewFlag"
+          class="btn save-button"
+          (click)="this.ps.bid_id ? updateProjectScope('draft') : createProjectScope('draft')">Save
+        </button>
+        <button type="button"
+          [disabled]="pocSubmited || bid?.parent || bidStatus == 'DROPPED' || !reviewFlag || !proposalReviewFlag || !solutionReviewFlag"
+          class="btn draft-button" (click)="this.ps.bid_id ? updateProjectScope() : createProjectScope()">Submit
+          Scope</button>
+        <button type="button"
+          [disabled]="pocSubmited || bid?.parent || bidStatus == 'DROPPED' ||  !reviewFlag || !proposalReviewFlag || !solutionReviewFlag"
+          class="btn cancel-button" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</tabset>
+<!-- Tabset Property using ngx Bootstrap Ends Here -->
+
+<!-- Loader Section for the Project scope-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

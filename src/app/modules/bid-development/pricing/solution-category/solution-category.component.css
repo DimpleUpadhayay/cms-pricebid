@@ -1,0 +1,34 @@
+#categoryInput {
+  margin-left: 15px!important;
+}
+
+#createBtn {
+  margin-left: 24px;
+  margin-top: 0px;
+}
+
+#closeBtn {
+  margin-top: 32px;
+  margin-left: 140px;
+}
+
+.navbar-inverse {
+  background-color: #364453;
+  border-color: #364453;
+  height: 0px;
+}
+
+#cancel {
+  width: 26px;
+  float: right;
+  margin-top: 14px;
+  margin-right: 18px;
+}
+
+ /* ================Responsive Mobile View =================  */
+
+@media only screen and (max-width: 800px) {
+  #cancel {
+    margin-top: -55px;
+  }
+}

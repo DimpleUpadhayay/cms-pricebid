@@ -1,0 +1,661 @@
+<app-bid-details></app-bid-details>
+<app-alert></app-alert>
+<div class="container">
+  <!-- NAV Bar -->
+  <!-- <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" routerLink="/dashboard" aria-current="page">Home</li>
+      <li class="breadcrumb-item active" aria-current="page">{{formtype}}</li>
+    </ol>
+  </nav> -->
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Page Heading In Bid-Documents -->
+      <div class="heading-profile" style="display: flex;">
+        <div class="titleTenderFee" style="display: flex; ">
+          <h2>{{formtype}}</h2>
+          <span *ngIf="(access && access.writeAccess) && !bidVersionStatus && bidStatus != 'DROPPED'">
+            <img src="assets/images/add-orange.png" id="AddCategory" (click)="onAddNewEMD()"
+              title="Create New {{formtype}}" *ngIf="multipleEMDFlag">
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+    </div>
+    <div class="options">
+      <div class="col-md-6">
+        <select id="selectMultiple" class="form-control" (change)="readData($event.target.value); selectDropdown();"
+          [(ngModel)]="selectedEMDPBG" *ngIf="multipleEMDFlag">
+          <option value="" disabled selected>Select {{formtype}}</option>
+          <option *ngFor="let details of allEMD;  let i = index;" [value]="details.emdRequestNumber">
+            {{details.emdRequestNumber}}</option>
+        </select>
+      </div>
+      <div class="col-md-6" *ngIf="multipleEMDFlag">
+        <i class="fa fa-info-circle" aria-hidden="true">
+          <span class="tooltiptext">
+            {{emdData && emdData.approval_status ?  emdData && emdData.approval_status : 'Draft'}}
+          </span>
+        </i>
+      </div>
+    </div>
+  </div>
+
+  <!-- (click)="readApproval()" -->
+  <div *ngIf="access && NoDataMultipleEMDFlag ">
+    <ul class="nav nav-tabs" style="text-align: left;">
+      <li class="active"><a href="#first_emd" data-toggle="tab" id="first_tab_emd">{{formtype}}</a></li>
+      <li><a href="#second_emd" data-toggle="tab" id="second_tab_emd">Attachment</a></li>
+      <li *ngIf="approvalStatusArray && approvalStatusArray.length >= 1"><a href="#third_emd" data-toggle="tab"
+          id="third_tab_emd">Timeline</a></li>
+    </ul>
+    <!--  ==================== USER SALES MANAGER ======================================================================================== -->
+    <!-- *ngIf='formtype=="EMD" && role=="salesManager"' -->
+    <div class="tab-content">
+      <div id="first_emd" class="tab-pane fade in active">
+        <!-- EMD form fields -->
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()">
+          <div class="scrollContainer" id="style-1"
+            style="border: 1px solid;  border-color: #eaeae2;border-width: thin;border-radius: 5px;">
+
+            <div class="row" style="display: flex;">
+              <div class="col" style="margin-left: 2rem; margin-right: 2rem;width: 53rem;">
+                <div class="row" id="main-container"
+                  style="border-style: solid;padding-bottom:5rem;margin:1rem;padding-left:1rem;margin-bottom: 5px;margin-right: auto;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <div class="row" style="margin-left: 5px;">
+                    <p style="margin-top: 1rem;width:30rem; font-size: 16px;">{{formtype}} Information</p>
+                  </div>
+                  <div class="row" style="margin-left: 5px;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Request Number</label>
+                      <input type="text" class="form-control" id="referance_no" style="width: 23rem !important;"
+                        [(ngModel)]="emdData && emdData.emdRequestNumber" [ngModelOptions]="{standalone: true}"
+                        [disabled]="true">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Name of Employee</label>
+                      <input type="text" class="form-control" id="two-input"
+                        [(ngModel)]="emdData && emdData.nameOfEmployeeRequestingEmd"
+                        [ngModelOptions]="{standalone: true}" [disabled]="true">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Employee Code</label>
+                      <input type="text" class="form-control" id="two-input"
+                        [(ngModel)]="emdData && emdData.employeeCode" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px;">
+                  </div>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">{{formtype}} required in the favour of <br> (Beneficiary) <span
+                          class="required_field">*</span> </label>
+                      <input type="text" class="form-control" id="two-input"
+                        [(ngModel)]="emdData && emdData.emdReqdInTheFavourOfBeneficary"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData?.emdReqdInTheFavourOfBeneficary == '' || emdData?.emdReqdInTheFavourOfBeneficary == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col" style="margin-top: 2rem;">
+                      <label for="exampleInputPassword1">Payable At</label>
+                      <input type="text" class="form-control" id="two-input" [(ngModel)]="emdData && emdData.payableAt"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Amount (in Rs) <span class="required_field">*</span> </label>
+                      <input type="number" min="0" class="form-control" id="two-input"
+                        [(ngModel)]="emdData && emdData.AmountReqdEmd" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData?.AmountReqdEmd == '' || emdData?.AmountReqdEmd == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Location of the beneficiary <span
+                          class="required_field">*</span> </label>
+                      <select type="text" id="two-input" class="form-control" [(ngModel)]="emdData && emdData.location"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData?.location == '' || emdData?.location == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                        <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px; width:50rem;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Type of {{formtype}}<span class="required_field">*</span></label>
+                      <select type="text" id="two-input" class="form-control"
+                        [(ngModel)]="emdData && emdData.emdPaymentType" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.emdPaymentType == '' || emdData.emdPaymentType == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                        <option *ngFor="let payment of emdPaymentType" [value]="payment">{{payment}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Purpose of the {{formtype}}</label>
+                      <textarea type="text" class="form-control" id="two-input"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [(ngModel)]="emdData && emdData.PurposeOfTheEmd"
+                        [ngModelOptions]="{standalone: true}"></textarea>
+                    </div>
+                  </div><br>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <!-- <div class="new-line" style="margin-left: 5px;"> -->
+                    <div class="form-group col">
+                      <label style="margin-bottom:1rem;">Bank Type</label>
+                      <br>
+                      <input type="radio" value="Nationalized" [(ngModel)]="emdData && emdData.BankType"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                      <label for="national">Nationalized</label><br>
+                      <input type="radio" id="private" value="Private" [(ngModel)]="emdData && emdData.BankType"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                      <label for="private">Private</label><br>
+                    </div>
+
+                    <!-- </div> -->
+                  </div>
+                  <div class="row" style="margin-left: 5px;margin-bottom: 3rem;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">{{formtype}} Required by Date <span
+                          class="required_field">*</span></label>
+                      <input type="text" [owlDateTime]="dt3" [min]="minDate" id="two-input" class="form-control"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngModelOptions]="{standalone: true}" [(ngModel)]="emdData && emdData.emdRequiredByDate"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.emdRequiredByDate == '' || emdData.emdRequiredByDate == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }"
+                        [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" placeholder="Date Time">
+                      <owl-date-time #dt3></owl-date-time>
+                    </div>
+
+                    <div class="form-group col" *ngIf="formtype == 'PBG'">
+                      <label for="exampleInputPassword1">Last Date for Claim of BG <span
+                          class="required_field">*</span></label>
+                      <input type="text" [owlDateTime]="dt3" [min]="minDate" id="two-input" class="form-control"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="emdData && emdData.lastDateForClaimOfBankGuarantee"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.lastDateForClaimOfBankGuarantee == '' || emdData.lastDateForClaimOfBankGuarantee == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }"
+                        [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" placeholder="Date Time">
+                      <owl-date-time #dt3></owl-date-time>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col" style="margin: 1rem;width: 53rem;">
+                <div class="row" id="main-container"
+                  style="border-style: solid;; padding: 18px;margin-bottom: 6px;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <p style="margin-left: -1.5rem; font-size: 16px;margin-top:-1rem;">Customer Information</p>
+                  <div class="row" style="display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Contact Person Name <span class="required_field">*</span></label>
+                      <input type="text" class="form-control" id="two-input"
+                        [(ngModel)]="emdData && emdData.contactPersonsNameAtCustomersPlace"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData?.contactPersonsNameAtCustomersPlace == '' || emdData?.contactPersonsNameAtCustomersPlace == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Address of beneficiary <span
+                          class="required_field">*</span></label>
+                      <textarea type="text" class="form-control" id="two-input"
+                        [(ngModel)]="emdData && emdData.addressOfBeneficary" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData?.addressOfBeneficary == '' || emdData?.addressOfBeneficary == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </textarea>
+                    </div>
+                  </div>
+                  <div class="row" style="display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Telephone</label>
+                      <input type="text" oninput="this.value=this.value.replace(/[^0-9]/g,'');" maxlength="11"
+                        (input)="validateRegex('contactPersonsTelephoneNo')" class="form-control" id="three"
+                        [ngModelOptions]="{standalone: true}" maxlength="11"
+                        [(ngModel)]="emdData && emdData.contactPersonsTelephoneNo"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                      <div class="message-warning" style="width: 165px !important;"
+                        *ngIf="(emdData && emdData.contactPersonsTelephoneNo) && !emdData.contactPersonsTelephoneNoRegexValid">
+                        Valid phone is required.
+                      </div>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Email Id</label>
+                      <textarea (input)="validateRegex('contactPersonsEmailId')" type="email" class="form-control"
+                        id="three" [(ngModel)]="emdData && emdData.contactPersonsEmailId"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"></textarea>
+                      <div class="message-warning" style="width: 165px !important;"
+                        *ngIf="(emdData && emdData.contactPersonsEmailId) &&  !emdData.contactPersonsEmailIdRegexValid">
+                        Valid email is required.
+                      </div>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Last Installation Date</label>
+                      <input [owlDateTime]="dt7" [owlDateTimeTrigger]="dt7" class="form-control" id="three"
+                        [(ngModel)]="emdData && emdData.lastInstallationDate" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                      <owl-date-time [pickerType]="'calendar'" #dt7></owl-date-time>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="main-container"
+                  style="border-style: solid;margin-bottom:4px;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <p style="margin: 0.5rem; font-size: 16px;margin-bottom: 1rem;">Tender Information</p>
+
+                  <div class="row" style="margin-left: 5px;display:flex; ">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Tender Date <span class="required_field">*</span></label>
+                      <input [owlDateTime]="dt" id="two-input" class="form-control"
+                        [(ngModel)]="emdData && emdData.tenderDate"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.tenderDate == '' || emdData.tenderDate == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }"
+                        [owlDateTimeTrigger]="dt" placeholder="Date Time" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                      <owl-date-time [pickerType]="'calendar'" #dt></owl-date-time>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Tender No <span class="required_field">*</span></label>
+                      <input type="text" class="form-control" id="two-input" [(ngModel)]="emdData && emdData.tenderNo"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.tenderNo == '' || emdData.tenderNo ==  null)  ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Tender Due Date <span class="required_field">*</span></label>
+                      <input [owlDateTime]="dt1" id="two-input" class="form-control"
+                        [(ngModel)]="emdData && emdData.tenderDueDate" [owlDateTimeTrigger]="dt1"
+                        placeholder="Date Time" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.tenderDueDate == '' || emdData.tenderDueDate == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Tender Type</label>
+                      <select type="text" id="two-input" class="form-control"
+                        [(ngModel)]="emdData && emdData.specifyWhetherGovernmentOrNonGovernment"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus">
+                        <option *ngFor="let spec of specify" [value]="user">{{spec}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" id="main-container"
+                  style="border-style: solid;margin-bottom: 5px;background-color: #e3e7ea7d;border-width: thin;border-color: #e0eeef;border-radius: 5px;">
+                  <p style="margin: 0.5rem; font-size: 16px;margin-bottom: 1rem;">Order Information</p>
+
+                  <div class="row" style="margin-left: 5px;margin-bottom: -2rem;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1" style="margin-bottom: 2.5rem;">Percentage Margin <span
+                          class="required_field">*</span> </label>
+                      <input type="number" min="0" class="form-control" id="three"
+                        [(ngModel)]="emdData && emdData.percentageMarginForTheOrder"
+                        [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.percentageMarginForTheOrder == '' || emdData.percentageMarginForTheOrder == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Total Expected Order <br> Value (in Rs Mn) </label>
+                      <input type="text" class="form-control" id="three" value="{{estimatedValueData}}"
+                        [disabled]="true">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1" style="margin-bottom: 2.5rem;">Payment Terms</label>
+                      <textarea type="number" id="three" class="form-control"
+                        [(ngModel)]="emdData && emdData.paymentTermsOfExpectedOrder"
+                        [ngModelOptions]="{standalone: true}" style="margin-bottom: 2.5rem;" readonly>
+                     </textarea>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1" style="margin-bottom: 2.5rem;">Delivery Terms</label>
+                      <textarea type="text" id="three" class="form-control"
+                        [(ngModel)]="emdData && emdData.deliveryTerms" [ngModelOptions]="{standalone: true}" readonly>
+                    </textarea>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputEmail1">Penalty LD Clauses <br>(if any) </label>
+                      <textarea type="text" id="three" class="form-control"
+                        [(ngModel)]="emdData && emdData.penaltyLdClauses" readonly
+                        [ngModelOptions]="{standalone: true}"></textarea>
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Potential Date of <br> Conversion<span
+                          class="required_field">*</span></label>
+                      <!-- <input type="password" class="form-control" id="inputfieldAttachment" [(ngModel)]="emdData.date_conversion" > -->
+                      <input [owlDateTime]="dt2" id="three" class="form-control"
+                        [(ngModel)]="emdData && emdData.potentialDateOfConversionOfTheTenderToOrder"
+                        [owlDateTimeTrigger]="dt2" placeholder="Date Time" [ngModelOptions]="{standalone: true}"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.potentialDateOfConversionOfTheTenderToOrder == '' || emdData.potentialDateOfConversionOfTheTenderToOrder == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-left: 5px;display: flex;">
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Location of Installation <span
+                          class="required_field">*</span></label>
+                      <input type="text" class="form-control" id="two-input" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="emdData && emdData.locationOfInstallation"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.locationOfInstallation == '' || emdData.locationOfInstallation == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                    </div>
+                    <div class="form-group col">
+                      <label for="exampleInputPassword1">Scope of Work <span class="required_field">*</span></label>
+                      <textarea type="text" class="form-control" id="two-input" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="emdData && emdData.scopeOfWorkInBrief"
+                        [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                        [ngStyle]="{'box-shadow': formSubmitted && (emdData.scopeOfWorkInBrief == '' || emdData.scopeOfWorkInBrief == null) ? '0 0 1px 1px red' : '0 0 0.1px 0.1px #17b495' }">
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container" *ngIf="hideButtonPlusDiv()">
+            <div class="text-center" style="margin-left: -10rem;">
+              <!-- EDM Form buttons -->
+              <button id="btnReset" (click)="resetEmdForm()"
+                [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                class="btn cancel-button" style="margin-left:- 10rem;font-size: 14px;">
+                Reset
+              </button>
+              <button (click)="saveDraftEmd('save')"
+                [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                style="font-size: 14px;" id="btnSave" class="btn save-button">
+                Save
+              </button>
+              <button type="submit" id="btnSubmit"
+                [disabled]="(access && !access.writeAccess)|| (emdData && emdData.isSubmittedStatus == 'Submitted') || bidStatus == 'DROPPED' || bidVersionStatus"
+                class="btn draft-button" (click)="onNextEmd('next')" style="background-color: #17b495;font-size: 14px;">
+                Next </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Approver comment Section  -->
+        <div *ngIf="!bidVersionStatus && bidStatus != 'DROPPED'">
+          <div class="row" style="margin-top:40px" *ngIf="approvalFlag">
+            <div class="col-md-12">
+              <div class="caption">Comments</div>
+              <div class="ps_div1">
+                <div class="row" *ngFor="let item of ac_comment;let i = index;last as isLast">
+                  <div class="col-xs-1 col-sm-1 col-lg-1 col-md-1 align-center" style="margin-top:10;">1.</div>
+                  <div class="col-xs-11 col-sm-11 col-lg-11 col-md-11">
+                    <input type="text" class="form-control" [(ngModel)]="ac_comment[i].comment"
+                      [ngModelOptions]="{standalone: true}"
+                      style="border-left: 7px solid #17b495!important;margin-left: -25px;">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-2 col-lg-2 col-md-2"></div>
+            <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12 align-right">
+              <button type="button" (click)="actionButton('APPROVED')" class="btn approved-button">APPROVED
+              </button>
+              <button type="button" (click)="actionButton('REJECTED')" class="btn reject-button"
+                style="background-color: #c9302c;">REJECTED
+              </button>
+            </div>
+          </div>
+          <div style="text-align: center;margin-top: 15px;" *ngIf="completedFlag">
+            <button type="button" (click)="actionButton('COMPLETED')" class="btn approved-button">COMPLETED
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- ATTACHMENTS -->
+      <div id="second_emd" class="tab-pane fade in" style="font-size: 14px; width: 1140px;height: 36rem;">
+        <form #attachForm="ngForm" style="background-color:rgb(234 247 220);padding:2rem;">
+          <div class="row" style="font-size:16px;display: flex;padding-left: 4rem;padding: 2rem;" autocomplete="off">
+            <div class="new-1 form-group" style=" font-size: 16px;">
+              #<br />
+            </div>
+            <div class="Attchfile">
+              <p id="exampleFormControlInput1">Document name </p>
+            </div>
+            <div class="Description">
+              <p id="exampleFormControlInput1">Attach File
+              </p>
+            </div>
+            <div class="Referance">
+              <p id="exampleFormControlInput1">Remark</p>
+            </div>
+            <div class="Attchments" style="text-align: center;">
+              <p id="exampleFormControlInput1">Attachments </p>
+            </div>
+          </div>
+          <div class="scrollContainer" style="height:23rem;overflow-y: scroll;margin-top:-4rem;padding: 2rem;">
+            <div class="row" *ngFor="let file of rfpReviewAttachments;let i = index; last as isLast"
+              style="display:flex ;">
+              <div class="new-1">
+                <p id="exampleFormControlInput1"> {{i+1}}</p>
+              </div>
+              <div class="form-group col">
+                <input type="text" class="form-control input-bar" id="inputfieldAttachment"
+                  [(ngModel)]="rfpReviewAttachments[i].cellRange" [ngModelOptions]="{standalone: true}"
+                  [attr.disabled]="true" style="background-color: #eee;">
+              </div>
+              <div class="form-group col">
+                <textarea type="text" class="form-control input-bar" id="inputfieldAttachment"
+                  [(ngModel)]="rfpReviewAttachments[i].original_name" [ngModelOptions]="{standalone: true}"
+                  [attr.disabled]="true"></textarea>
+              </div>
+              <div class="form-group col">
+                <textarea type="text" placeholder="Description" id="inputfieldAttachment" class="form-control input-bar"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="rfpReviewAttachments[i].description"
+                  [attr.disabled]="true"></textarea>
+              </div>
+              <div class="form-group col" style="text-align:center;margin-top: -1rem;margin-left: 3rem;">
+                <button type="button" class="btn btn-success" id="downloadBtn" title="Download"
+                  (click)="onDownload(i , 'rfpFile')">
+                  <span class="glyphicon glyphicon-download"></span>
+                </button>
+              </div>
+            </div>
+
+            <ng-container>
+              <div class="row" *ngFor="let file of uploadAttachments;let i = index; last as isLast"
+                style="display:flex ;">
+                <div class="new-1">
+                  <p id="exampleFormControlInput1"> {{i+1 + ReadAttachLength}} </p>
+                </div>
+                <div class="form-group col">
+                  <input type="text" class="form-control input-bar" id="inputfieldAttachment"
+                    [(ngModel)]="uploadAttachments[i].cellRange" [ngModelOptions]="{standalone: true}"
+                    [attr.disabled]="true" style="background-color: #eee;">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" class="form-control input-bar" id="inputfieldAttachment"
+                    [(ngModel)]="uploadAttachments[i].original_name" [ngModelOptions]="{standalone: true}"
+                    [attr.disabled]="true"></textarea>
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" id="inputfieldAttachment"
+                    class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                    [(ngModel)]="uploadAttachments[i].description" [attr.disabled]="true"></textarea>
+                </div>
+                <div class="form-group col" style="text-align:center;margin-top: -1rem;margin-left: 3rem;">
+                  <button type="button" class="btn btn-success" id="downloadBtn" title="Download"
+                    (click)="onDownload(i , 'upload')">
+                    <span class="glyphicon glyphicon-download"></span>
+                  </button>
+                  <button type="button" *ngIf="hideButtonPlusDiv()" class="btn btn-danger" style="margin-right:5px;"
+                    title="Delete File" (click)="onRemoveUploadFile(i)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                  <button type="button" *ngIf="hideButtonBGWriter() && uploadAttachments[i].user_id == user.user_id "
+                    class="btn btn-danger" style="margin-right:5px;" title="Delete File"
+                    (click)="onRemoveUploadBGWriterFile(i)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="hideButtonPlusDiv()">
+              <div class="row" *ngFor="let file of files;let i = index; last as isLast" style="display:flex ;">
+                <div class="new-1">
+                  <p id="exampleFormControlInput1"> {{i+1 + ReadAttachLength + UploadAttachLength}}</p>
+                </div>
+                <div class="form-group col">
+                  <select *ngIf="formtype == 'EMD'" class="form-control input-bar"
+                    [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    id="inputfieldAttachment" [ngModelOptions]="{standalone: true}" [(ngModel)]="files[i].cellRange">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let item of specimenDraftEMD" value="{{item}}">{{item}}</option>
+                  </select>
+                  <select *ngIf="formtype == 'PBG'" class="form-control input-bar"
+                    [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    id="inputfieldAttachment" [ngModelOptions]="{standalone: true}" [(ngModel)]="files[i].cellRange">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let item of specimenDraftPBG" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <input #myInput type="file" style="outline: none;background-color: #ffff;" id="inputfieldAttachment"
+                    (change)="onFileSelected($event,i)"
+                    [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" id="inputfieldAttachment"
+                    class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                    [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    [(ngModel)]="files[i].description"></textarea>
+                </div>
+                <div class="form-group col" style="text-align: center; margin-top: -1rem;margin-left: 3rem;">
+                  <button type="button" class="btn btn-success"
+                    [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+                    style="margin-right:5px;" title="Upload File" (click)="onUpload(i)">
+                    <span class="glyphicon glyphicon-upload"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="hideButtonBGWriter()">
+              <div class="row" *ngFor="let file of files;let i = index; last as isLast" style="display:flex ;">
+                <div class="new-1">
+                  <p id="exampleFormControlInput1"> {{i+1 + ReadAttachLength + UploadAttachLength}}</p>
+                </div>
+                <div class="form-group col">
+                  <select
+                    *ngIf="(formtype == 'EMD' || formtype == 'PBG') && (this.user_type == 'BG_WRITER' && this.user_subtype == 'All')"
+                    class="form-control input-bar" [disabled]="bidStatus == 'DROPPED' || bidVersionStatus"
+                    id="inputfieldAttachment" [ngModelOptions]="{standalone: true}" [(ngModel)]="files[i].cellRange">
+                    <option value="" disabled selected>Select</option>
+                    <option *ngFor="let item of specimenDraftBGWriter" value="{{item}}">{{item}}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <input #myInput type="file" style="outline: none;background-color: #ffff;" id="inputfieldAttachment"
+                    (change)="onFileSelected($event,i)" [disabled]="bidStatus == 'DROPPED' || bidVersionStatus">
+                </div>
+                <div class="form-group col">
+                  <textarea type="text" placeholder="Description" id="inputfieldAttachment"
+                    class="form-control input-bar" [ngModelOptions]="{standalone: true}"
+                    [disabled]="bidStatus == 'DROPPED' || bidVersionStatus"
+                    [(ngModel)]="files[i].description"></textarea>
+                </div>
+                <div class="form-group col" style="text-align: center; margin-top: -1rem;margin-left: 3rem;">
+                  <button type="button" class="btn btn-success" [disabled]="bidStatus == 'DROPPED' || bidVersionStatus"
+                    style="margin-right:5px;" title="Upload File" (click)="onUpload(i)">
+                    <span class="glyphicon glyphicon-upload"></span>
+                  </button>
+                </div>
+              </div>
+            </ng-container>
+
+          </div>
+        </form>
+        <!-- ATTACHMENT Form buttons -->
+        <div class="container" *ngIf="hideButtonPlusDiv()">
+          <div class="text-center">
+            <button type="submit" id="btnReset" (click)="resetAttachmentFile()"
+              [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+              class="btn cancel-button" style="margin-left: 1rem;font-size: 14px;">
+              Reset
+            </button>
+            <button type="submit" (click)="finalSaveSubmitEMD('save')"
+              [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+              style="font-size: 14px;" id="btnSave" class="btn save-button">
+              Save
+            </button>
+            <button type="submit" id="btnSubmit" class="btn draft-button"
+              [disabled]="(access && !access.writeAccess)|| (emdData && (emdData.isSubmittedStatus != 'EMDSubmmited' || emdData.isSubmittedStatus == 'Submitted')) || bidStatus == 'DROPPED' || bidVersionStatus"
+              style="background-color: #17b495;font-size: 14px;" (click)="finalSaveSubmitEMD('submit')">
+              Submit {{formtype}} </button>
+          </div>
+        </div>
+      </div>
+      <!-- ---------------------Approval----------------------------- -->
+      <div id="third_emd" class="tab-pane fade in" *ngIf="approvalStatusArray && approvalStatusArray.length >= 1">
+        <form autocomplete="off" (keydown.enter)="$event.preventDefault()"
+          style=" background-color:rgb(234 247 220); -webkit-scrollbar:none;height: 30rem; padding:2rem;">
+          <div class="row" style="display: flex;padding:2rem;margin-bottom: 1.5rem;">
+            <div class="title-no" style=" font-size: 15px; ;">
+              #<br />
+            </div>
+            <div class="ApproverName ">
+              <p id="exampleFormControlInput1">Action</p>
+            </div>
+            <div class="actionApproval">
+              <p id="exampleFormControlInput1">Name</p>
+            </div>
+            <div class="dateOfAction">
+              <p id="exampleFormControlInput1">Date of Action</p>
+            </div>
+            <div class="comment">
+              <p id="exampleFormControlInput1">Comments</p>
+            </div>
+          </div>
+          <div>
+            <div class="scrollContainer" style="height:23rem;overflow-y: scroll;padding:2rem;margin-top:-5rem">
+              <div class="row" style="display: flex;"
+                *ngFor="let approval of approvalStatusArray; let i = index; last as isLast">
+                <div class="SRNo form-group" style="width: 5%; font-size: 14px;">
+                  <p>{{i+1}}</p>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="text" class="form-control" id="two-input" [(ngModel)]="approval.action"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true">
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <input type="text" class="form-control" id="two-input" [(ngModel)]="approval.fullname"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true">
+                </div>
+                <div class="form-group col" id="contract-inputDate">
+                  <input id="two-input" [owlDateTimeTrigger]="dt4" [owlDateTime]="dt4" [(ngModel)]="approval.Date"
+                    class="form-control" [ngModelOptions]="{standalone: true}" [disabled]="true">
+                  <owl-date-time #dt4></owl-date-time>
+                </div>
+                <div class="form-group col" id="contract-input">
+                  <textarea type="text" class="form-control input-bar" [(ngModel)]="approval.comments"
+                    [ngModelOptions]="{standalone: true}" [attr.disabled]="true"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- If there is no EMD/PBG -->
+  <div class="aling-center bid_div color-white" style="margin-top:18px;color:white;text-align: center;"
+    *ngIf="!NoDataMultipleEMDFlag && (!access?.createAccess)">
+    No Approvals requested yet
+  </div>
+</div>
+<!-- Loader Section for the Technical Solution TAB-->
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

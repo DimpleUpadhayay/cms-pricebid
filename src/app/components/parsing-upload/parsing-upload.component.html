@@ -1,0 +1,49 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Upload Files <span class="glyphicon glyphicon-upload" style="font-size: 20px;"></span></p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" (click)="onSave()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="col-md-12">
+  <div id="bid_head">
+    <div class="row" style="margin-bottom
+          :10px;">
+      <div class="col-md-1" >
+        <b>#</b>
+      </div>
+      <div class="col-md-7" style="margin-left:49px">
+        <strong>Upload File</strong>
+      </div>
+
+      <div class="col-md-4" style="margin-left: -60px;">
+        <strong> Action</strong>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1" style="margin-top:7px;" >
+      1.
+    </div>
+    <div class="col-md-7">
+      <input type="file" style="outline: none;" id="file" (change)="onFileSelected($event)">
+    </div>
+
+    <div class="col-md-2" id="uploadBtn">
+      <button type="button" class="btn btn-success" (click)="onUpload('')" title="Upload">
+        <span class="glyphicon glyphicon-upload"></span>
+      </button>
+    </div>
+    <div class="col-md-2" id="removeBtn">
+      <button type="button" class="btn btn-danger" title="Delete">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loader">
+  <img src="assets/Logo/browserlogo.png" id="logoLoader" alt="" />
+</div>

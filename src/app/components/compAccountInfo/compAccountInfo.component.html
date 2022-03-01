@@ -1,0 +1,60 @@
+<app-alert></app-alert>
+<div class="col-md-12">
+  <div class="title">
+    <p class=" align-center" style="border-bottom: 2px solid #F5F5F5;font-size: 20px;">
+      Competition Details</p>
+    <button type="button" class="close" (click)="close()" style="margin-top: -47px;margin-right: -8px;">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="col-md-6 margin-top-12 ">
+    <label class="margin-bottom">Competitior Name&nbsp;<span class="required_field">*</span></label>
+    <!-- (input)="validateSingle('competitor_name');validateRegex('competitor_name')" -->
+    <input type="text" class="form-control input-border input-bar" [(ngModel)]="compCreate.competitor_name"
+      [ngModelOptions]="{standalone: true}" maxlength="30"
+      [ngStyle]="{'box-shadow' : competsubmitted &&  !compCreate.competitor_name ? '0 0 .5px .5px red' : '0  0 .5px .5px #17b495'}"
+      required="required">
+
+    <!-- <div class="message-warning" *ngIf="compCreate.competitor_name">
+      Competitior Name should be greater than 5.
+    </div> -->
+
+  </div>
+  <div class="col-md-6 margin-top-12 ">
+    <label class="margin-bottom">Website&nbsp;<span class="required_field">*</span></label>
+    <input (input)="validateSingle('competitor_website');validateRegex('competitor_website')" type="text"
+      class="form-control input-border input-bar" [(ngModel)]="compCreate.competitor_website"
+      [ngModelOptions]="{standalone: true}"
+      [ngStyle]="{'box-shadow' : competsubmitted &&  !compCreate.competitor_website ? '0 0 .5px .5px red' : '0  0 .5px .5px #17b495'}"
+      required="required">
+    <div class="message-warning" style="font-size: 13px; position: absolute; width: 89%;"
+      *ngIf="compCreate.competitor_website && !compCreate.competitor_websiteRegexValid ">
+      Website must be valid.
+    </div>
+  </div>
+  <div class="col-md-6 margin-top-12 " style="margin-top:5%;">
+    <label class="margin-bottom">Contact no&nbsp;<span class="required_field">*</span></label>
+    <input (input)="validateSingle('competitor_contact');validateRegex('competitor_contact')" type="text"
+      class="form-control input-border input-bar" [(ngModel)]="compCreate.competitor_contact"
+      [ngModelOptions]="{standalone: true}" maxlength="11"
+      [ngStyle]="{'box-shadow' : competsubmitted &&  !compCreate.competitor_contact ? '0 0 .5px .5px red' : '0  0 .5px .5px #17b495'}"
+      required="required">
+    <div class="message-warning" style="font-size: 13px; position: absolute; width: 89%;"
+      *ngIf="compCreate.competitor_contact && !compCreate.competitor_contactRegexValid">
+      Valid phone is required.
+    </div>
+  </div>
+  <div class="col-md-6 margin-top-12" style="margin-top:5%;">
+    <label class="margin-bottom">Description&nbsp;</label>
+    <input (input)="validateSingle('description')" maxlength="50" type="text" [(ngModel)]="compCreate.description"
+      [ngModelOptions]="{standalone: true}" class="form-control input-border input-bar">
+
+  </div>
+</div>
+<!-- Action Button Save Update Reset -->
+<div class="col-md-12 text-center" style="margin-bottom:17px;">
+  <button type="button" style="margin-top:30px" class="btn draft-button align-center"
+    (click)="competCreate()">Save</button>
+  <button type="button" style="margin-top:30px" class="btn cancel-button" (click)="resetCompetit()">Reset</button>
+</div>

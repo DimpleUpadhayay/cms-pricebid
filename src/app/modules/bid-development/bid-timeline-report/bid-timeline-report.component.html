@@ -1,0 +1,345 @@
+<app-alert></app-alert>
+<nav class="navbar navbar-inverse">
+  <div class="navbar-header">
+    <p class="navbar-brand">Bid Timeline <span class="glyphicon glyphicon-upload" style="font-size: 20px;"></span></p>
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><img src="assets/images/cancel.png" alt="Cancel" (click)="onClose()" id="cancel"></li>
+  </ul>
+</nav>
+<div class="scrollContainer" style="overflow-x:hidden;height: 373px;width: 100%;">
+  <div class="panel-group" id="accordion">
+    <div class="panel card">
+      <a role="button" data-toggle="collapse" (click)="data1(1)" data-target="#solutionReview" aria-expanded="false"
+        aria-controls="solutionReview">
+        <div class="card-header box" style="height: 70px;">
+          <h5 class="mb-0 abc">
+            <i class="fa fa-lightbulb-o" style="color: black; font-size: 27px;"></i>
+            <span class="span-title" style="padding-right: 20px;">Solution</span>
+          </h5>
+          <button class="btn btn-link mr-0 " style="float:right; outline: none;">
+            <i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px; float:right;"></i>
+          </button>
+        </div>
+      </a>
+      <div id="solutionReview" class="collapse" *ngIf="data_coll==1">
+        <table class="table table-bordered table-inside">
+          <thead>
+            <tr>
+              <th class="table-row">Action</th>
+              <th class="table-row">Name</th>
+              <th class="table-row">Status</th>
+              <th class="table-row">Comment</th>
+              <th class="table-row">Date of Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td colspan="5" class="align-center" *ngIf="!solTechReview">This section has not been sent for Review</td>
+            <ng-container *ngFor="let item of solTechReview;let i=index">
+              <tr>
+                <td>{{item.review_cat}}</td>
+                <td>{{coowner}}</td>
+                <td>Submitted for Review</td>
+                <td>NA</td>
+                <td>{{item.review_create}}</td>
+              </tr>
+              <tr class="accordion-toggle clickable task-info-row" data-toggle="collapse"
+                [attr.data-target]="'#solution'+i" aria-expanded="false" [attr.aria-controls]="i">
+                <td>{{item.review_cat}} </td>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td *ngIf="item.review_flag else elseBlock">{{item.approval_status}}</td>
+                <ng-template #elseBlock>
+                  <td>In Progress</td>
+                </ng-template>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td>{{item.lastUpdate_date}}</td>
+
+              </tr>
+              <td colspan="5" class="hiddenRow task-info-row">
+                <div colspan="5" class="collapse" id="solution{{i}}">
+                  <table class="table table-bordered table-inside">
+                    <tbody>
+                      <ng-container *ngIf="item.review_flag">
+                        <ng-container *ngFor="let techSolReview_add of item.techSolReview_add; let i=index">
+                          <tr>
+                            <td style="width: 18.4%;" class="align-center">{{i+1}}.</td>
+                            <td style="width: 21.2%;">{{techSolReview_add.contributorName}}</td>
+                            <td style="width: 21.2%;" *ngIf="techSolReview_add.approvalStatus else elseBlock">Review
+                              Completed</td>
+                            <ng-template #elseBlock>
+                              <td style="width: 21.2%;">Tasks Assigned After Review</td>
+                            </ng-template>
+                            <td style="width: 21.2%;">{{techSolReview_add.comment}}</td>
+                            <td>{{techSolReview_add.reviewSubmitDate}}</td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel card">
+      <a role="button" data-toggle="collapse" (click)="data1(2)" data-target="#proposal" aria-expanded="false"
+        aria-controls="proposal">
+        <div class="card-header box" style="height: 70px;">
+          <h5 class="mb-0 abc">
+            <i class="fa fa-file-powerpoint-o" style="color: black; font-size: 20px;"></i>
+            <span class="span-title" style="padding-right: 13px;">Proposal</span>
+          </h5>
+          <button class="btn btn-link mr-0 collapsed" type="button" style="float: right; outline: none;">
+            <i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i>
+          </button>
+        </div>
+      </a>
+      <div id="proposal" *ngIf="data_coll==2" class="collapse">
+        <table class="table table-bordered table-inside">
+          <thead>
+            <tr>
+              <th class="table-row">Action</th>
+              <th class="table-row">Name</th>
+              <th class="table-row">Status</th>
+              <th class="table-row">Comment</th>
+              <th class="table-row">Date of Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td colspan="5" class="align-center" *ngIf="!proposalReview">This section has not been sent for Review</td>
+            <ng-container *ngFor="let item of proposalReview;let i=index">
+              <tr>
+                <td>{{item.review_cat}}</td>
+                <td>{{coowner}}</td>
+                <td>Submitted for Review</td>
+                <td>NA</td>
+                <td>{{item.review_create}}</td>
+              </tr>
+              <tr class="accordion-toggle clickable task-info-row" data-toggle="collapse"
+                [attr.data-target]="'#proposal'+i" aria-expanded="false" [attr.aria-controls]="i">
+                <td>{{item.review_cat}} </td>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td *ngIf="item.review_flag else elseBlock">{{item.approval_status}}</td>
+                <ng-template #elseBlock>
+                  <td>In Progress</td>
+                </ng-template>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td>{{item.lastUpdate_date}}</td>
+
+              </tr>
+              <td colspan="5" class="hiddenRow task-info-row">
+                <div colspan="5" class="collapse" id="proposal{{i}}">
+                  <table class="table table-bordered table-inside">
+                    <tbody>
+                      <ng-container *ngFor="let proposalReview_add of item.proposalReview_add; let i=index">
+                        <tr>
+                          <td class="align-center" style="width: 18.4%;">{{i+1}}.</td>
+                          <td style="width:21.2%">{{proposalReview_add.contributorName}}</td>
+                          <td style="width:21.2%" *ngIf="proposalReview_add.approvalStatus else elseBlock">Review
+                            Completed</td>
+                          <ng-template #elseBlock>
+                            <td style="width: 21.2%;">Tasks Assigned After Review</td>
+                          </ng-template>
+                          <td style="width: 21.2%;">{{proposalReview_add.comment}}</td>
+                          <td>{{proposalReview_add.reviewSubmitDate}}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel card">
+      <a role="button" data-toggle="collapse" class="" data-target="#pricing" aria-expanded="true"
+        aria-controls="pricing" (click)="data1(3)">
+        <div class="card-header box" style="height: 70px;">
+          <h5 class="mb-0 abc">
+            <i class="fa fa-dollar" style="color: black; font-size: 22px;"></i>
+            <span class="span-title" style="margin-left: 15px; padding-right: 23px;">Pricing</span>
+          </h5>
+          <button class="btn btn-link abc mr-0" type="button" style="float: right; outline: none;" id="myCheck">
+            <i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i>
+          </button>
+        </div>
+      </a>
+      <div id="pricing" *ngIf="data_coll==3 || data_coll==0" data-parent="#accordion" aria-labelledby="headingThree">
+        <table class="table table-bordered table-inside">
+          <thead>
+            <tr>
+              <th class="table-row">Action</th>
+              <th class="table-row">Name</th>
+              <th class="table-row">Status</th>
+              <th class="table-row">Comment</th>
+              <th class="table-row">Date of Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td colspan="5" class="align-center" *ngIf="!review">This section has not been sent for Review</td>
+            <ng-container *ngFor="let item of review;let i=index">
+              <tr>
+                <td>{{item.review_cat}}</td>
+                <td>{{coowner}}</td>
+                <td>Submitted for Review</td>
+                <td>NA</td>
+                <td>{{item.review_create}}</td>
+              </tr>
+              <tr class="accordion-toggle clickable task-info-row" data-toggle="collapse"
+                [attr.data-target]="'#pricing'+i" aria-expanded="false" [attr.aria-controls]="i">
+                <td>{{item.review_cat}} </td>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td *ngIf="item.review_flag else elseBlock">{{item.approval_status}}</td>
+                <ng-template #elseBlock>
+                  <td>In Progress</td>
+                </ng-template>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td>{{item.lastUpdate_date}}</td>
+
+              </tr>
+              <td colspan="5" class="hiddenRow task-info-row">
+                <div colspan="5" class="collapse" id="pricing{{i}}">
+                  <table class="table table-bordered table-inside">
+                    <tbody>
+                      <ng-container *ngFor="let review_add of item.review_add; let i=index">
+                        <tr>
+                          <td style="width: 18.4%;" class="align-center">{{i+1}}.</td>
+                          <td style="width: 21.2%;">{{review_add.contributorName}}</td>
+                          <td style="width: 21.2%;" *ngIf="review_add.approvalStatus else elseBlock">Review Completed
+                          </td>
+                          <ng-template #elseBlock>
+                            <td style="width: 21.2%;">Tasks Assigned After Review</td>
+                          </ng-template>
+                          <td style="width: 21.2%;">{{review_add.comment}}</td>
+                          <td>{{review_add.reviewSubmitDate}}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel card">
+      <a role="button" data-toggle="collapse" (click)="data1(4)" data-target="#Legal" aria-expanded="false"
+        aria-controls="Legal">
+        <div class="card-header box" style="height: 70px;">
+          <h5 class="mb-0 abc">
+            <i class="fa fa-gavel" style="color: black; font-size: 20px;"></i>
+            <span class="span-title" style="padding-right: 27px;">Legal</span>
+          </h5>
+          <button class="btn btn-link  mr-0 collapsed" type="button" style="float: right; outline: none;">
+            <i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i>
+          </button>
+        </div>
+      </a>
+      <div id="Legal" class="collapse" *ngIf="data_coll==4" data-parent="#accordion" aria-labelledby="headingThree">
+        <table class="table table-bordered table-inside">
+          <thead>
+            <tr>
+              <th class="table-row">Action</th>
+              <th class="table-row">Name</th>
+              <th class="table-row">Status</th>
+              <th class="table-row">Comment</th>
+              <th class="table-row">Date of Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td colspan="5" class="align-center" *ngIf="!legalReview">This section has not been sent for Review</td>
+            <ng-container *ngFor="let item of legalReview;let i=index">
+              <tr>
+                <td>{{item.review_cat}}</td>
+                <td>{{item.name}}</td>
+                <td>Submitted for Review</td>
+                <td>NA</td>
+                <td>{{item.review_create}}</td>
+              </tr>
+              <tr class="accordion-toggle clickable task-info-row" data-toggle="collapse"
+                [attr.data-target]="'#legal'+i" aria-expanded="false" [attr.aria-controls]="i">
+                <td>{{item.review_cat}} </td>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td *ngIf="item.review_flag else elseBlock">{{item.approval_status}}</td>
+                <ng-template #elseBlock>
+                  <td>In Progress</td>
+                </ng-template>
+                <td><i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i></td>
+                <td>{{item.lastUpdate_date}}</td>
+
+              </tr>
+              <td colspan="5" class="hiddenRow task-info-row">
+                <div colspan="5" class="collapse" id="legal{{i}}">
+                  <table class="table table-bordered table-inside">
+                    <tbody>
+                      <ng-container *ngFor="let legalReview_add of item.legalReview_add; let i=index">
+                        <tr>
+                          <td style="width: 18.4%;" class="align-center">{{i+1}}.</td>
+                          <td style="width: 21.2%;">{{legalReview_add.contributorName}}</td>
+                          <td style="width: 21.2%;" *ngIf="legalReview_add.approvalStatus else elseBlock">Review
+                            Completed</td>
+                          <ng-template #elseBlock>
+                            <td style="width: 21.2%;">Tasks Assigned After Review</td>
+                          </ng-template>
+                          <td style="width: 21.2%;">{{legalReview_add.comment}}</td>
+                          <td>{{legalReview_add.reviewSubmitDate}}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="panel card">
+      <a role="button" (click)="data1(1)" data-toggle="collapse" (click)="data1(5)" data-target="#approval"
+        aria-expanded="false" aria-controls="approval">
+        <div class="card-header box" style="height: 70px;">
+          <h5 class="mb-0 abc">
+            <i class="fa fa-check" style="color: black; font-size: 20px;"></i>
+            <span class="span-title">Approval</span>
+          </h5>
+          <button class="btn btn-link mr-0 abc collapsed" type="button" style="float: right; outline: none;">
+            <i class="fa fa-chevron-down rotate" style="color: black; margin-top: 0px;"></i>
+          </button>
+        </div>
+      </a>
+      <div id="approval" class="collapse" *ngIf="data_coll==5">
+        <div class="card-body">
+          <table class="table table-bordered table-inside">
+            <thead>
+              <tr>
+                <th class="table-row">Section</th>
+                <th class="table-row">Name</th>
+                <th class="table-row">Status</th>
+                <th class="table-row">Comment</th>
+                <th class="table-row">Date of Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td colspan="5" class="align-center" *ngIf="!Approval">This section has not been sent for Approval</td>
+              <tr *ngFor="let item of Approval;let i=index">
+                <td>Approval</td>
+                <td>{{item.name}}</td>
+                <td>{{item.approval_type || item.approval_submit}}</td>
+                <td *ngIf="item.comment else elseBlock">{{item.comment}}</td>
+                <ng-template #elseBlock>
+                  <td>NA</td>
+                </ng-template>
+                <td>{{item.time_stamp|date:'dd-MM-yyyy, hh:mm:ss'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
